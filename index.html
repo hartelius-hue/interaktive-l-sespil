@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script>if(new URLSearchParams(location.search).get('sites')==='1')document.documentElement.classList.add('sites-embed');</script>
   <meta name="theme-color" content="#19274a">
   <meta name="description" content="15 interaktive læsespil for 3.C: præcis afkodning, konsonantforbindelser, dobbeltkonsonanter, stavelser, inferens og læseforståelse.">
   <title>Læseværkstedet · 3.C</title>
@@ -51,12 +52,50 @@
 .text-mark{background:#ffe18d;padding:0 2px;border-radius:3px;color:#293f49}
 @media(max-width:570px){.filter-button{font-size:14px;padding:10px 12px}.sort-bins{gap:7px}.sort-bin{min-height:88px}.sort-word{padding:16px 23px}.word-tiles .word-piece{padding:9px 12px}.sentence-track{padding:10px}.game-card .new-label{margin-top:0}}
 
+
+    /* Google Sites: kompakt visning aktiveres kun med ?sites=1 */
+    .open-full-site{display:none;text-decoration:none;align-items:center}
+    .sites-embed .open-full-site{display:inline-flex}
+    .sites-embed body{background:#fffaf1}
+    .sites-embed .shell{width:min(1160px,calc(100% - 24px))}
+    .sites-embed .topbar{padding:8px 0}
+    .sites-embed .brand-mark{width:40px;height:40px;border-radius:12px}
+    .sites-embed .brand-name{font-size:18px}
+    .sites-embed .brand-sub{font-size:12px}
+    .sites-embed main{padding:18px 0 40px}
+    .sites-embed .hero{grid-template-columns:1fr;padding:25px 29px;border-radius:22px}
+    .sites-embed .hero-art{display:none}
+    .sites-embed .hero h1{font-size:clamp(28px,3.5vw,43px);margin:11px 0}
+    .sites-embed .hero p{font-size:17px;margin-bottom:16px}
+    .sites-embed .section-head{margin:25px 0 15px}
+    .sites-embed .section-head h2{font-size:27px}
+    .sites-embed .games-grid{gap:13px}
+    .sites-embed .game-card{min-height:232px;padding:16px;border-radius:20px}
+    .sites-embed .game-card .icon-bubble{width:60px;height:56px;font-size:32px;margin-bottom:11px;border-radius:16px}
+    .sites-embed .game-card h3{font-size:20px}
+    .sites-embed .game-card p{margin-bottom:11px}
+    .sites-embed .foot{display:none}
+    @media(max-width:760px){
+      .sites-embed .games-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+      .sites-embed .hero{padding:20px 22px}
+      .sites-embed .top-actions{gap:6px}
+      .sites-embed .topbtn{padding:8px 10px;font-size:12px}
+    }
+    @media(max-width:500px){
+      .sites-embed .games-grid{grid-template-columns:1fr}
+      .sites-embed .game-card{min-height:0}
+      .sites-embed .toprow{align-items:flex-start}
+      .sites-embed .hero h1{font-size:30px}
+      .sites-embed .hero p{font-size:16px}
+      .sites-embed .shell{width:calc(100% - 18px)}
+      .sites-embed .top-actions{width:100%;justify-content:flex-start}
+    }
   </style>
 </head>
 <body>
   <header class="topbar"><div class="shell toprow">
     <button type="button" class="brand" onclick="goHome()" aria-label="Til forsiden"><span class="brand-mark">3.C</span><span><span class="brand-name">Læseværkstedet</span><span class="brand-sub">Små spil. Store læseskridt.</span></span></button>
-    <div class="top-actions"><button class="topbtn" id="modeButton" onclick="toggleHelp()" type="button" aria-pressed="true">🧩 Hjælp: til</button><button class="topbtn" type="button" onclick="showTeacher()">👩‍🏫 Til læreren</button></div>
+    <div class="top-actions"><a class="topbtn open-full-site" href="./" target="_blank" rel="noopener noreferrer" aria-label="Åbn læseværkstedet i en ny fane">↗ Større visning</a><button class="topbtn" id="modeButton" onclick="toggleHelp()" type="button" aria-pressed="true">🧩 Hjælp: til</button><button class="topbtn" type="button" onclick="showTeacher()">👩‍🏫 Til læreren</button></div>
   </div></header>
   <div id="app" class="shell" aria-live="off"></div>
   <footer class="foot"><div class="shell foot-inner"><span>Udviklet til læsetræning i 3.C · 15 spil · Ingen login</span><span>Elevernes øveresultater gemmes kun på denne enhed.</span></div></footer>
