@@ -68,7 +68,7 @@ function speak(){if(!('speechSynthesis' in window))return say('Oplæsning er ikk
 function options(arr){return '<div class="opts">'+arr.map(o=>'<button class="opt" onclick="choose('+0+',\''+encodeURIComponent(o.s).replace(/'/g,'%27')+'\')">'+esc(o.s)+'</button>').join('')+'</div>';}
 function game(){if(!g)return;if(i===qs.length)return result();const q=qs[i],kind=g.kind;let h='<div class="gamebar"><button class="btn light" onclick="home()">← Alle spil</button><span class="tiny">Opgave '+(i+1)+' af '+qs.length+' · '+points+' rigtige i første forsøg</span></div><section class="mission"><div class="eyebrow" style="color:#9bded8">DIN LÆSEMISSION</div><h1>'+g.icon+' '+g.title+'</h1><p>'+g.desc+'</p></section><div class="meter"><div style="width:'+Math.round(100*i/qs.length)+'%"></div></div><section class="question"><div class="tiny">Niveau: '+['','Basis','På vej','Udfordring'][lvl]+'</div>';
 if(q.t && kind!=='speedtext')h+='<div class="passage">'+esc(q.t)+'</div><button class="btn light" onclick="speak()">🔊 Læs teksten højt</button>';
-h+='<h2 style="margin-top:16px">'+esc(kind==='evidence'&&phase===1?'Hvilken sætning er det bedste tekstbevis?':kind==='nonword'&&phase===1?'Byg vrøvleordet, du lige læste.':q.p)+'</h2>';
+h+='<h2 style="margin-top:16px">'+esc(kind==='speedtext'&&readStatus!=='question'?'Læs sikkert og med forståelse.':kind==='evidence'&&phase===1?'Hvilken sætning er det bedste tekstbevis?':kind==='nonword'&&phase===1?'Byg vrøvleordet, du lige læste.':q.p)+'</h2>';
 if(kind==='speedwords'){
  if(flashStatus==='ready'){
   h+='<p class="muted">Tryk på Vis ordet. Læs hele ordet. Når det forsvinder, skal du finde det blandt fire næsten ens ord. Du kan altid prøve igen.</p><div class="word-flash ready">Klar?</div><div class="row"><button class="btn secondary" onclick="showFlash()">👀 Vis ordet</button></div>';
@@ -147,7 +147,9 @@ S.innerHTML="\n<button class=\"btn light\" onclick=\"home()\">← Til spilmenuen
 window.scrollTo(0,0);
 }
 home();
-if(location.hash==='#reading-tips'){
+const initialSpeedGame=params.get('spil');
+if(['ordglimt','flydelaesning'].includes(initialSpeedGame))start(initialSpeedGame);
+if(location.hash==='#reading-tips'&&!initialSpeedGame){
  const showGuide=()=>document.getElementById('reading-tips')?.scrollIntoView?.({block:'start'});
  if(document.readyState==='complete')showGuide();
  else window.addEventListener('load',showGuide,{once:true});
