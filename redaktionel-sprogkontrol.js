@@ -27,7 +27,12 @@ function sprogkontrol(files){
   const ids=new Set([...config,...games].map(g=>g.id));
   for(const d of domains)for(const [id] of d.games)if(!ids.has(id))fejl.push("Ukendt spil fra starttest: "+id);
   questions.forEach((q,i)=>{if(!q.o?.includes(q.a))fejl.push("Ugyldigt facit i startspørgsmål "+(i+1));});
-  for(const g of games)for(const q of g.qs)if(!["order","nonword","write","dictation"].includes(g.kind)&&!q.o?.includes(q.a))fejl.push("Ugyldigt facit i "+g.id);
+  for(const g of games)for(const q of g.qs){
+    if(g.kind==="morphbuild"){if(!q.parts||q.parts.join("")!==q.a)fejl.push("Ugyldigt sammensat ord i "+g.id);continue;}
+    if(g.kind==="morphending"){if(q.stem+q.suffix!==q.a||!q.o?.includes(q.suffix))fejl.push("Ugyldig endelse i "+g.id);continue;}
+    if(g.kind==="vowelrule"&&!["kort","lang"].includes(q.vowel))fejl.push("Ugyldig vokallængde i "+g.id);
+    if(!["order","nonword","write","dictation"].includes(g.kind)&&!q.o?.includes(q.a))fejl.push("Ugyldigt facit i "+g.id);
+  }
   if(tips.length!==11||voiceTips.length!==11||tips.some((t,i)=>t.tip!==voiceTips[i]?.body))fejl.push("Læsemakkerens råd afviger fra guiden.");
   if(start.includes("localStorage")||start.includes("sessionStorage"))fejl.push("Starttesten gemmer svar i browseren.");
   for(const name of ["index.html","st3-traening.html","starttest.html"])if(!files[name].includes('laesemakker.js'))fejl.push("Avatar mangler på "+name);
