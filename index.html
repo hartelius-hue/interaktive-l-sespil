@@ -163,6 +163,14 @@ body{background:radial-gradient(ellipse at 12% 0%,#f4ecff,transparent 27%),radia
 
 .explain-why{display:inline-flex;align-items:center;gap:5px;background:#fff7e8;border:2px solid #dcb978;color:#62471f;font-size:16px;font-weight:850;border-radius:12px;padding:10px 14px;margin-top:10px;min-height:44px}
 .explain-why:hover{background:#ffedcd}.explain-why:focus-visible{outline:3px solid #dfaa43;outline-offset:2px}
+
+.vowel-discovery{border-left:5px solid #deae62;border-radius:13px;padding:13px 17px;background:#fff4dd;text-align:left;color:#503e24;font-size:16px;line-height:1.55;margin:16px auto;max-width:660px}
+.vowel-buttons{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:16px auto;max-width:620px}
+.vowel-buttons button{border:2px solid #bdd4df;background:#eaf3ff;color:#203b59;border-radius:16px;font-weight:950;font-size:20px;min-height:72px;padding:14px}
+.vowel-buttons button:first-child{background:#fff0da;border-color:#e9c486}
+.vowel-buttons button:focus-visible{outline:3px solid #d5a858;outline-offset:3px}
+.double-word-reveal{font-size:30px;font-weight:900;color:#2d5374}
+@media(max-width:540px){.vowel-buttons{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -434,18 +442,210 @@ const MAZE=[
 const MAZE_SPOTS=[[3,1],[5,1],[9,2],[8,3],[7,5],[9,7],[5,7],[1,7],[2,5],[3,3],[1,3],[5,4],[7,3],[3,5]];
 // Supplerende spil til Læseværkstedet 3.C. Alle spørgsmål er nyskrevne.
 const DOUBLE_WORDS = [
- {word:'sommer',icon:'☀️',options:['somer','sommer','sommar','sommerh'],reason:'I sommer står der to m’er midt i ordet.'},
- {word:'katte',icon:'🐈 🐈',options:['katte','kate','katteh','katteee'],reason:'Flere katte staves med to t’er.'},
- {word:'kopper',icon:'☕ ☕',options:['koper','kopper','koppar','kopperr'],reason:'Flere kopper staves med to p’er.'},
- {word:'boller',icon:'🥯 🥯',options:['boler','boller','bolle','bollor'],reason:'Flere boller staves med to l’er.'},
- {word:'sokker',icon:'🧦 🧦',options:['soker','sokker','sokar','sokkerh'],reason:'Flere sokker staves med to k’er.'},
- {word:'kasser',icon:'📦 📦',options:['kaser','kasser','kassser','kasserh'],reason:'Flere kasser staves med to s’er.'},
- {word:'klokke',icon:'⏰',options:['kloke','klokke','klokker','klakke'],reason:'En klokke staves med to k’er.'},
- {word:'krabbe',icon:'🦀',options:['krabe','krabbe','krabber','krabpe'],reason:'En krabbe staves med to b’er.'},
- {word:'tallerken',icon:'🍽️',options:['talerken','tallerken','talarken','tallarken'],reason:'En tallerken har to l’er.'},
- {word:'kuffert',icon:'🧳',options:['kufert','kuffert','kufferd','kuvert'],reason:'En kuffert har to f’er.'},
- {word:'hammer',icon:'🔨',options:['hamer','hammer','hamner','hammar'],reason:'En hammer staves med to m’er.'},
- {word:'skuffe',icon:'🗄️',options:['skufe','skuffe','skufte','skuffeæ'],reason:'En skuffe har to f’er.'}
+ {
+  "word": "sommer",
+  "icon": "☀️",
+  "options": [
+   "somer",
+   "sommer",
+   "sommar",
+   "sommerh"
+  ],
+  "reason": "I sommer er o kort. Derfor skriver vi mm mellem to vokaler.",
+  "vowel": "kort",
+  "mark": "o"
+ },
+ {
+  "word": "katte",
+  "icon": "🐈 🐈",
+  "options": [
+   "katte",
+   "kate",
+   "katteh",
+   "katteee"
+  ],
+  "reason": "I katte er a kort. Derfor skriver vi tt mellem to vokaler.",
+  "vowel": "kort",
+  "mark": "a"
+ },
+ {
+  "word": "kopper",
+  "icon": "☕ ☕",
+  "options": [
+   "koper",
+   "kopper",
+   "koppar",
+   "kopperr"
+  ],
+  "reason": "I kopper er o kort. Derfor skriver vi pp mellem to vokaler.",
+  "vowel": "kort",
+  "mark": "o"
+ },
+ {
+  "word": "boller",
+  "icon": "🥯 🥯",
+  "options": [
+   "boler",
+   "boller",
+   "bolle",
+   "bollor"
+  ],
+  "reason": "I boller er o kort. Derfor skriver vi ll mellem to vokaler.",
+  "vowel": "kort",
+  "mark": "o"
+ },
+ {
+  "word": "sokker",
+  "icon": "🧦 🧦",
+  "options": [
+   "soker",
+   "sokker",
+   "sokar",
+   "sokkerh"
+  ],
+  "reason": "I sokker er o kort. Derfor skriver vi kk mellem to vokaler.",
+  "vowel": "kort",
+  "mark": "o"
+ },
+ {
+  "word": "kasser",
+  "icon": "📦 📦",
+  "options": [
+   "kaser",
+   "kasser",
+   "kassser",
+   "kasserh"
+  ],
+  "reason": "I kasser er a kort. Derfor skriver vi ss mellem to vokaler.",
+  "vowel": "kort",
+  "mark": "a"
+ },
+ {
+  "word": "klokke",
+  "icon": "⏰",
+  "options": [
+   "kloke",
+   "klokke",
+   "klokker",
+   "klakke"
+  ],
+  "reason": "I klokke er o kort. Derfor skriver vi kk mellem to vokaler.",
+  "vowel": "kort",
+  "mark": "o"
+ },
+ {
+  "word": "krabbe",
+  "icon": "🦀",
+  "options": [
+   "krabe",
+   "krabbe",
+   "krabber",
+   "krabpe"
+  ],
+  "reason": "I krabbe er a kort. Derfor skriver vi bb mellem to vokaler.",
+  "vowel": "kort",
+  "mark": "a"
+ },
+ {
+  "word": "tallerken",
+  "icon": "🍽️",
+  "options": [
+   "talerken",
+   "tallerken",
+   "talarken",
+   "tallarken"
+  ],
+  "reason": "I tallerken er a kort. Derfor skriver vi ll mellem to vokaler.",
+  "vowel": "kort",
+  "mark": "a"
+ },
+ {
+  "word": "kuffert",
+  "icon": "🧳",
+  "options": [
+   "kufert",
+   "kuffert",
+   "kufferd",
+   "kuvert"
+  ],
+  "reason": "I kuffert er u kort. Derfor skriver vi ff mellem to vokaler.",
+  "vowel": "kort",
+  "mark": "u"
+ },
+ {
+  "word": "hammer",
+  "icon": "🔨",
+  "options": [
+   "hamer",
+   "hammer",
+   "hamner",
+   "hammar"
+  ],
+  "reason": "I hammer er a kort. Derfor skriver vi mm mellem to vokaler.",
+  "vowel": "kort",
+  "mark": "a"
+ },
+ {
+  "word": "skuffe",
+  "icon": "🗄️",
+  "options": [
+   "skufe",
+   "skuffe",
+   "skufte",
+   "skuffeæ"
+  ],
+  "reason": "I skuffe er u kort. Derfor skriver vi ff mellem to vokaler.",
+  "vowel": "kort",
+  "mark": "u"
+ },
+ {
+  "word": "læse",
+  "icon": "📖",
+  "options": [
+   "læse",
+   "læsse",
+   "læsee"
+  ],
+  "vowel": "lang",
+  "mark": "æ",
+  "reason": "I læse er æ lang. Derfor står der kun ét s mellem æ og e."
+ },
+ {
+  "word": "pude",
+  "icon": "🛏️",
+  "options": [
+   "pude",
+   "pudde",
+   "puude"
+  ],
+  "vowel": "lang",
+  "mark": "u",
+  "reason": "I pude er u lang. Derfor står der kun ét d mellem u og e."
+ },
+ {
+  "word": "køle",
+  "icon": "❄️",
+  "options": [
+   "køle",
+   "kølle",
+   "kølee"
+  ],
+  "vowel": "lang",
+  "mark": "ø",
+  "reason": "I køle er ø lang. Derfor står der kun ét l mellem ø og e."
+ },
+ {
+  "word": "mase",
+  "icon": "👐",
+  "options": [
+   "mase",
+   "masse",
+   "masee"
+  ],
+  "vowel": "lang",
+  "mark": "a",
+  "reason": "I mase er a lang. Derfor står der kun ét s mellem a og e."
+ }
 ];
 const SYLLABLE_WORDS = [
  {word:'banan',icon:'🍌',parts:['ba','nan'],extras:['bo','nin']},
@@ -560,7 +760,7 @@ function goHome(){if('speechSynthesis' in window)speechSynthesis.cancel();window
 function newGame(id){
  window.Laesemakker?.setContext(id);
  if('speechSynthesis' in window)speechSynthesis.cancel();
- active=id;game={id,index:0,score:0,attempted:false,solved:false,message:'',feedbackType:'',finished:false};
+ active=id;game={id,index:0,score:0,attempted:false,solved:false,message:'',feedbackType:'',finished:false,vowelStep:0,vowelRevealed:false};
  if(id==='maze'){game.cluster='sk';game.mazeMode='rolig';setupMaze();}
  if(id==='onset')game.items=shuffle(ONSETS).slice(0,10);
  if(id==='blend'){game.items=shuffle(BLENDS).slice(0,8);setupBlend();}
@@ -577,7 +777,7 @@ function newGame(id){
 function finish(){game.finished=true;const max=countTotal();stats[active]={best:Math.max(stats[active]?.best||0,game.score),last:game.score,total:max,plays:(stats[active]?.plays||0)+1};save();render();announce('Spillet er færdigt. Du fik '+game.score+' ud af '+max+' rigtige i første forsøg.');}
 function countTotal(){if(active==='maze')return 5;if(active==='story')return 12;if(active==='order')return ORDERS.length;return game.items.length;}
 function feedback(message,type){game.message=message;game.feedbackType=type||'try';announce(message);render();}
-function finishOrNext(){if(!game.solved)return;game.index++;game.solved=false;game.attempted=false;game.message='';game.feedbackType='';game.whyShown=false;if(game.index>=countTotal()){finish();return;}if(active==='blend')setupBlend();if(active==='order')setupOrder();if(active==='syllable')setupSyllable();if(active==='sentence')setupSentence();render();}
+function finishOrNext(){if(!game.solved)return;game.index++;game.solved=false;game.attempted=false;game.message='';game.feedbackType='';game.whyShown=false;game.vowelStep=0;game.vowelRevealed=false;if(game.index>=countTotal()){finish();return;}if(active==='blend')setupBlend();if(active==='order')setupOrder();if(active==='syllable')setupSyllable();if(active==='sentence')setupSentence();render();}
 function correct(message){if(!game.attempted)game.score++;game.solved=true;feedback(message||'Ja, det er rigtigt.','good');}
 function wrong(message){
  game.attempted=true;game.whyShown=false;
@@ -714,8 +914,21 @@ document.addEventListener('keydown',e=>{if(active!=='maze'||game?.finished)retur
 function setCategory(category){homeCategory=category;render();const el=document.getElementById('games');if(el)el.scrollIntoView({block:'start'});}
 function gameLabel(){return active==='double'?'DOBBELTKONSONANTER':active==='syllable'?'STAVELSESRAKETTEN':active==='sort'?'FORLYDSSORTERING':active==='sentence'?'SÆTNINGSTOGET':active==='infer'?'LÆS MELLEM LINJERNE':active==='noise'?'HOLD FAST I DET RIGTIGE':active==='vocab'?'ORD I SAMMENHÆNG':'TEKSTKOMPASSET';}
 function optionsHTML(options,correctValue,onAnswer,small=false){return `<div class="answers">${shuffleStable(options,game.index,active+'extra').map(s=>`<button type="button" class="answer-btn ${game.solved&&s===correctValue?'correct':''}" style="${small?'font-size:17px;text-align:left;':''}" onclick="${onAnswer}(${JSON.stringify(s).replaceAll('"','&quot;')})" ${game.solved?'disabled':''}>${esc(s)}</button>`).join('')}</div>`;}
-function renderDouble(){const o=game.items[game.index];const emphasized=esc(o.word).replace(/(.)\1/ig,'<span class="double-highlight">$&</span>');return `<div class="build-wrap text-center"><div class="prompt-label">${gameLabel()}</div><h2 class="prompt">Hvilket ord er stavet rigtigt?</h2><div class="picture" role="img" aria-label="Billede til ordet ${esc(o.word)}">${o.icon}</div><p class="instruction">Læs hele ordet. Skal en af konsonanterne stå to gange?</p>${optionsHTML(o.options,o.word,'answerDouble')}${withHelp?`<div class="small-actions center-actions">${audioHTML(o.word)}<button class="assist secondary" onclick="feedback('Se på ordets midte. Er der et bogstav, som skal stå to gange?','')">💡 Hjælp</button></div>`:''}${game.solved?`<div class="word-reveal">${emphasized}</div><p class="reason">${esc(o.reason)}</p>`:''}${feedbackHTML()}${nextHTML()}</div>`;}
-function answerDouble(value){if(game.solved)return;const o=game.items[game.index];if(value===o.word)correct('Ja. Sådan staves ordet.');else wrong('Prøv igen. Læs ordet fra start til slut, og se på bogstaverne i midten.');}
+function renderDouble(){
+ const o=game.items[game.index],emphasized=esc(o.word).replace(/(.)\1/ig,'<span class="double-highlight">$&</span>');
+ const intro='<div class="vowel-discovery"><strong>Husk:</strong> Når den trykstærke vokal er kort, skriver vi som regel dobbeltkonsonant mellem to vokaler. Fx ka<strong>ss</strong>e. Når vokalen er lang, bruger vi som regel én. Fx læ<strong>s</strong>e.</div>';
+ if(game.vowelStep===0){
+  return '<div class="build-wrap text-center"><div class="prompt-label">KORT ELLER LANG VOKAL?</div><h2 class="prompt">Hør ordet. Er vokalen '+esc(o.mark)+' kort eller lang?</h2><div class="picture" role="img" aria-label="Billede til opgaven">'+o.icon+'</div>'+intro+'<p class="instruction">Sig ordet højt, og lyt til den trykstærke vokal.</p><div class="small-actions center-actions"><button class="assist" type="button" onclick="speak('+JSON.stringify(o.word).replaceAll('"','&quot;')+')">🔊 Hør ordet</button><button class="assist secondary" type="button" onclick="revealDoubleWord()">👀 Se ordet</button></div>'+(game.vowelRevealed?'<p class="double-word-reveal">'+esc(o.word)+'</p>':'')+'<div class="vowel-buttons"><button type="button" onclick="chooseDoubleVowel(&quot;kort&quot;)">🟠 Kort vokal</button><button type="button" onclick="chooseDoubleVowel(&quot;lang&quot;)">🔵 Lang vokal</button></div>'+feedbackHTML()+'</div>';
+ }
+ return '<div class="build-wrap text-center"><div class="prompt-label">'+gameLabel()+'</div><h2 class="prompt">Hvilken stavemåde passer til ordet?</h2><div class="picture" role="img" aria-label="Billede til ordet">'+o.icon+'</div>'+intro+'<p class="instruction">Du fandt vokallængden. Vælg nu stavemåden. Lyt gerne igen.</p>'+optionsHTML(o.options,o.word,'answerDouble')+'<div class="small-actions center-actions"><button class="assist" onclick="speak('+JSON.stringify(o.word).replaceAll('"','&quot;')+')">🔊 Hør ordet igen</button></div>'+(game.solved?'<div class="word-reveal">'+emphasized+'</div><p class="reason">'+esc(o.reason)+'</p>':'')+feedbackHTML()+nextHTML()+'</div>';
+}
+function revealDoubleWord(){if(active!=='double'||game.solved)return;game.vowelRevealed=true;game.attempted=true;render();}
+function chooseDoubleVowel(value){
+ if(active!=='double'||game.solved||game.vowelStep!==0)return;
+ if(value!==game.items[game.index].vowel){wrong('Prøv at høre vokalen igen. Er den kort eller lang?');return;}
+ game.vowelStep=1;game.message='';render();
+}
+function answerDouble(value){if(game.solved||game.vowelStep!==1)return;const o=game.items[game.index];if(value===o.word)correct('Ja. Sådan staves ordet.');else wrong('Prøv igen. Læs ordet fra start til slut, og se på bogstaverne i midten.');}
 function setupSyllable(){const o=game.items[game.index];game.syllableTiles=shuffle([...o.parts,...o.extras].map((text,id)=>({text,id})));game.syllablePlaced=[];}
 function pickSyllable(id){if(game.solved||game.syllablePlaced.includes(id))return;game.syllablePlaced.push(id);game.message='';render();}
 function removeSyllable(i){if(game.solved)return;game.syllablePlaced.splice(i,1);game.message='';render();}
