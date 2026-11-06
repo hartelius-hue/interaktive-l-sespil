@@ -840,7 +840,7 @@ function explainWrong(){
  else if(active==='onset'){answer=item.prefix;reason='Ordet '+item.word+' begynder med '+item.prefix+'.';}
  else if(active==='blend'){answer=item.word;reason='Sæt lydene sammen: '+item.parts.join(' – ')+'.';}
  else if(active==='order'){answer=ORDERS[game.index].sentences.join(' ');reason='Først, bagefter og til sidst.';}
- else if(active==='double'){answer=item.word;reason=item.reason;}
+ else if(active==='double'){answer=game.vowelStep===0?item.vowel:item.word;reason=item.reason;}
  else if(active==='syllable'){answer=item.word;reason='Klap stavelserne: '+item.parts.join(' – ')+'.';}
  else if(active==='sort'){answer=item.target;reason='Ordet '+item.word+' begynder med '+item.target+'.';}
  else if(active==='sentence'){answer=item.parts.join(' ');reason='Læs sætningen fra venstre mod højre.';}
