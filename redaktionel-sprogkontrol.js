@@ -22,13 +22,13 @@ function sprogkontrol(files){
   const domains=JSON.parse(m[1]),questions=JSON.parse(m[2]);
   const tips=JSON.parse(ekstra.match(/const READING_TIPS=([\s\S]*?);\nconst READING_TIP_BY_GAME=/)[1]);
   const voiceTips=JSON.parse(avatar.match(/const TIPS=([\s\S]*?);\nconst GAME_TIP=/)[1]);
-  if(config.length!==15||games.length!==20)fejl.push("Spilantallet er ikke 35.");
+  if(config.length!==15||games.length!==22)fejl.push("Spilantallet er ikke 37.");
   if(questions.length!==24||domains.length!==6)fejl.push("Starttestens antal er ændret.");
   const ids=new Set([...config,...games].map(g=>g.id));
   for(const d of domains)for(const [id] of d.games)if(!ids.has(id))fejl.push("Ukendt spil fra starttest: "+id);
   questions.forEach((q,i)=>{if(!q.o?.includes(q.a))fejl.push("Ugyldigt facit i startspørgsmål "+(i+1));});
   for(const g of games)for(const q of g.qs)if(!["order","nonword","write","dictation"].includes(g.kind)&&!q.o?.includes(q.a))fejl.push("Ugyldigt facit i "+g.id);
-  if(tips.length!==10||voiceTips.length!==10||tips.some((t,i)=>t.tip!==voiceTips[i]?.body))fejl.push("Læsemakkerens råd afviger fra guiden.");
+  if(tips.length!==11||voiceTips.length!==11||tips.some((t,i)=>t.tip!==voiceTips[i]?.body))fejl.push("Læsemakkerens råd afviger fra guiden.");
   if(start.includes("localStorage")||start.includes("sessionStorage"))fejl.push("Starttesten gemmer svar i browseren.");
   for(const name of ["index.html","st3-traening.html","starttest.html"])if(!files[name].includes('laesemakker.js'))fejl.push("Avatar mangler på "+name);
   if(!original.includes("u.lang='da-DK'")||!ekstra.includes("utterance.lang='da-DK'")||!avatar.includes('u.lang="da-DK"'))fejl.push("Dansk oplæsning mangler.");
