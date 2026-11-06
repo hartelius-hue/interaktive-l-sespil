@@ -145,6 +145,21 @@ body{background:radial-gradient(ellipse at 12% 0%,#f4ecff,transparent 27%),radia
 @media(prefers-reduced-motion:reduce){.reading-book,.reading-page.flip,.reading-letter,.reading-halo,.reading-spark,.detective-paper,.detective-glass,.detective-star{animation:none!important}}
 
 .reading-start-second{display:inline-flex;align-items:center;min-height:46px;padding:11px 14px;background:#ffffff14;color:#fff;border:1px solid #ffffff80;border-radius:14px;font-size:14px;font-weight:850;box-shadow:none}.reading-start-second:hover{background:#ffffff28}.reading-actions>.hero-cta{text-align:center}
+
+/* Brugerfeedback 5.D: større instruktioner, tydelige svar og rolig farvevariation */
+.game-card p{font-size:16px;line-height:1.55;color:#415473}
+.play-head p{font-size:18px;line-height:1.55}
+.instruction{font-size:18px;line-height:1.55;color:#3b506c}
+.maze-log{font-size:17px;line-height:1.5}
+.game-card:nth-child(3n+1){background:linear-gradient(180deg,#fff,#fffaf0)}
+.game-card:nth-child(3n+2){background:linear-gradient(180deg,#fff,#f2fbf9)}
+.game-card:nth-child(3n+3){background:linear-gradient(180deg,#fff,#f5f4ff)}
+.maze-levels{display:flex;align-items:center;flex-wrap:wrap;gap:8px;margin:15px 0 16px;padding:10px 12px;border-radius:14px;background:#f3f7ff}
+.maze-levels strong{font-size:15px;margin-right:5px;color:#29405f}
+.maze-levels button{border:2px solid #cbd9ea;background:#fff;color:#253d5f;border-radius:11px;padding:8px 11px;min-height:40px;font-size:15px;font-weight:850}
+.maze-levels button[aria-pressed="true"]{background:#1d466c;color:#fff;border-color:#1d466c}
+.maze-levels button:focus-visible{outline:3px solid #deaf4f;outline-offset:2px}
+@media(max-width:650px){.play-head p{font-size:17px}.instruction{font-size:17px}.maze-levels strong{width:100%}}
 </style>
 </head>
 <body>
@@ -543,7 +558,7 @@ function newGame(id){
  window.Laesemakker?.setContext(id);
  if('speechSynthesis' in window)speechSynthesis.cancel();
  active=id;game={id,index:0,score:0,attempted:false,solved:false,message:'',feedbackType:'',finished:false};
- if(id==='maze'){game.cluster='sk';setupMaze();}
+ if(id==='maze'){game.cluster='sk';game.mazeMode='rolig';setupMaze();}
  if(id==='onset')game.items=shuffle(ONSETS).slice(0,10);
  if(id==='blend'){game.items=shuffle(BLENDS).slice(0,8);setupBlend();}
  if(id==='picture')game.items=shuffle(PICTURE).slice(0,10);
@@ -561,7 +576,15 @@ function countTotal(){if(active==='maze')return 5;if(active==='story')return 12;
 function feedback(message,type){game.message=message;game.feedbackType=type||'try';announce(message);render();}
 function finishOrNext(){if(!game.solved)return;game.index++;game.solved=false;game.attempted=false;game.message='';game.feedbackType='';if(game.index>=countTotal()){finish();return;}if(active==='blend')setupBlend();if(active==='order')setupOrder();if(active==='syllable')setupSyllable();if(active==='sentence')setupSentence();render();}
 function correct(message){if(!game.attempted)game.score++;game.solved=true;feedback(message||'Ja, det er rigtigt.','good');}
-function wrong(message){game.attempted=true;feedback(message||'Prøv igen. Kig på ordet eller teksten en gang til.','try');}
+function wrong(message){
+ game.attempted=true;
+ let tip='';
+ if(active==='story')tip=STORIES[Math.floor(game.index/4)].qs[game.index%4].hint||'';
+ if(['infer','noise','vocab'].includes(active))tip=game.items[game.index].hint||'';
+ if(active==='compass')tip=({Find:'Se efter de ord, der står direkte i teksten.',Tænk:'Hvilke spor i teksten kan hjælpe dig?',Forstå:'Hvad handler hele teksten om?',Vurdér:'Tænk over, hvorfor teksten er skrevet.'})[game.items[game.index].kind]||'';
+ const answer=[message||'Se på ordet eller teksten igen.',tip].filter(Boolean).join(' ');
+ feedback(answer,'try');
+}
 function render(){updateTop();let html='';if(!active)html=renderHome();else if(game.finished)html=renderFinish();else html=renderGame();document.getElementById('app').innerHTML=html;attachDrags();attachExtraDrags();}
 function renderHome(){
  const done=Object.keys(stats).filter(id=>CONFIG.some(c=>c.id===id)).length;
@@ -591,9 +614,9 @@ function renderGame(){const cfg=CONFIG.find(c=>c.id===active);const total=countT
 function feedbackHTML(){return game.message?`<div class="feedback ${game.feedbackType}" role="status"><span aria-hidden="true">${game.solved?'🌟':'💡'}</span><span>${esc(game.message)}</span></div>`:'';}
 function nextHTML(){return game.solved?`<button class="next-btn" onclick="finishOrNext()">${game.index+1===countTotal()?'Se mit resultat':'Næste opgave'} →</button>`:'';}
 function audioHTML(text){return withHelp?`<button class="assist" type="button" onclick="speak(${JSON.stringify(text).replaceAll('"','&quot;')})">🔊 Hør ${text.length>65?'teksten':text.length>20?'sætningen':'ordet'}</button>`:'';}
-function renderFinish(){const cfg=CONFIG.find(c=>c.id===active),max=countTotal(),rate=game.score/max;const lines=rate>=.85?['Du havde godt styr på opgaverne.','Du fandt mange af de rigtige svar i første forsøg.']:rate>=.5?['Godt arbejdet!','Du løste mange opgaver. Prøv igen og se, hvad du opdager.']:['Du har øvet dig.','Prøv en runde mere. Brug gerne læsehjælpen undervejs.'];return `<main><button class="back" onclick="goHome()">← Alle spil</button><section class="finish-wrap"><div class="finish-emoji" aria-hidden="true">${active==='maze'&&game.lives===0?'👻':rate>=.8?'🏆':'🌟'}</div><h1>${active==='maze'&&game.lives===0?'Spøgelset fangede dig!':'Mission gennemført!'}</h1><p>${lines[0]}<br>${lines[1]}</p><div class="finish-score">${game.score} af ${max} i første forsøg</div><p class="tiny-caption">Her øver du dig. Det er helt i orden at prøve igen.</p><div class="finish-buttons"><button class="again" onclick="newGame('${active}')">Spil ${esc(cfg.name)} igen</button><button class="home" onclick="goHome()">Vælg et andet spil</button></div></section></main>`;}
+function renderFinish(){const cfg=CONFIG.find(c=>c.id===active),max=countTotal(),rate=game.score/max;const lines=rate>=.85?['Du havde godt styr på opgaverne.','Du fandt mange af de rigtige svar i første forsøg.']:rate>=.5?['Godt arbejdet!','Du løste mange opgaver. Prøv igen og se, hvad du opdager.']:['Du har øvet dig.','Prøv en runde mere. Brug gerne læsehjælpen undervejs.'];return `<main><button class="back" onclick="goHome()">← Alle spil</button><section class="finish-wrap"><div class="finish-emoji" aria-hidden="true">${active==='maze'&&game.lives===0?'👻':rate>=.8?'🏆':'🌟'}</div><h1>${active==='maze'&&game.lives===0?'Spøgelset fangede dig!':'Mission gennemført!'}</h1><p>${lines[0]}<br>${lines[1]}</p><div class="finish-score">${game.score} af ${max} i første forsøg</div><p class="tiny-caption">Her øver du dig. Det er helt i orden at prøve igen.</p><div class="finish-buttons"><button class="again" onclick="newGame('${active}')">Spil ${esc(cfg.name)} igen</button><button class="home" onclick="goHome()">Vælg et andet spil</button>${active==='maze'&&game.lives>0&&game.mazeMode!=='turbo'?'<button class="again" onclick="setMazeMode(\''+(game.mazeMode==='rolig'?'normal':'turbo')+'\')">Prøv næste fartniveau →</button>':''}</div></section></main>`;}
 function renderOnset(){const o=game.items[game.index];return `<div class="build-wrap text-center"><div class="prompt-label">KONSONANTFORBINDELSER</div><h2 class="prompt">Hvilke to bogstaver mangler i starten?</h2><div class="picture" role="img" aria-label="Billede til ordet ${esc(o.word)}">${o.icon}</div><div class="word-target"><span class="missing-part" aria-label="To bogstaver mangler">${game.solved?o.prefix:'__'}</span><span>${esc(o.ending)}</span></div><p class="instruction">Vælg de to bogstaver, der mangler. Du kan trykke eller trække.</p><div class="drop-target" id="dropzone" data-drop="onset"><span class="drop-note">Læg bogstaverne her</span></div><div class="tiles">${shuffleStable(o.choices,game.index,'onset').map(s=>`<button class="piece" draggable="${!game.solved}" data-piece="${esc(s)}" type="button" onclick="answerOnset('${esc(s)}')" ${game.solved?'disabled':''}>${esc(s)}</button>`).join('')}</div><div class="small-actions" style="justify-content:center">${audioHTML(o.word)}${withHelp?`<button class="assist secondary" onclick="hintOnset()">💡 Et lille hint</button>`:''}</div>${feedbackHTML()}${nextHTML()}</div>`;}
-function shuffleStable(arr,index,purpose){const seed=(index*7+purpose.length*13)%17;return arr.map((x,i)=>({x,n:(i*13+seed*3)%17})).sort((a,b)=>a.n-b.n).map(z=>z.x);}
+function shuffleStable(arr,index,purpose){if(!game.answerOrders)game.answerOrders={};const key=purpose+'|'+index+'|'+JSON.stringify(arr);if(!game.answerOrders[key])game.answerOrders[key]=shuffle(arr);return game.answerOrders[key];}
 function answerOnset(s){if(game.solved)return;const o=game.items[game.index];if(s===o.prefix)correct('Ja! '+o.prefix+' + '+o.ending+' = '+o.word+'. Prøv at sige ordet langsomt.');else wrong('Du valgte "'+s+'". Prøv at høre, hvilke to lyde ordet begynder med.');}
 function hintOnset(){const o=game.items[game.index];feedback('Sig '+o.word+' langsomt. Lyt til begyndelsen: "'+o.prefix[0]+'…"','');}
 function setupBlend(){const o=game.items[game.index];game.blendTiles=shuffle([...o.parts,...o.extra].map((text,i)=>({id:i,text})));game.placed=[];}
@@ -614,13 +637,48 @@ function renderOrder(){const o=ORDERS[game.index];return `<div class="build-wrap
 function moveOrder(i,delta){if(game.solved)return;const j=i+delta;if(j<0||j>=game.order.length)return;[game.order[i],game.order[j]]=[game.order[j],game.order[i]];game.message='';render();}
 function checkOrder(){if(game.solved)return;if(game.order.every((it,i)=>it.id===i))correct('Nu står begivenhederne i den rigtige rækkefølge.');else wrong('Læs sætningerne igen. Hvad skal ske, før det næste kan ske?');}
 function mazeWalkable(x,y){return x>=0&&y>=0&&y<MAZE.length&&x<MAZE[0].length&&MAZE[y][x]==='.';}
-function setupMaze(){game.caught=0;game.lives=3;game.turns=0;game.player={x:1,y:1};game.ghost={x:9,y:7};game.words=new Map();const targets=shuffle(WORD_BANKS[game.cluster]).slice(0,5);const distractors=shuffle(Object.entries(WORD_BANKS).filter(([k])=>k!==game.cluster).flatMap(([k,words])=>words.slice(0,2))).slice(0,4);const choices=shuffle([...targets.map(w=>({w,good:true})),...distractors.map(w=>({w,good:false}))]);const spots=shuffle(MAZE_SPOTS).slice(0,choices.length);choices.forEach((obj,i)=>game.words.set(spots[i].join(','),obj));game.message='';game.feedbackType='';game.solved=false;game.score=0;}
+function mazeAccessibleWithout(blocked){
+ const found=new Set(['1,1']),queue=[[1,1]];
+ for(let i=0;i<queue.length;i++){const [x,y]=queue[i];
+ for(const [dx,dy] of [[1,0],[-1,0],[0,1],[0,-1]]){const u=x+dx,v=y+dy,key=u+','+v;
+ if(!found.has(key)&&!blocked.has(key)&&mazeWalkable(u,v)){found.add(key);queue.push([u,v]);}
+ }}
+ return found;
+}
+function setupMaze(){
+ game.caught=0;game.lives=3;game.turns=0;game.player={x:1,y:1};game.ghost={x:9,y:7};game.words=new Map();
+ game.finished=false;
+ const targets=shuffle(WORD_BANKS[game.cluster]).slice(0,5);
+ const distractors=shuffle(Object.entries(WORD_BANKS).filter(([k])=>k!==game.cluster).flatMap(([k,words])=>words.slice(0,2))).slice(0,4);
+ const candidateSpots=MAZE_SPOTS.filter(([x,y])=>!(x===9&&y===7));
+ let badSpots=[],goodSpots=[];
+ for(let tries=0;tries<250;tries++){
+   const testBad=shuffle(candidateSpots).slice(0,4);
+   const blocked=new Set(testBad.map(p=>p.join(',')));
+   const reached=mazeAccessibleWithout(blocked);
+   const possible=shuffle(candidateSpots.filter(p=>!blocked.has(p.join(','))&&reached.has(p.join(','))));
+   if(possible.length>=5){badSpots=testBad;goodSpots=possible.slice(0,5);break;}
+ }
+ if(goodSpots.length!==5){
+  badSpots=[[9,2],[1,3],[3,5],[7,5]];
+  const blocked=new Set(badSpots.map(p=>p.join(',')));
+  const reached=mazeAccessibleWithout(blocked);
+  goodSpots=shuffle(candidateSpots.filter(p=>!blocked.has(p.join(','))&&reached.has(p.join(',')))).slice(0,5);
+ }
+ targets.forEach((w,i)=>game.words.set(goodSpots[i].join(','),{w,good:true}));
+ distractors.forEach((w,i)=>game.words.set(badSpots[i].join(','),{w,good:false}));
+ game.message='';game.feedbackType='';game.solved=false;game.score=0;
+}
+function setMazeMode(mode){
+ if(!['rolig','normal','turbo'].includes(mode)||active!=='maze')return;
+ game.mazeMode=mode;setupMaze();render();
+}
 function chooseCluster(value){game.cluster=value;setupMaze();render();}
-function renderMaze(){let cells='';for(let y=0;y<MAZE.length;y++)for(let x=0;x<MAZE[y].length;x++){const wall=MAZE[y][x]==='#';const w=game.words.get(x+','+y);const hero=game.player.x===x&&game.player.y===y;const ghost=game.ghost.x===x&&game.ghost.y===y;cells+=`<div class="cell ${wall?'wall':'floor'}" aria-label="${wall?'Væg':w?'Ord '+w.w:'Gang'}">${w?`<span class="maze-word">${esc(w.w)}</span>`:''}${hero?`<span class="pac" aria-label="Din figur"></span>`:''}${ghost?`<span class="ghost" aria-label="Spøgelse">👻</span>`:''}</div>`;}return `<div class="maze-intro"><div><div class="prompt-label">ORDLABYRINTEN</div><h2 class="prompt" style="margin-bottom:3px">Fang 5 ord med <b>${game.cluster}</b></h2><p class="instruction" style="margin-bottom:0">Brug piletasterne eller knapperne på skærmen. Fang kun ord, der begynder med de valgte bogstaver.</p></div><label for="cluster"><b>Vælg bogstaver: </b><select id="cluster" class="cluster-picker" onchange="chooseCluster(this.value)">${Object.keys(WORD_BANKS).map(s=>`<option value="${s}" ${s===game.cluster?'selected':''}>${s}</option>`).join('')}</select></label></div><div class="maze-zone"><div class="maze-board" role="img" aria-label="Ord-labyrint med veje, ord og en spiller. Brug piletaster eller knapper." id="maze-board">${cells}</div><aside class="maze-side"><div><strong>🟡 Din mission</strong><div class="goal">${game.caught} / 5 rigtige ord fundet</div><div class="hearts" aria-label="${game.lives} liv tilbage">${'❤️'.repeat(game.lives)}${'🤍'.repeat(3-game.lives)}</div><p>Du får et nyt forsøg, hvis du vælger et forkert ord. Spøgelset tager et liv, hvis det fanger dig.</p><div class="maze-log" role="status">${esc(game.message||'Find ordene med '+game.cluster+'. Held og lykke!')}</div></div><div><div class="dpad" aria-label="Styr din figur"><button aria-label="Op" onclick="moveMaze(0,-1)">↑</button><button aria-label="Venstre" onclick="moveMaze(-1,0)">←</button><button aria-label="Højre" onclick="moveMaze(1,0)">→</button><button aria-label="Ned" onclick="moveMaze(0,1)">↓</button></div>${withHelp?`<button class="assist" onclick="speak('Find fem ord, der begynder med ${game.cluster}.')">🔊 Hør din mission</button>`:''}</div></aside></div>`;}
-function moveMaze(dx,dy){if(active!=='maze'||game.finished)return;const nx=game.player.x+dx,ny=game.player.y+dy;if(!mazeWalkable(nx,ny))return;game.player={x:nx,y:ny};game.turns++;const here=game.words.get(nx+','+ny);if(here){if(here.good){game.words.delete(nx+','+ny);game.caught++;game.score++;game.message='Ja. "'+here.w+'" starter med '+game.cluster+'.';if(game.caught>=5){finish();return;}}else{game.message='"'+here.w+'" starter ikke med '+game.cluster+'. Find et andet ord.';}}
- if(game.turns%(withHelp?5:3)===0)moveGhost();if(game.ghost.x===game.player.x&&game.ghost.y===game.player.y){game.lives--;game.player={x:1,y:1};game.ghost={x:9,y:7};game.message='Hov, spøgelset fik dig! Du har '+game.lives+' liv tilbage.';if(game.lives<=0){game.finished=true;stats.maze={best:Math.max(stats.maze?.best||0,game.caught),last:game.caught,total:5,plays:(stats.maze?.plays||0)+1};save();}}
+function renderMaze(){let cells='';for(let y=0;y<MAZE.length;y++)for(let x=0;x<MAZE[y].length;x++){const wall=MAZE[y][x]==='#';const w=game.words.get(x+','+y);const hero=game.player.x===x&&game.player.y===y;const ghost=game.ghost.x===x&&game.ghost.y===y;cells+=`<div class="cell ${wall?'wall':'floor'}" aria-label="${wall?'Væg':w?'Ord '+w.w:'Gang'}">${w?`<span class="maze-word">${esc(w.w)}</span>`:''}${hero?`<span class="pac" aria-label="Din figur"></span>`:''}${ghost?`<span class="ghost" aria-label="Spøgelse">👻</span>`:''}</div>`;}return `<div class="maze-intro"><div><div class="prompt-label">ORDLABYRINTEN</div><h2 class="prompt" style="margin-bottom:3px">Fang 5 ord med <b>${game.cluster}</b></h2><p class="instruction" style="margin-bottom:0">Find fem ord, der begynder med de valgte bogstaver. Du kan komme hele vejen uden at ramme forkerte ord.</p></div><label for="cluster"><b>Vælg bogstaver: </b><select id="cluster" class="cluster-picker" onchange="chooseCluster(this.value)">${Object.keys(WORD_BANKS).map(s=>`<option value="${s}" ${s===game.cluster?'selected':''}>${s}</option>`).join('')}</select></label></div><div class="maze-levels" role="group" aria-label="Vælg spøgelsets fart"><strong>Spøgelsets fart:</strong><button type="button" aria-pressed="${game.mazeMode==='rolig'}" onclick="setMazeMode('rolig')">🌱 Rolig</button><button type="button" aria-pressed="${game.mazeMode==='normal'}" onclick="setMazeMode('normal')">⭐ Normal</button><button type="button" aria-pressed="${game.mazeMode==='turbo'}" onclick="setMazeMode('turbo')">🚀 Turbo</button></div><div class="maze-zone"><div class="maze-board" role="img" aria-label="Ord-labyrint med veje, ord og en spiller. Brug piletaster eller knapper." id="maze-board">${cells}</div><aside class="maze-side"><div><strong>🟡 Din mission</strong><div class="goal">${game.caught} / 5 rigtige ord fundet</div><div class="hearts" aria-label="${game.lives} liv tilbage">${'❤️'.repeat(game.lives)}${'🤍'.repeat(3-game.lives)}</div><p>Et forkert ord stopper dig ikke og koster ikke liv. Kun spøgelset kan tage et liv.</p><div class="maze-log" role="status">${esc(game.message||'Find ordene med '+game.cluster+'. Held og lykke!')}</div></div><div><div class="dpad" aria-label="Styr din figur"><button aria-label="Op" onclick="moveMaze(0,-1)">↑</button><button aria-label="Venstre" onclick="moveMaze(-1,0)">←</button><button aria-label="Højre" onclick="moveMaze(1,0)">→</button><button aria-label="Ned" onclick="moveMaze(0,1)">↓</button></div>${withHelp?`<button class="assist" onclick="speak('Find fem ord, der begynder med ${game.cluster}.')">🔊 Hør din mission</button>`:''}</div></aside></div>`;}
+function moveMaze(dx,dy){if(active!=='maze'||game.finished)return;const nx=game.player.x+dx,ny=game.player.y+dy;if(!mazeWalkable(nx,ny))return;game.player={x:nx,y:ny};game.turns++;const here=game.words.get(nx+','+ny);if(here){game.words.delete(nx+','+ny);if(here.good){game.caught++;game.score++;game.message='Ja. "'+here.w+'" starter med '+game.cluster+'.';if(game.caught>=5){finish();return;}}else{game.message='"'+here.w+'" begynder ikke med '+game.cluster+'. Du mister ikke liv. Gå bare videre.';}}
+ const pace=game.mazeMode==='turbo'?2:game.mazeMode==='normal'?4:6;if(game.turns%(pace+(withHelp?1:0))===0)moveGhost();if(game.ghost.x===game.player.x&&game.ghost.y===game.player.y){game.lives--;game.player={x:1,y:1};game.ghost={x:9,y:7};game.message='Hov, spøgelset fik dig! Du har '+game.lives+' liv tilbage.';if(game.lives<=0){game.finished=true;stats.maze={best:Math.max(stats.maze?.best||0,game.caught),last:game.caught,total:5,plays:(stats.maze?.plays||0)+1};save();}}
  render();}
-function moveGhost(){const {x,y}=game.ghost;const dirs=[[1,0],[-1,0],[0,1],[0,-1]];const possible=dirs.map(([dx,dy])=>({x:x+dx,y:y+dy})).filter(p=>mazeWalkable(p.x,p.y));if(!possible.length)return;const chasing=Math.random()<(withHelp?.18:.38);const chosen=chasing?[...possible].sort((a,b)=>(Math.abs(a.x-game.player.x)+Math.abs(a.y-game.player.y))-(Math.abs(b.x-game.player.x)+Math.abs(b.y-game.player.y)))[0]:shuffle(possible)[0];game.ghost=chosen;}
+function moveGhost(){const {x,y}=game.ghost;const dirs=[[1,0],[-1,0],[0,1],[0,-1]];const possible=dirs.map(([dx,dy])=>({x:x+dx,y:y+dy})).filter(p=>mazeWalkable(p.x,p.y));if(!possible.length)return;const chasing=Math.random()<Math.max(.05,(game.mazeMode==='turbo'?.46:game.mazeMode==='normal'?.27:.10)-(withHelp?.07:0));const chosen=chasing?[...possible].sort((a,b)=>(Math.abs(a.x-game.player.x)+Math.abs(a.y-game.player.y))-(Math.abs(b.x-game.player.x)+Math.abs(b.y-game.player.y)))[0]:shuffle(possible)[0];game.ghost=chosen;}
 function attachDrags(){const drop=document.querySelector('[data-drop]');if(drop){drop.addEventListener('dragover',e=>{e.preventDefault();drop.classList.add('drag-over');});drop.addEventListener('dragleave',()=>drop.classList.remove('drag-over'));drop.addEventListener('drop',e=>{e.preventDefault();drop.classList.remove('drag-over');const value=e.dataTransfer.getData('text/plain');if(active==='onset')answerOnset(value);if(active==='blend'&&value!=='')pickBlend(Number(value));});document.querySelectorAll('[data-piece]').forEach(el=>el.addEventListener('dragstart',e=>{e.dataTransfer.setData('text/plain',el.dataset.piece);e.dataTransfer.effectAllowed='move';}));}
  const list=document.getElementById('order-list');if(list){let origin=null;list.querySelectorAll('[data-order-index]').forEach(el=>{el.addEventListener('dragstart',e=>{origin=Number(el.dataset.orderIndex);e.dataTransfer.setData('text/plain',String(origin));});el.addEventListener('dragover',e=>{e.preventDefault();el.classList.add('drag-over');});el.addEventListener('dragleave',()=>el.classList.remove('drag-over'));el.addEventListener('drop',e=>{e.preventDefault();el.classList.remove('drag-over');const from=Number(e.dataTransfer.getData('text/plain'));const to=Number(el.dataset.orderIndex);if(!Number.isInteger(from)||from<0||from>=game.order.length||from===to)return;const [item]=game.order.splice(from,1);game.order.splice(to,0,item);game.message='';render();});});}
 }
