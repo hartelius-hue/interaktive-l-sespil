@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <script>if(new URLSearchParams(location.search).get('sites')==='1')document.documentElement.classList.add('sites-embed');</script>
   <meta name="theme-color" content="#19274a">
-  <meta name="description" content="33 interaktive læse- og stavespil for 3.C: præcis afkodning, konsonantforbindelser, dobbeltkonsonanter, stavelser, inferens og læseforståelse.">
+  <meta name="description" content="35 interaktive læse- og stavespil for 3.C: præcis afkodning, konsonantforbindelser, dobbeltkonsonanter, stavelser, inferens og læseforståelse.">
   <title>Læseværkstedet · 3.C</title>
   <style>
     :root{--navy:#19274a;--deep:#111d3b;--ink:#1c2b49;--muted:#52627c;--cream:#fffaf1;--paper:#fff;--line:#e4e8ef;--teal:#0d8b82;--mint:#d4f4e8;--coral:#f36d54;--peach:#ffe3d5;--gold:#ffc64f;--blue:#e3edff;--lav:#ede6ff;--shadow:0 14px 40px rgba(26,38,70,.08);--radius:24px}
@@ -90,15 +90,68 @@
       .sites-embed .shell{width:calc(100% - 18px)}
       .sites-embed .top-actions{width:100%;justify-content:flex-start}
     }
-  </style>
+  
+/* Læseunivers: original, letvægts animeret bog og detektivscene */
+body{background:radial-gradient(ellipse at 12% 0%,#f4ecff,transparent 27%),radial-gradient(ellipse at 100% 20%,#e8f7f5,transparent 34%),#fffaf1}
+.hero.reading-hero{grid-template-columns:minmax(0,1.12fr) minmax(260px,.88fr);gap:20px;min-height:405px;padding:38px 42px;background:linear-gradient(125deg,#121f42,#273c70 58%,#32617b);border:2px solid #26345f;box-shadow:0 10px 0 #dce6f3,0 25px 50px #15274a18;color:white;isolation:isolate}
+.reading-hero::before{content:"";position:absolute;inset:0;z-index:-1;background:radial-gradient(ellipse at 76% 46%,#b2a1ff42,transparent 37%)}
+.reading-hero .eyebrow{background:#ffffff19;border:1px solid #ffffff40;color:#e6f2ff;font-size:12px;letter-spacing:.09em;padding:8px 13px}
+.reading-hero h1{font-size:clamp(41px,5.15vw,65px);line-height:1.03;letter-spacing:-.055em;margin:16px 0 19px;color:#fff}
+.reading-hero h1 span{color:#ffdf85}
+.reading-hero p{font-size:clamp(17px,1.8vw,20px);line-height:1.53;color:#dfecff;max-width:540px;margin:0 0 17px}
+.reading-chipline,.reading-actions,.detective-actions{display:flex;gap:9px;align-items:center;flex-wrap:wrap}
+.reading-chipline{margin:19px 0 21px}.reading-chipline span{color:#f8fbff;background:#ffffff19;border:1px solid #ffffff30;font-size:12px;font-weight:850;padding:7px 11px;border-radius:90px}
+.reading-hero .hero-cta{background:#ffcb66;color:#1b3351;box-shadow:0 5px 0 #bd903f;font-size:15px}
+.reading-alt{display:inline-flex;align-items:center;min-height:48px;border:1px solid #ffffff8a;border-radius:15px;color:white;text-decoration:none;font-size:14px;font-weight:850;padding:11px 14px}
+.reading-alt:hover{background:#ffffff22}
+.reading-art{min-height:325px;perspective:760px}
+.reading-halo{position:absolute;width:300px;height:300px;background:radial-gradient(circle,#b2b6ff70,transparent 70%);border-radius:50%;animation:read-pulse 6s ease-in-out infinite}
+.reading-book{position:relative;width:272px;height:177px;transform:rotate(-8deg) rotateX(6deg);filter:drop-shadow(0 23px 15px #08173370);animation:read-float 5s ease-in-out infinite}
+.reading-book::before{content:"";position:absolute;inset:4px -7px -8px;background:#cb844f;border:8px solid #dba963;border-radius:14px}
+.reading-page{position:absolute;top:1px;height:168px;width:49%;border:2px solid #e9d4b6;border-radius:8px;background:#fff9ec;overflow:hidden}
+.reading-page.left{left:0;background:linear-gradient(100deg,#efddc0,#fff9eb)}
+.reading-page.right{right:0;background:linear-gradient(90deg,#fff8dc,#fffdf5)}
+.reading-page.flip{left:50%;z-index:2;transform-origin:0 50%;backface-visibility:visible;animation:read-flip 7.4s ease-in-out infinite}
+.reading-page i{display:block;margin:39px auto 0;width:69%;height:56px;background:repeating-linear-gradient(to bottom,#d8c7aa 0 2px,transparent 2px 10px);opacity:.77}
+.reading-page b{position:absolute;bottom:13px;right:18px;font-size:30px;color:#e7b858}
+.reading-spine{position:absolute;left:49.5%;top:0;width:7px;height:172px;z-index:3;border-radius:7px;background:#bb9876;box-shadow:1px 0 4px #69452f52}
+.reading-letter{position:absolute;display:grid;place-items:center;width:55px;height:55px;background:#fff0c5;border-radius:16px;color:#223653;font-size:26px;font-weight:950;box-shadow:0 7px 0 #c49451,0 13px 20px #0c1a3e5a;animation:read-drift 5s ease-in-out infinite}
+.reading-letter.a{left:2%;top:7%;animation-delay:-2s;rotate:-12deg}.reading-letter.b{right:2%;top:3%;background:#d3f9ef;box-shadow:0 7px 0 #82bcae;animation-delay:-1s;rotate:11deg}.reading-letter.c{right:9%;bottom:8%;background:#ecd9ff;box-shadow:0 7px 0 #ae90cf;animation-delay:-3s}
+.reading-spark{position:absolute;left:10%;bottom:18%;font-size:36px;color:#ffd96d;animation:read-twinkle 2.9s infinite}
+.reading-sticker{position:absolute;left:0;bottom:0;color:#1e345c;font-weight:950;font-size:11px;letter-spacing:.02em;background:#fff;border-radius:12px;padding:10px;rotate:-6deg;box-shadow:0 6px 0 #d5e5ff}
+@keyframes read-flip{0%,13%,80%,100%{transform:rotateY(0deg)}40%,61%{transform:rotateY(-158deg)}}
+@keyframes read-float{0%,100%{transform:rotate(-8deg) translateY(0)}50%{transform:rotate(-6deg) translateY(-10px)}}
+@keyframes read-pulse{0%,100%{scale:.91;opacity:.8}50%{scale:1.1;opacity:1}}
+@keyframes read-drift{0%,100%{translate:0 0}50%{translate:0 -11px}}
+@keyframes read-twinkle{0%,100%{opacity:.5;scale:.8}50%{opacity:1;scale:1.18}}
+.reading-feature{display:grid;grid-template-columns:195px minmax(0,1fr);align-items:center;gap:19px;margin:29px 0 22px;padding:24px 26px;border:2px solid #eddbb6;border-radius:26px;background:linear-gradient(115deg,#fff3d9,#fffaf1 64%,#f2eefc);box-shadow:0 6px 0 #f3e6cf}
+.detective-visual{position:relative;min-height:162px;isolation:isolate}
+.detective-paper{position:absolute;display:grid;place-items:center;width:108px;height:133px;border-radius:11px;border:2px solid #c5d6e9;background:#fff;box-shadow:0 8px 0 #c9d9e8;font-size:28px;font-weight:950;color:#708aaa;left:26px;top:12px;rotate:-10deg;animation:read-paper 5s ease-in-out infinite}
+.detective-paper.p2{left:70px;top:8px;background:#e4faf4;border-color:#b6ded3;box-shadow:0 8px 0 #a9d6c8;rotate:8deg;animation-delay:-2s}
+.detective-glass{position:absolute;top:29px;left:69px;width:90px;height:90px;border:10px solid #214d69;border-radius:50%;background:#bcf3e954;box-shadow:inset 0 0 0 3px #defff9;z-index:2;animation:read-search 5.5s ease-in-out infinite}
+.detective-glass::after{content:"";position:absolute;left:60px;top:57px;width:68px;height:17px;background:#214d69;border-radius:10px;transform:rotate(46deg);transform-origin:13px center}
+.detective-star{position:absolute;left:2px;top:4px;font-size:32px;color:#dda32f;animation:read-twinkle 2.7s infinite}
+@keyframes read-search{0%,100%{transform:translate(0,0) rotate(-10deg)}50%{transform:translate(10px,12px) rotate(5deg)}}
+@keyframes read-paper{0%,100%{translate:0 0}50%{translate:0 -6px}}
+.detective-label{font-size:12px;color:#825c2a;font-weight:950;letter-spacing:.09em}
+.detective-content h2{margin:8px 0 8px;font-size:clamp(25px,3.2vw,34px);line-height:1.17;letter-spacing:-.03em}
+.detective-content p{margin:0 0 17px;color:#51637c;font-size:16px;line-height:1.55}
+.detective-actions a{display:inline-flex;align-items:center;padding:11px 16px;border-radius:13px;background:#263c63;text-decoration:none;color:white;font-weight:900;font-size:14px;min-height:44px}
+.detective-actions a:nth-child(2){background:#0a8376}.detective-actions a.allgames{background:transparent;color:#304966;text-decoration:underline;text-underline-offset:3px;padding-left:4px;padding-right:4px}
+.game-card{box-shadow:0 5px 0 #e9edf3,0 11px 25px #243b5d10}.game-card:hover{transform:translateY(-4px) rotate(-.2deg)}
+@media(max-width:950px){.hero.reading-hero{grid-template-columns:1fr .55fr;padding:28px}.reading-book{scale:.78}.reading-feature{grid-template-columns:150px 1fr}.detective-visual{scale:.8;transform-origin:center left}}
+@media(max-width:670px){.hero.reading-hero{grid-template-columns:1fr;padding:25px 22px;gap:0}.reading-hero h1{font-size:clamp(37px,8.9vw,48px)}.reading-hero p{font-size:17px}.reading-hero .hero-art{display:grid;min-height:235px;max-height:235px;overflow:hidden}.reading-book{scale:.69}.reading-halo{width:210px;height:210px}.reading-sticker{display:none}.reading-letter{scale:.75}.reading-feature{grid-template-columns:1fr;gap:0;padding:22px}.detective-visual{min-height:112px;scale:.65;transform-origin:top left}.detective-content{margin-top:-38px}}
+@media(prefers-reduced-motion:reduce){.reading-book,.reading-page.flip,.reading-letter,.reading-halo,.reading-spark,.detective-paper,.detective-glass,.detective-star{animation:none!important}}
+
+</style>
 </head>
 <body>
   <header class="topbar"><div class="shell toprow">
     <button type="button" class="brand" onclick="goHome()" aria-label="Til forsiden"><span class="brand-mark">3.C</span><span><span class="brand-name">Læseværkstedet</span><span class="brand-sub">Små spil. Store læseskridt.</span></span></button>
-    <div class="top-actions"><a class="topbtn" style="background:#a94e36;border-color:#ee977d" href="st3-traening.html">✨ 18 nye læsespil</a><a class="topbtn open-full-site" href="./" target="_blank" rel="noopener noreferrer" aria-label="Åbn læseværkstedet i en ny fane">↗ Større visning</a><button class="topbtn" id="modeButton" onclick="toggleHelp()" type="button" aria-pressed="true">🧩 Hjælp: til</button><button class="topbtn" type="button" onclick="showTeacher()">👩‍🏫 Til læreren</button></div>
+    <div class="top-actions"><a class="topbtn" style="background:#a94e36;border-color:#ee977d" href="st3-traening.html">✨ 20 nye læsespil</a><a class="topbtn open-full-site" href="./" target="_blank" rel="noopener noreferrer" aria-label="Åbn læseværkstedet i en ny fane">↗ Større visning</a><button class="topbtn" id="modeButton" onclick="toggleHelp()" type="button" aria-pressed="true">🧩 Hjælp: til</button><button class="topbtn" type="button" onclick="showTeacher()">👩‍🏫 Til læreren</button></div>
   </div></header>
   <div id="app" class="shell" aria-live="off"></div>
-  <footer class="foot"><div class="shell foot-inner"><span>Udviklet til læsetræning i 3.C · 33 spil i to værksteder · Ingen login</span><span>Elevernes øveresultater gemmes kun på denne enhed.</span></div></footer>
+  <footer class="foot"><div class="shell foot-inner"><span>Udviklet til læsetræning i 3.C · 35 spil i to værksteder · Ingen login</span><span>Elevernes øveresultater gemmes kun på denne enhed.</span></div></footer>
   <div id="modalRoot"></div>
   <div class="sr-only" id="announcer" role="status" aria-live="polite"></div>
 <script>
@@ -368,9 +421,25 @@ function renderHome(){
  const done=Object.keys(stats).filter(id=>CONFIG.some(c=>c.id===id)).length;
  const shown=CONFIG.filter(c=>homeCategory==='all'||c.group===homeCategory);
  const filterOptions=[['all','Alle spil'],['decode','Afkodning'],['comprehension','Læseforståelse']];
- return `<main><section class="hero"><div><span class="eyebrow">✨ Velkommen, 3.C</span><h1>Bliv en stærkere læser.<br>Én mission ad gangen.</h1><p>15 læsespil her – og 18 ekstra træningsspil. Prøv igen, lyt, leg og lær i dit eget tempo.</p><button class="hero-cta" onclick="document.getElementById('games').scrollIntoView({behavior:'smooth'})">Vælg dit første spil <span aria-hidden="true">→</span></button></div><div class="hero-art" aria-hidden="true"><div class="art-circle"></div><div class="book-illustration">📖</div><div class="art-star a">⭐</div><div class="art-star b">🧩</div><div class="art-sticker">DU KAN GODT!</div></div></section>
- <section class="st3-feature" aria-label="Nye træningsspil" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:20px;background:#fff;border:2px solid #f0dca4;border-radius:24px;padding:24px 27px;margin-top:23px;box-shadow:0 5px 0 #f3e8ce"><div style="max-width:650px"><span class="eyebrow" style="background:#fff1bd">✨ NYT · 18 EKSTRA TRÆNINGSSPIL</span><h2 style="font-size:clamp(24px,3vw,33px);margin:12px 0 8px;letter-spacing:-.03em">Stavehelte & tekst-detektiver</h2><p style="color:#52627c;font-size:16px;margin:0">Træn lyd-diktat, stavning, læseflyd og forståelse på tre niveauer. To nye spil, Ordglimt og Læs med flyd, styrker præcis ordgenkendelse og gentagen læsning. I alt 33 spil.</p></div><div style="display:flex;flex-wrap:wrap;gap:10px;align-items:center"><a class="hero-cta" style="text-decoration:none;display:inline-flex" href="st3-traening.html">Åbn de nye spil →</a><a href="st3-traening.html?spil=ordglimt" style="display:inline-flex;align-items:center;min-height:44px;padding:10px 14px;background:#fff3d5;color:#273c60;text-decoration:none;border:1px solid #e8d4a6;border-radius:13px;font-weight:850">⚡ Prøv Ordglimt</a><a href="st3-traening.html?spil=flydelaesning" style="display:inline-flex;align-items:center;min-height:44px;padding:10px 14px;background:#e8f4ef;color:#1e5148;text-decoration:none;border:1px solid #b8d9cb;border-radius:13px;font-weight:850">📖 Prøv Læs med flyd</a><a href="st3-traening.html#reading-tips" style="display:inline-flex;align-items:center;min-height:44px;padding:10px 14px;font-weight:850;color:#273c60;text-decoration:underline;text-underline-offset:3px">💛 Gode råd fra læsevejlederne</a></div></section>
- <section id="games"><div class="section-head"><div><h2>Vælg en læsemission</h2><p>Du kan vælge mellem ordspil og læseforståelsesspil.</p></div><span class="statline">🏅 ${done} af ${CONFIG.length} missioner prøvet</span></div><div class="filter-bar" role="group" aria-label="Vælg type af spil">${filterOptions.map(([k,label])=>`<button class="filter-button ${homeCategory===k?'active':''}" type="button" aria-pressed="${homeCategory===k}" onclick="setCategory('${k}')">${label}<span class="filter-count">${k==='all'?CONFIG.length:CONFIG.filter(c=>c.group===k).length}</span></button>`).join('')}</div><div class="games-grid">${shown.map(c=>`<article class="game-card"><div class="icon-bubble" style="background:${c.color}" aria-hidden="true">${c.icon}</div><span class="tag ${c.group}" style="align-self:start">${esc(c.type)}</span><h3>${esc(c.name)}</h3><p>${esc(c.intro)}</p><div class="game-bottom"><span class="micro">${stats[c.id]?`⭐ Bedst: ${stats[c.id].best}/${stats[c.id].total}`:esc(c.duration)}</span><button class="start-card" type="button" onclick="newGame('${c.id}')">Spil nu →</button></div></article>`).join('')}</div></section><aside class="info-strip"><span class="round" aria-hidden="true">💛</span><p><b>Du bestemmer tempoet.</b> Lyt med hjælp-knappen, prøv igen, og spil missionen flere gange. Der er ingen tidsgrænse. Læreren kan se forslag til, hvilke spil du kan begynde med.</p></aside></main>`;
+ return `<main><section class="hero reading-hero"><div class="reading-copy">
+ <span class="eyebrow">✦ 3.C · DIT LÆSEUNIVERS</span>
+ <h1>Åbn en bog.<br><span>Start et eventyr.</span></h1>
+ <p>35 missioner med ord, fortællinger og mysterier. Vælg en opgave, vær nysgerrig, og bliv mere sikker for hver gang.</p>
+ <div class="reading-chipline"><span>📚 35 missioner</span><span>🔎 Løs mysterier</span><span>⭐ Prøv igen</span></div>
+ <div class="reading-actions"><button class="hero-cta" onclick="document.getElementById('games').scrollIntoView({behavior:'smooth'})">Vælg en læsemission →</button><a class="reading-alt" href="st3-traening.html?spil=tekstkilder">Prøv et tekstmysterie ↗</a></div>
+ </div><div class="hero-art reading-art" aria-hidden="true">
+ <div class="reading-halo"></div><div class="reading-book">
+ <span class="reading-page left"><i></i><b>✦</b></span><span class="reading-page right"><i></i><b>★</b></span><span class="reading-page flip"><i></i><b>?</b></span><span class="reading-spine"></span>
+ </div><span class="reading-letter a">A</span><span class="reading-letter b">B</span><span class="reading-letter c">?</span><span class="reading-spark">✦</span>
+ <span class="reading-sticker">DU ER HISTORIENS HELT!</span></div></section>
+ <section class="st3-feature reading-feature" aria-label="Nye spil med tekstforståelse">
+ <div class="detective-visual" aria-hidden="true"><span class="detective-paper p1">ABC</span><span class="detective-paper p2">?</span><span class="detective-glass"></span><span class="detective-star">✦</span></div>
+ <div class="detective-content"><span class="detective-label">NYT · TEKSTMYSTERIER</span>
+ <h2>Kan du løse mysteriet i teksten?</h2>
+ <p>Læs små beskeder, find spor, og sammenhold oplysninger. I to helt nye spil bliver du tekstens detektiv.</p>
+ <div class="detective-actions"><a href="st3-traening.html?spil=tekstkilder">🗝️ To tekster, én løsning</a><a href="st3-traening.html?spil=teksttjek">🔎 Teksttjekkerne</a><a class="allgames" href="st3-traening.html">Alle 20 træningsspil</a></div>
+ </div></section>
+ <section id="games"><div class="section-head"><div><h2>Din næste læsemission venter</h2><p>Vælg et ordspil, eller gå på opdagelse i en historie.</p></div><span class="statline">🏅 ${done} af ${CONFIG.length} missioner prøvet</span></div><div class="filter-bar" role="group" aria-label="Vælg type af spil">${filterOptions.map(([k,label])=>`<button class="filter-button ${homeCategory===k?'active':''}" type="button" aria-pressed="${homeCategory===k}" onclick="setCategory('${k}')">${label}<span class="filter-count">${k==='all'?CONFIG.length:CONFIG.filter(c=>c.group===k).length}</span></button>`).join('')}</div><div class="games-grid">${shown.map(c=>`<article class="game-card"><div class="icon-bubble" style="background:${c.color}" aria-hidden="true">${c.icon}</div><span class="tag ${c.group}" style="align-self:start">${esc(c.type)}</span><h3>${esc(c.name)}</h3><p>${esc(c.intro)}</p><div class="game-bottom"><span class="micro">${stats[c.id]?`⭐ Bedst: ${stats[c.id].best}/${stats[c.id].total}`:esc(c.duration)}</span><button class="start-card" type="button" onclick="newGame('${c.id}')">Spil nu →</button></div></article>`).join('')}</div></section><aside class="info-strip"><span class="round" aria-hidden="true">💛</span><p><b>Du bestemmer tempoet.</b> Lyt med hjælp-knappen, prøv igen, og spil missionen flere gange. Der er ingen tidsgrænse. Læreren kan se forslag til, hvilke spil du kan begynde med.</p></aside></main>`;
 }
 function renderGame(){const cfg=CONFIG.find(c=>c.id===active);const total=countTotal();const current=active==='maze'?game.caught:game.index;return `<main><div class="play-top"><button class="back" onclick="goHome()">← Alle spil</button><div class="meter"><span>⭐ ${game.score} sikre svar</span>${active==='maze'?`<span>❤️ ${game.lives} liv</span>`:''}</div></div><section class="play-head"><div><div class="prompt-label" style="color:#cfddff">DIN LÆSEMISSION</div><h1>${cfg.icon} ${esc(cfg.name)}</h1><p>${esc(cfg.intro)}</p></div><div class="play-meta">${active==='maze'?`Fanget ${game.caught} af 5`:`Opgave ${game.index+1} af ${total}`}</div></section><div class="progress-track" role="progressbar" aria-label="Fremgang" aria-valuemin="0" aria-valuemax="${total}" aria-valuenow="${current}"><div class="progress-fill" style="width:${Math.round(current/total*100)}%"></div></div><section class="play-panel">${({maze:renderMaze,onset:renderOnset,blend:renderBlend,picture:renderPicture,caption:renderCaption,story:renderStory,order:renderOrder,double:renderDouble,syllable:renderSyllable,sort:renderSort,sentence:renderSentence,infer:renderScenario,noise:renderScenario,vocab:renderScenario,compass:renderCompass})[active]()}</section></main>`;}
 function feedbackHTML(){return game.message?`<div class="feedback ${game.feedbackType}" role="status"><span aria-hidden="true">${game.solved?'🌟':'💡'}</span><span>${esc(game.message)}</span></div>`:'';}
