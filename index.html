@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="laesemakker.css">
   <script>if(new URLSearchParams(location.search).get('sites')==='1')document.documentElement.classList.add('sites-embed');</script>
   <meta name="theme-color" content="#19274a">
   <meta name="description" content="35 interaktive læse- og stavespil for 3.C: præcis afkodning, konsonantforbindelser, dobbeltkonsonanter, stavelser, inferens og læseforståelse.">
@@ -143,6 +144,7 @@ body{background:radial-gradient(ellipse at 12% 0%,#f4ecff,transparent 27%),radia
 @media(max-width:670px){.hero.reading-hero{grid-template-columns:1fr;padding:25px 22px;gap:0}.reading-hero h1{font-size:clamp(37px,8.9vw,48px)}.reading-hero p{font-size:17px}.reading-hero .hero-art{display:grid;min-height:235px;max-height:235px;overflow:hidden}.reading-book{scale:.69}.reading-halo{width:210px;height:210px}.reading-sticker{display:none}.reading-letter{scale:.75}.reading-feature{grid-template-columns:1fr;gap:0;padding:22px}.detective-visual{min-height:112px;scale:.65;transform-origin:top left}.detective-content{margin-top:-38px}}
 @media(prefers-reduced-motion:reduce){.reading-book,.reading-page.flip,.reading-letter,.reading-halo,.reading-spark,.detective-paper,.detective-glass,.detective-star{animation:none!important}}
 
+.reading-start-second{display:inline-flex;align-items:center;min-height:46px;padding:11px 14px;background:#ffffff14;color:#fff;border:1px solid #ffffff80;border-radius:14px;font-size:14px;font-weight:850;box-shadow:none}.reading-start-second:hover{background:#ffffff28}.reading-actions>.hero-cta{text-align:center}
 </style>
 </head>
 <body>
@@ -393,8 +395,9 @@ function announce(message){document.getElementById('announcer').textContent='';r
 function speak(message){if(!('speechSynthesis' in window)){announce('Oplæsning er ikke tilgængelig i denne browser.');return;}try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(message);u.lang='da-DK';u.rate=.77;u.pitch=1;const voices=speechSynthesis.getVoices();const danish=voices.find(v=>/^da([-_]|$)/i.test(v.lang));if(danish)u.voice=danish;speechSynthesis.speak(u);}catch(e){announce('Oplæsning virker ikke på denne enhed.');}}
 function toggleHelp(){withHelp=!withHelp;save();updateTop();render();announce(withHelp?'Læsehjælp er slået til.':'Læsehjælp er slået fra.');}
 function updateTop(){const btn=document.getElementById('modeButton');btn.textContent=withHelp?'🧩 Hjælp: til':'🧩 Hjælp: fra';btn.setAttribute('aria-pressed',String(withHelp));}
-function goHome(){if('speechSynthesis' in window)speechSynthesis.cancel();active=null;game=null;render();window.scrollTo({top:0,behavior:'instant'});}
+function goHome(){if('speechSynthesis' in window)speechSynthesis.cancel();window.Laesemakker?.setContext('home');active=null;game=null;render();window.scrollTo({top:0,behavior:'instant'});}
 function newGame(id){
+ window.Laesemakker?.setContext(id);
  if('speechSynthesis' in window)speechSynthesis.cancel();
  active=id;game={id,index:0,score:0,attempted:false,solved:false,message:'',feedbackType:'',finished:false};
  if(id==='maze'){game.cluster='sk';setupMaze();}
@@ -426,7 +429,7 @@ function renderHome(){
  <h1>Åbn en bog.<br><span>Start et eventyr.</span></h1>
  <p>35 missioner med ord, fortællinger og mysterier. Vælg en opgave, vær nysgerrig, og bliv mere sikker for hver gang.</p>
  <div class="reading-chipline"><span>📚 35 missioner</span><span>🔎 Løs mysterier</span><span>⭐ Prøv igen</span></div>
- <div class="reading-actions"><button class="hero-cta" onclick="document.getElementById('games').scrollIntoView({behavior:'smooth'})">Vælg en læsemission →</button><a class="reading-alt" href="st3-traening.html?spil=tekstkilder">Prøv et tekstmysterie ↗</a></div>
+ <div class="reading-actions"><a class="hero-cta" style="text-decoration:none" href="starttest.html">🧭 Start her · Find dine spil</a><button class="reading-start-second" onclick="document.getElementById('games').scrollIntoView({behavior:'smooth'})">Vælg selv en mission ↓</button><a class="reading-alt" href="st3-traening.html?spil=tekstkilder">Prøv et tekstmysterie ↗</a></div>
  </div><div class="hero-art reading-art" aria-hidden="true">
  <div class="reading-halo"></div><div class="reading-book">
  <span class="reading-page left"><i></i><b>✦</b></span><span class="reading-page right"><i></i><b>★</b></span><span class="reading-page flip"><i></i><b>?</b></span><span class="reading-spine"></span>
@@ -516,5 +519,6 @@ function closeTeacher(e){if(e&&e.target!==e.currentTarget)return;document.getEle
 function clearStats(){stats={};save();closeTeacher();render();announce('Lokale øveresultater er ryddet.');}
 render();
 </script>
+<script src="laesemakker.js" defer></script>
 </body>
 </html>
