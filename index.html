@@ -160,6 +160,9 @@ body{background:radial-gradient(ellipse at 12% 0%,#f4ecff,transparent 27%),radia
 .maze-levels button[aria-pressed="true"]{background:#1d466c;color:#fff;border-color:#1d466c}
 .maze-levels button:focus-visible{outline:3px solid #deaf4f;outline-offset:2px}
 @media(max-width:650px){.play-head p{font-size:17px}.instruction{font-size:17px}.maze-levels strong{width:100%}}
+
+.explain-why{display:inline-flex;align-items:center;gap:5px;background:#fff7e8;border:2px solid #dcb978;color:#62471f;font-size:16px;font-weight:850;border-radius:12px;padding:10px 14px;margin-top:10px;min-height:44px}
+.explain-why:hover{background:#ffedcd}.explain-why:focus-visible{outline:3px solid #dfaa43;outline-offset:2px}
 </style>
 </head>
 <body>
@@ -574,10 +577,10 @@ function newGame(id){
 function finish(){game.finished=true;const max=countTotal();stats[active]={best:Math.max(stats[active]?.best||0,game.score),last:game.score,total:max,plays:(stats[active]?.plays||0)+1};save();render();announce('Spillet er færdigt. Du fik '+game.score+' ud af '+max+' rigtige i første forsøg.');}
 function countTotal(){if(active==='maze')return 5;if(active==='story')return 12;if(active==='order')return ORDERS.length;return game.items.length;}
 function feedback(message,type){game.message=message;game.feedbackType=type||'try';announce(message);render();}
-function finishOrNext(){if(!game.solved)return;game.index++;game.solved=false;game.attempted=false;game.message='';game.feedbackType='';if(game.index>=countTotal()){finish();return;}if(active==='blend')setupBlend();if(active==='order')setupOrder();if(active==='syllable')setupSyllable();if(active==='sentence')setupSentence();render();}
+function finishOrNext(){if(!game.solved)return;game.index++;game.solved=false;game.attempted=false;game.message='';game.feedbackType='';game.whyShown=false;if(game.index>=countTotal()){finish();return;}if(active==='blend')setupBlend();if(active==='order')setupOrder();if(active==='syllable')setupSyllable();if(active==='sentence')setupSentence();render();}
 function correct(message){if(!game.attempted)game.score++;game.solved=true;feedback(message||'Ja, det er rigtigt.','good');}
 function wrong(message){
- game.attempted=true;
+ game.attempted=true;game.whyShown=false;
  let tip='';
  if(active==='story')tip=STORIES[Math.floor(game.index/4)].qs[game.index%4].hint||'';
  if(['infer','noise','vocab'].includes(active))tip=game.items[game.index].hint||'';
@@ -611,7 +614,31 @@ function renderHome(){
  <section id="games"><div class="section-head"><div><h2>Din næste læsemission venter</h2><p>Vælg et ordspil, eller gå på opdagelse i en historie.</p></div><span class="statline">🏅 ${done} af ${CONFIG.length} missioner prøvet</span></div><div class="filter-bar" role="group" aria-label="Vælg type af spil">${filterOptions.map(([k,label])=>`<button class="filter-button ${homeCategory===k?'active':''}" type="button" aria-pressed="${homeCategory===k}" onclick="setCategory('${k}')">${label}<span class="filter-count">${k==='all'?CONFIG.length:CONFIG.filter(c=>c.group===k).length}</span></button>`).join('')}</div><div class="games-grid">${shown.map(c=>`<article class="game-card"><div class="icon-bubble" style="background:${c.color}" aria-hidden="true">${c.icon}</div><span class="tag ${c.group}" style="align-self:start">${esc(c.type)}</span><h3>${esc(c.name)}</h3><p>${esc(c.intro)}</p><div class="game-bottom"><span class="micro">${stats[c.id]?`⭐ Bedst: ${stats[c.id].best}/${stats[c.id].total}`:esc(c.duration)}</span><button class="start-card" type="button" onclick="newGame('${c.id}')">Spil nu →</button></div></article>`).join('')}</div></section><aside class="info-strip"><span class="round" aria-hidden="true">💛</span><p><b>Du bestemmer tempoet.</b> Lyt med hjælp-knappen, prøv igen, og spil missionen flere gange. Der er ingen tidsgrænse. Læreren kan se forslag til, hvilke spil du kan begynde med.</p></aside></main>`;
 }
 function renderGame(){const cfg=CONFIG.find(c=>c.id===active);const total=countTotal();const current=active==='maze'?game.caught:game.index;return `<main><div class="play-top"><button class="back" onclick="goHome()">← Alle spil</button><div class="meter"><span>⭐ ${game.score} sikre svar</span>${active==='maze'?`<span>❤️ ${game.lives} liv</span>`:''}</div></div><section class="play-head"><div><div class="prompt-label" style="color:#cfddff">DIN LÆSEMISSION</div><h1>${cfg.icon} ${esc(cfg.name)}</h1><p>${esc(cfg.intro)}</p></div><div class="play-meta">${active==='maze'?`Fanget ${game.caught} af 5`:`Opgave ${game.index+1} af ${total}`}</div></section><div class="progress-track" role="progressbar" aria-label="Fremgang" aria-valuemin="0" aria-valuemax="${total}" aria-valuenow="${current}"><div class="progress-fill" style="width:${Math.round(current/total*100)}%"></div></div><section class="play-panel">${({maze:renderMaze,onset:renderOnset,blend:renderBlend,picture:renderPicture,caption:renderCaption,story:renderStory,order:renderOrder,double:renderDouble,syllable:renderSyllable,sort:renderSort,sentence:renderSentence,infer:renderScenario,noise:renderScenario,vocab:renderScenario,compass:renderCompass})[active]()}</section></main>`;}
-function feedbackHTML(){return game.message?`<div class="feedback ${game.feedbackType}" role="status"><span aria-hidden="true">${game.solved?'🌟':'💡'}</span><span>${esc(game.message)}</span></div>`:'';}
+function explainWrong(){
+ if(!game||!game.attempted||game.solved)return;
+ let answer='',reason='',item=game.items?.[game.index];
+ if(active==='story'){const q=STORIES[Math.floor(game.index/4)].qs[game.index%4];answer=q.correct;reason=q.hint;}
+ else if(active==='picture'){answer=item.word;reason='Læs hele ordet, og sammenlign det med billedet.';}
+ else if(active==='caption'){answer=item.correct;reason='Se på de ting, der er på billedet.';}
+ else if(active==='onset'){answer=item.prefix;reason='Ordet '+item.word+' begynder med '+item.prefix+'.';}
+ else if(active==='blend'){answer=item.word;reason='Sæt lydene sammen: '+item.parts.join(' – ')+'.';}
+ else if(active==='order'){answer=ORDERS[game.index].sentences.join(' ');reason='Først, bagefter og til sidst.';}
+ else if(active==='double'){answer=item.word;reason=item.reason;}
+ else if(active==='syllable'){answer=item.word;reason='Klap stavelserne: '+item.parts.join(' – ')+'.';}
+ else if(active==='sort'){answer=item.target;reason='Ordet '+item.word+' begynder med '+item.target+'.';}
+ else if(active==='sentence'){answer=item.parts.join(' ');reason='Læs sætningen fra venstre mod højre.';}
+ else if(['infer','noise','vocab','compass'].includes(active)){answer=item.correct;reason=item.reason;}
+ else return;
+ game.whyShown=true;
+ game.message='Det rigtige svar er: '+answer+'. '+(reason||'Prøv at se på opgaven igen.');
+ feedback(game.message,'try');
+}
+function feedbackHTML(){
+ if(!game.message)return '';
+ const explain=game.attempted&&!game.solved&&!game.whyShown?
+ '<button class="explain-why" type="button" onclick="explainWrong()">💡 Vis forklaringen</button>':'';
+ return '<div class="feedback '+game.feedbackType+'" role="status"><span aria-hidden="true">'+(game.solved?'🌟':'💡')+'</span><span>'+esc(game.message)+'</span></div>'+explain;
+}
 function nextHTML(){return game.solved?`<button class="next-btn" onclick="finishOrNext()">${game.index+1===countTotal()?'Se mit resultat':'Næste opgave'} →</button>`:'';}
 function audioHTML(text){return withHelp?`<button class="assist" type="button" onclick="speak(${JSON.stringify(text).replaceAll('"','&quot;')})">🔊 Hør ${text.length>65?'teksten':text.length>20?'sætningen':'ordet'}</button>`:'';}
 function renderFinish(){const cfg=CONFIG.find(c=>c.id===active),max=countTotal(),rate=game.score/max;const lines=rate>=.85?['Du havde godt styr på opgaverne.','Du fandt mange af de rigtige svar i første forsøg.']:rate>=.5?['Godt arbejdet!','Du løste mange opgaver. Prøv igen og se, hvad du opdager.']:['Du har øvet dig.','Prøv en runde mere. Brug gerne læsehjælpen undervejs.'];return `<main><button class="back" onclick="goHome()">← Alle spil</button><section class="finish-wrap"><div class="finish-emoji" aria-hidden="true">${active==='maze'&&game.lives===0?'👻':rate>=.8?'🏆':'🌟'}</div><h1>${active==='maze'&&game.lives===0?'Spøgelset fangede dig!':'Mission gennemført!'}</h1><p>${lines[0]}<br>${lines[1]}</p><div class="finish-score">${game.score} af ${max} i første forsøg</div><p class="tiny-caption">Her øver du dig. Det er helt i orden at prøve igen.</p><div class="finish-buttons"><button class="again" onclick="newGame('${active}')">Spil ${esc(cfg.name)} igen</button><button class="home" onclick="goHome()">Vælg et andet spil</button>${active==='maze'&&game.lives>0&&game.mazeMode!=='turbo'?'<button class="again" onclick="setMazeMode(\''+(game.mazeMode==='rolig'?'normal':'turbo')+'\')">Prøv næste fartniveau →</button>':''}</div></section></main>`;}
