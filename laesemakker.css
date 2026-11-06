@@ -1,0 +1,29 @@
+
+/* Læsemakker – tilgængelig, let og gennemgående på sitet */
+#laesemakker-root{position:fixed;z-index:210;right:16px;bottom:15px;font-family:system-ui,-apple-system,"Trebuchet MS",sans-serif;color:#213454;font-size:15px}
+.lm-launch{display:flex;align-items:center;gap:9px;border:2px solid #f1d487;border-radius:999px;background:#fffbec;padding:7px 13px 7px 7px;box-shadow:0 5px 0 #d1b77a,0 10px 25px #1c2d4a27;color:#1b3754;font-weight:900;cursor:pointer;min-height:56px}
+.lm-launch:focus-visible,.lm-panel button:focus-visible{outline:3px solid #db7d38;outline-offset:4px}
+.lm-launch:hover{transform:translateY(-2px)}
+.lm-avatar{display:block;flex-shrink:0;height:43px;width:43px;filter:drop-shadow(0 3px 1px #132a4b38)}
+.lm-avatar svg{display:block;height:100%;width:100%}
+.lm-wiggle .lm-avatar{animation:lm-nod 2.9s ease-in-out infinite;transform-origin:50% 80%}
+.lm-panel{position:absolute;right:0;bottom:calc(100% + 14px);background:#fff;border:2px solid #bfdad4;border-radius:22px;padding:18px;width:min(338px,calc(100vw - 30px));box-shadow:0 12px 0 #d0e6de,0 25px 40px #1c305730;max-height:min(550px,calc(100vh - 110px));overflow:auto}
+.lm-panel[hidden]{display:none}
+.lm-head{display:flex;align-items:center;gap:11px;margin-bottom:12px}
+.lm-head .lm-avatar{height:53px;width:53px}
+.lm-head strong{display:block;font-size:21px;letter-spacing:-.03em}
+.lm-head span{display:block;font-size:12px;color:#5c7185}
+.lm-bubble{background:#edf8f5;border:1px solid #cde7de;color:#1d4a43;border-radius:14px 14px 14px 4px;padding:15px;font-size:16px;line-height:1.6;margin:8px 0 12px}
+.lm-bubble p{margin:0}
+.lm-context{font-size:11px;font-weight:900;letter-spacing:.06em;color:#497e74;text-transform:uppercase;margin:0 0 7px}
+.lm-actions{display:flex;flex-wrap:wrap;gap:8px}
+.lm-panel button{background:#e9f1fa;color:#1b3a58;border:1px solid #cbd8e6;padding:9px 10px;border-radius:11px;font-weight:850;font:inherit;font-size:13px;cursor:pointer}
+.lm-panel button.lm-speak{background:#1f6670;color:#fff;border-color:#1f6670}
+.lm-panel button:hover{filter:brightness(.97)}
+.lm-note{font-size:12px;color:#617286;line-height:1.45;margin:12px 0 0}
+.lm-close{margin-left:auto;align-self:flex-start}
+.lm-launch-label{display:block}
+@keyframes lm-nod{0%,100%{transform:rotate(-3deg)}45%{transform:rotate(4deg)}65%{transform:rotate(-1deg)}}
+@media(max-width:590px){#laesemakker-root{right:10px;bottom:10px}.lm-launch{padding:6px;border-radius:50%;min-height:56px;min-width:56px;justify-content:center}.lm-launch-label{display:none}.lm-panel{width:min(330px,calc(100vw - 20px))}}
+@media(prefers-reduced-motion:reduce){.lm-wiggle .lm-avatar{animation:none!important}.lm-launch:hover{transform:none}}
+@media print{#laesemakker-root{display:none!important}}
