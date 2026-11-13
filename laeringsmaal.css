@@ -1,0 +1,21 @@
+
+/* Rolig, læsbar præsentation af læringsmål for 3. klasse */
+.learning-card,.learning-result{background:#fbfffc;color:#253e52;border:2px solid #bdded4;border-radius:19px;box-shadow:0 5px 0 #e0eee8;margin:17px 0 21px;padding:19px 21px;font-family:system-ui,-apple-system,"Trebuchet MS",sans-serif}
+.learning-eyebrow{font-size:12px;letter-spacing:.085em;color:#28695c;font-weight:950}
+.learning-two,.learning-result-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px;margin:12px 0}
+.learning-two>div,.learning-result-grid>div{background:#fff;border:1px solid #d8e7e1;border-radius:13px;padding:13px 15px}
+.learning-card strong,.learning-result strong{font-size:15px;color:#205d53;display:block;line-height:1.4}
+.learning-card p,.learning-result p{font-size:16px;line-height:1.6;color:#344e62;margin:5px 0 0}
+.learning-card .learning-proof{margin:10px 0 0;border-left:4px solid #9ccfc4;padding:8px 12px;background:#f2faf6;border-radius:7px}
+.learning-card .learning-proof strong{display:inline}
+.learning-result h2{font-size:clamp(22px,3vw,29px);line-height:1.2;margin:9px 0 12px;letter-spacing:-.02em}
+.learning-reflect{padding:15px 17px;border-radius:14px;background:#fff5df;margin-top:15px}
+.learning-reflect>strong{color:#754e25}.learning-reflect>p{color:#614d35}
+.learning-reflect-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px}
+.learning-reflect-actions button{border-radius:12px;min-height:45px;background:#fff;border:2px solid #dec592;color:#4b482f;font:inherit;font-size:15px;font-weight:850;padding:9px 13px;cursor:pointer}
+.learning-reflect-actions button[aria-pressed="true"]{background:#295f53;border-color:#295f53;color:#fff}
+.learning-reflect-actions button:focus-visible{outline:3px solid #dda548;outline-offset:3px}
+.learning-response{font-weight:700;min-height:0}
+.learning-disclaimer{border-top:1px solid #dfece6;margin-top:18px!important;padding-top:11px;font-size:13px!important;color:#526879!important}
+@media(max-width:680px){.learning-two,.learning-result-grid{grid-template-columns:1fr}.learning-card,.learning-result{padding:16px 14px}.learning-reflect-actions button{flex:1 1 150px}}
+@media print{.learning-reflect-actions{display:none}.learning-card,.learning-result{break-inside:avoid;box-shadow:none}}
