@@ -196,12 +196,42 @@ body{background:radial-gradient(ellipse at 12% 0%,#f4ecff,transparent 27%),radia
 .writing-feature>div{max-width:690px}.writing-tag{font-size:12px;font-weight:950;letter-spacing:.09em;color:#6e5092}.writing-feature h2{font-size:clamp(25px,3.3vw,32px);margin:5px 0}.writing-feature p{margin:0;color:#526278;font-size:16px;line-height:1.6}
 .writing-feature a{padding:13px 16px;border-radius:14px;background:#5d4a94;color:white;text-decoration:none;font-size:14px;font-weight:900;white-space:nowrap}
 @media(max-width:550px){.progress-counter{font-size:12px;padding:6px 9px}.writing-feature a{white-space:normal;width:100%;text-align:center}}
+
+/* Forside 3.C: Start med læringsbehovet – ikke en lang liste af spil */
+.choice-home{padding-bottom:32px}.choice-hero{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(260px,.85fr);gap:22px;align-items:stretch;padding:31px 35px;background:linear-gradient(120deg,#172f53,#265d6e);color:#fff;border-radius:25px;margin:22px 0 28px;box-shadow:0 7px 0 #dee9ec}
+.choice-hero-copy{display:flex;flex-direction:column;justify-content:center;gap:12px}.choice-eyebrow{display:block;font-size:12px;font-weight:900;letter-spacing:.095em;color:#367c75}
+.choice-hero .choice-eyebrow{color:#b9f0df}.choice-hero h1{font-size:clamp(33px,4.3vw,54px);line-height:1.1;letter-spacing:-.045em;margin:0;max-width:660px}.choice-hero p{line-height:1.58;font-size:18px;margin:0;max-width:610px;color:#f3f8fa}
+.choice-progress{color:#fff5cf;font-size:14px;font-weight:800}.choice-help{border:1px solid #cde7e6;background:#f4fcf8;color:#263e50;border-radius:19px;padding:22px;display:flex;flex-direction:column;justify-content:center;align-items:flex-start;gap:9px}
+.choice-help-icon{font-size:34px}.choice-help h2{font-size:21px;line-height:1.24;letter-spacing:-.025em;margin:0;color:#183a40}.choice-help p{font-size:15px;color:#455d67;line-height:1.55}.choice-help a{background:#205f56;color:#fff;border-radius:12px;padding:10px 13px;font-size:15px;font-weight:900;text-decoration:none;margin-top:6px}
+.choice-heading{display:flex;justify-content:space-between;gap:12px;align-items:end;flex-wrap:wrap;margin:0 0 16px}.choice-heading h2{font-size:clamp(26px,3.3vw,37px);margin:4px 0 0;letter-spacing:-.03em;line-height:1.18}
+.choice-show-all{background:transparent;border:1px solid #b5cbd0;padding:10px 12px;font-weight:800;color:#2a4d58;font-size:14px;border-radius:11px;min-height:44px}
+.choice-category-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:15px}
+.choice-category{font:inherit;display:flex;gap:16px;align-items:flex-start;text-align:left;min-height:182px;padding:22px;background:var(--category-bg,#f1f7ff);border:2px solid #d3dfe1;border-radius:21px;color:#203747;box-shadow:0 5px 0 #e4e8e7;transition:transform .12s,box-shadow .12s,border-color .12s}
+.choice-category:hover{transform:translateY(-3px);box-shadow:0 8px 0 #dde7e3;border-color:#74a89e}.choice-category[aria-pressed="true"]{border-color:#155f55;box-shadow:0 5px 0 #aad1c5}
+.choice-category-icon{font-size:36px;line-height:1.1;background:#ffffffb8;border:1px solid #ffffffd6;border-radius:15px;display:grid;place-items:center;min-width:65px;height:65px}
+.choice-category-content{display:flex;flex-direction:column;flex:1;gap:5px;min-width:0}.choice-category-content>strong{font-size:23px;line-height:1.25;letter-spacing:-.02em;color:#233a50}.choice-category-wish{font-size:16px;color:#2e4d5e;line-height:1.47;font-weight:750}
+.choice-category-hint{font-size:14px;line-height:1.52;color:#50677a;margin:4px 0 9px}.choice-category-foot{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;margin-top:auto;font-size:13px;font-weight:900;color:#16685c}
+.choice-selected{scroll-margin-top:18px;margin:29px 0 21px;background:#fff;border:1px solid #dbe6e5;border-radius:24px;padding:24px;box-shadow:0 8px 25px #284a4a0d}
+.choice-back{background:transparent;border:0;color:#205e56;font-weight:800;font-size:14px;padding:0 0 12px;text-align:left;display:block}
+.choice-selected-heading .choice-eyebrow{margin:3px 0 5px}.choice-selected-heading h2{font-size:clamp(27px,3vw,35px);letter-spacing:-.03em;line-height:1.2;margin:0 0 5px}
+.choice-selected-heading>p{margin:3px 0;color:#3d5166;font-size:17px}.choice-selected-heading .choice-selected-hint{font-size:15px;color:#526779}.choice-count{display:inline-block;font-weight:800;font-size:13px;color:#476076;background:#eaf5f3;border-radius:99px;padding:7px 11px;margin-top:11px}
+.choice-level-pick{margin:16px 0 22px;border-top:1px solid #e7eeed;padding-top:14px}.choice-level-pick .level-picker{margin:0}.choice-level-pick>p{font-size:13px;color:#59717c;margin:7px 0 0}
+.choice-game-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.learning-game-card{display:flex;gap:12px;align-items:flex-start;flex-wrap:wrap;border:1px solid #dce6e8;background:#faffff;border-radius:16px;padding:17px;min-height:166px}
+.learning-game-icon{font-size:33px;background:#f0f6f8;border-radius:11px;min-width:52px;height:52px;display:grid;place-items:center}.learning-game-content{flex:1 1 170px;min-width:0}.learning-game-content h3{font-size:19px;line-height:1.3;margin:0 0 6px;color:#223b51}.learning-game-content p{font-size:15px;line-height:1.55;color:#536676;margin:0}.learning-game-content small{font-size:12px;color:#287565;font-weight:800}
+.learning-start{display:inline-flex;justify-content:center;align-items:center;margin-left:auto;align-self:flex-end;text-decoration:none;background:#214f68;color:white;border:0;border-radius:11px;padding:10px 13px;min-height:43px;white-space:nowrap;font-size:14px;font-weight:850}
+.choice-footer-note{display:flex;gap:12px;align-items:flex-start;background:#f2f8f4;border:1px solid #dde9e1;padding:15px 18px;border-radius:15px;margin:23px 0 2px}
+.choice-footer-note>span{font-size:24px}.choice-footer-note p{font-size:15px;line-height:1.55;margin:0;color:#435b61}.choice-footer-note strong{color:#2c574f}
+.choice-home :is(button,a):focus-visible{outline:3px solid #dba33c;outline-offset:3px}
+@media(max-width:760px){.choice-hero{grid-template-columns:1fr;padding:26px}.choice-hero h1{font-size:38px}.choice-category{padding:17px}.choice-game-grid{grid-template-columns:1fr}}
+@media(max-width:600px){.choice-category-grid{grid-template-columns:1fr}.choice-category{min-height:150px}.choice-category-icon{min-width:55px;height:55px;font-size:29px}.choice-category-content>strong{font-size:21px}.choice-selected{padding:17px}.choice-hero{padding:23px 20px}.choice-hero h1{font-size:35px}.choice-help{padding:18px}}
+@media(prefers-reduced-motion:reduce){.choice-category{transition:none}.choice-category:hover{transform:none}}
 </style>
 </head>
 <body>
   <header class="topbar"><div class="shell toprow">
     <button type="button" class="brand" onclick="goHome()" aria-label="Til forsiden"><span class="brand-mark">3.C</span><span><span class="brand-name">Læseværkstedet</span><span class="brand-sub">Små spil. Store læseskridt.</span></span></button>
-    <div class="top-actions"><a class="topbtn" style="background:#a94e36;border-color:#ee977d" href="st3-traening.html">✨ 23 nye læsespil</a><span class="progress-counter" id="progressCounter" title="Kun denne enhed">⭐ 0/38 spil</span><a class="topbtn open-full-site" href="./" target="_blank" rel="noopener noreferrer" aria-label="Åbn læseværkstedet i en ny fane">↗ Større visning</a><button class="topbtn" id="modeButton" onclick="toggleHelp()" type="button" aria-pressed="true">🧩 Hjælp: til</button><button class="topbtn" type="button" onclick="showTeacher()">👩‍🏫 Til læreren</button></div>
+    <div class="top-actions"><a class="topbtn" href="starttest.html">🧭 Hjælp til at vælge spil</a><span class="progress-counter" id="progressCounter" title="Kun denne enhed">⭐ 0/38 spil</span><a class="topbtn open-full-site" href="./" target="_blank" rel="noopener noreferrer" aria-label="Åbn læseværkstedet i en ny fane">↗ Større visning</a><button class="topbtn" id="modeButton" onclick="toggleHelp()" type="button" aria-pressed="true">🧩 Hjælp: til</button><button class="topbtn" type="button" onclick="showTeacher()">👩‍🏫 Til læreren</button></div>
   </div></header>
   <div id="app" class="shell" aria-live="off"></div>
   <footer class="foot"><div class="shell foot-inner"><span>Udviklet til læsetræning i 3.C · 38 spil i to værksteder · Ingen login</span><span>Elevernes øveresultater gemmes kun på denne enhed.</span></div></footer>
@@ -777,7 +807,7 @@ const COMPASS_TEXTS=[
 
 const shuffle=arr=>{const a=[...arr];for(let i=a.length-1;i>0;i--){let j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;};
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-let homeCategory='all';let active=null;let game=null;let withHelp=true;let stats={};let difficulty=2;
+let homeCategory='';let active=null;let game=null;let withHelp=true;let stats={};let difficulty=2;
 try{withHelp=localStorage.getItem('laese3c_help')!=='off';stats=JSON.parse(localStorage.getItem('laese3c_stats')||'{}')||{};const storedLevel=Number(localStorage.getItem('laese3c_level'));if([1,2,3].includes(storedLevel))difficulty=storedLevel;}catch(e){}
 function save(){try{localStorage.setItem('laese3c_stats',JSON.stringify(stats));localStorage.setItem('laese3c_help',withHelp?'on':'off');localStorage.setItem('laese3c_level',String(difficulty));}catch(e){}}
 function announce(message){document.getElementById('announcer').textContent='';requestAnimationFrame(()=>{document.getElementById('announcer').textContent=message;});}
@@ -838,37 +868,44 @@ function wrong(message){
  feedback(answer,'try');
 }
 function render(){updateTop();let html='';if(!active)html=renderHome();else if(game.finished)html=renderFinish();else html=renderGame();document.getElementById('app').innerHTML=html;attachDrags();attachExtraDrags();}
+const LEARNING_CATEGORIES=[{"id":"ord","icon":"👂","title":"Læse ord","wish":"Jeg vil være mere sikker, når jeg læser ord.","hint":"Lyt til lydene, sæt dem sammen, og læs også ord, du ikke kender.","professional":"Afkodning og ordgenkendelse","tone":"#e9f4ff","ids":["maze","onset","blend","picture","syllable","sort","lydbro","vrovle","ordblik","stavelser","ordglimt"]},{"id":"stavning","icon":"✏️","title":"Stave ord","wish":"Jeg vil blive bedre til at stave.","hint":"Lyt efter lydene og vokalerne. Se på, hvilke bogstaver ordet skal have.","professional":"Stavning og stavemønstre","tone":"#fff3dd","ids":["double","vokaler","dobbelte","stumme","skriv","diktat-ord","diktat-vrovle"]},{"id":"orddele","icon":"🧩","title":"Bygge og bøje ord","wish":"Jeg vil finde ud af, hvordan ord er bygget.","hint":"Sæt orddele sammen. Prøv endelser, og se, hvad de ændrer.","professional":"Morfemer og bøjning","tone":"#edf9e9","ids":["endelser","sammensat","nutidsr","morfem-byg","morfem-endelser"]},{"id":"saetninger","icon":"💬","title":"Forstå sætninger","wish":"Jeg vil forstå hele sætningen.","hint":"Læs de små ord, byg sætninger, og find ud af, hvad der sker.","professional":"Sætningsforståelse","tone":"#fff0eb","ids":["caption","order","sentence","noise"]},{"id":"tekster","icon":"🔎","title":"Forstå tekster","wish":"Jeg vil forstå mere af det, jeg læser.","hint":"Find svar på linjerne. Brug spor i teksten til at læse mellem linjerne.","professional":"Læseforståelse og inferens","tone":"#f0edff","ids":["story","infer","vocab","compass","tekstspor","tekstkompas","tekstkilder","teksttjek"]},{"id":"flyd","icon":"📖","title":"Læse med flyd","wish":"Jeg vil læse mere sikkert og flydende.","hint":"Læs teksten i dit eget tempo. Læs den igen, og mærk, om ordene bliver lettere.","professional":"Læseflyd og genlæsning","tone":"#e5f7f7","ids":["genlaes","flydelaesning"]},{"id":"skrive","icon":"📝","title":"Skrive historier","wish":"Jeg vil selv skrive en historie.","hint":"Skriv en begyndelse, fortæl hvad der sker, og find på en slutning.","professional":"Skriftlig fremstilling","tone":"#fcecf5","ids":["minihistorie"]}];
+const EXTRA_CATALOG=[{"id":"lydbro","name":"Lydbroen","icon":"🧱"},{"id":"vrovle","name":"Vrøvleordsplaneten","icon":"👽"},{"id":"ordblik","name":"Ord på kornet","icon":"🎯"},{"id":"stavelser","name":"Stavelsesraketten","icon":"🚀"},{"id":"vokaler","name":"Vokaldetektiven","icon":"🔎"},{"id":"dobbelte","name":"Konsonantkontrol","icon":"⚡"},{"id":"stumme","name":"De skjulte bogstaver","icon":"🕵️"},{"id":"endelser","name":"Bøjningsværkstedet","icon":"🌱"},{"id":"sammensat","name":"Orddelingsmesteren","icon":"✂️"},{"id":"nutidsr","name":"R-detektiven","icon":"📝"},{"id":"skriv","name":"Skriv ordet selv","icon":"✏️"},{"id":"tekstspor","name":"Find tekstens spor","icon":"🔦"},{"id":"tekstkompas","name":"Tekstkompasset","icon":"🧭"},{"id":"genlaes","name":"Genlæs og forstå","icon":"🔁"},{"id":"diktat-ord","name":"Lyt og stav ordene","icon":"🎧"},{"id":"diktat-vrovle","name":"Vrøvleordsdiktat","icon":"👂"},{"id":"ordglimt","name":"Ordglimt","icon":"⚡"},{"id":"flydelaesning","name":"Læs med flyd","icon":"⏱️"},{"id":"tekstkilder","name":"To tekster, én løsning","icon":"🗝️"},{"id":"teksttjek","name":"Teksttjekkerne","icon":"🕵️"},{"id":"morfem-byg","name":"Morfemværkstedet","icon":"🧩"},{"id":"morfem-endelser","name":"Endelseslaboratoriet","icon":"✍️"},{"id":"minihistorie","name":"Min minihistorie","icon":"✍️"}];
 function renderHome(){
- const done=Object.keys(stats).filter(id=>CONFIG.some(c=>c.id===id)).length;
- const shown=CONFIG.filter(c=>homeCategory==='all'||c.group===homeCategory);
- const filterOptions=[['all','Alle spil'],['decode','Afkodning'],['comprehension','Læseforståelse']];
- return `<main><section class="hero reading-hero"><div class="reading-copy">
- <span class="eyebrow">✦ 3.C · DIT LÆSEUNIVERS</span>
- <h1>Åbn en bog.<br><span>Start et eventyr.</span></h1>
- <p>38 missioner med ord, fortællinger og mysterier. Vælg en opgave, vær nysgerrig, og bliv mere sikker for hver gang.</p>
- <div class="reading-chipline"><span>📚 38 missioner</span><span>🔎 Løs mysterier</span><span>⭐ Prøv igen</span></div>
- <div class="reading-actions"><a class="hero-cta" style="text-decoration:none" href="starttest.html">🧭 Start her · Find dine spil</a><button class="reading-start-second" onclick="document.getElementById('games').scrollIntoView({behavior:'smooth'})">Vælg selv en mission ↓</button><a class="reading-alt" href="st3-traening.html?spil=tekstkilder">Prøv et tekstmysterie ↗</a></div>
- </div><div class="hero-art reading-art" aria-hidden="true">
- <div class="reading-halo"></div><div class="reading-book">
- <span class="reading-page left"><i></i><b>✦</b></span><span class="reading-page right"><i></i><b>★</b></span><span class="reading-page flip"><i></i><b>?</b></span><span class="reading-spine"></span>
- </div><span class="reading-letter a">A</span><span class="reading-letter b">B</span><span class="reading-letter c">?</span><span class="reading-spark">✦</span>
- <span class="reading-sticker">DU ER HISTORIENS HELT!</span></div></section>
- <section class="st3-feature reading-feature" aria-label="Nye spil med tekstforståelse">
- <div class="detective-visual" aria-hidden="true"><span class="detective-paper p1">ABC</span><span class="detective-paper p2">?</span><span class="detective-glass"></span><span class="detective-star">✦</span></div>
- <div class="detective-content"><span class="detective-label">NYT · TEKSTMYSTERIER</span>
- <h2>Kan du løse mysteriet i teksten?</h2>
- <p>Læs små beskeder, find spor, og sammenhold oplysninger. I to helt nye spil bliver du tekstens detektiv.</p>
- <div class="detective-actions"><a href="st3-traening.html?spil=tekstkilder">🗝️ To tekster, én løsning</a><a href="st3-traening.html?spil=teksttjek">🔎 Teksttjekkerne</a><a class="allgames" href="st3-traening.html">Alle 23 træningsspil</a></div>
- </div></section>
- <section class="morph-feature" aria-labelledby="morph-title">
- <div class="morph-feature-intro"><span class="morph-tag">🔤 NYT · BYG OG SKRIV</span><h2 id="morph-title">Ord kan bygges af små dele</h2><p>Bliv ordbygger! Sæt orddele sammen, undersøg endelser, og find ud af, hvorfor en kort vokal ofte får en dobbeltkonsonant efter sig.</p></div>
- <div class="morph-feature-cards">
-  <a href="st3-traening.html?spil=morfem-byg"><span>🧩</span><strong>Morfemværkstedet</strong><small>Træk og byg sammensatte ord</small></a>
-  <a href="st3-traening.html?spil=morfem-endelser"><span>✍️</span><strong>Endelseslaboratoriet</strong><small>Vælg en endelse, og skriv ordet</small></a>
-  <a href="st3-traening.html?spil=dobbelte"><span>🔎</span><strong>Kort eller lang vokal?</strong><small>Lyt først, stav bagefter</small></a>
- </div></section>
- <section class="writing-feature"><div><span class="writing-tag">✍️ NYT · DU ER FORFATTEREN</span><h2>Skriv din egen lille historie</h2><p>Vælg ord fra tre ordklasser, og skriv selv, hvad der sker først, så og til sidst. Historien bliver din helt egen.</p></div><a href="st3-traening.html?spil=minihistorie">Prøv Min minihistorie →</a></section>
- <section id="games">${levelButtons()}<div class="section-head"><div><h2>Din næste læsemission venter</h2><p>Vælg et ordspil, eller gå på opdagelse i en historie.</p></div><span class="statline">🏅 ${completedCount()} af 38 spil gennemført på denne enhed</span></div><div class="filter-bar" role="group" aria-label="Vælg type af spil">${filterOptions.map(([k,label])=>`<button class="filter-button ${homeCategory===k?'active':''}" type="button" aria-pressed="${homeCategory===k}" onclick="setCategory('${k}')">${label}<span class="filter-count">${k==='all'?CONFIG.length:CONFIG.filter(c=>c.group===k).length}</span></button>`).join('')}</div><div class="games-grid">${shown.map(c=>`<article class="game-card"><div class="icon-bubble" style="background:${c.color}" aria-hidden="true">${c.icon}</div><span class="tag ${c.group}" style="align-self:start">${esc(c.type)}</span><h3>${esc(c.name)}</h3><p>${esc(c.intro)}</p><div class="game-bottom"><span class="micro">${stats[c.id]?`⭐ Bedst: ${stats[c.id].best}/${stats[c.id].total}`:esc(c.duration)}</span><button class="start-card" type="button" onclick="newGame('${c.id}')">Spil nu →</button></div></article>`).join('')}</div></section><aside class="info-strip"><span class="round" aria-hidden="true">💛</span><p><b>Du bestemmer tempoet.</b> Lyt med hjælp-knappen, prøv igen, og spil missionen flere gange. Der er ingen tidsgrænse. Læreren kan se forslag til, hvilke spil du kan begynde med.</p></aside></main>`;
+ const cats=LEARNING_CATEGORIES;
+ const current=homeCategory==="all"?{id:"all",icon:"📚",title:"Alle spil",wish:"Her er alle spillene samlet.",hint:"Du kan også vælge et område ovenfor, hvis du vil øve noget bestemt.",ids:cats.flatMap(c=>c.ids)}:cats.find(c=>c.id===homeCategory);
+ const original=new Map(CONFIG.map(g=>[g.id,g]));
+ const extra=new Map(EXTRA_CATALOG.map(g=>[g.id,g]));
+ function gameCard(id){
+  const local=original.get(id),remote=extra.get(id),item=local||remote,goal=window.Laeringsmaal?.get(id);
+  if(!item)return "";
+  const name=local?local.name:remote.name;
+  const detail=goal?.practice?"Her øver du dig i "+goal.practice+".":(local?local.intro:"");
+  const progress=local&&stats[id]?"<small>✓ Spillet er prøvet på denne enhed</small>":"";
+  const action=local?'<button type="button" class="learning-start" onclick="newGame(&quot;'+id+'&quot;)">Prøv spillet →</button>':
+   '<a class="learning-start" href="st3-traening.html?spil='+encodeURIComponent(id)+'&amp;niveau='+difficulty+'">Prøv spillet →</a>';
+  return '<article class="learning-game-card"><span class="learning-game-icon" aria-hidden="true">'+item.icon+'</span><div class="learning-game-content"><h3>'+esc(name)+'</h3><p>'+esc(detail)+'</p>'+progress+'</div>'+action+'</article>';
+ }
+ let h='<main class="choice-home"><section class="choice-hero" aria-labelledby="choice-title"><div class="choice-hero-copy">';
+ h+='<span class="choice-eyebrow">LÆSEVÆRKSTEDET · 3.C</span><h1 id="choice-title">Hvad vil du gerne blive bedre til?</h1>';
+ h+='<p>Vælg det, du vil øve. Så finder du spil, der hjælper dig i gang. Du må gerne vælge noget, der er svært.</p>';
+ h+='<div class="choice-progress">⭐ '+completedCount()+' af 38 spil er gennemført på denne enhed.</div></div>';
+ h+='<aside class="choice-help"><span class="choice-help-icon" aria-hidden="true">🧭</span><h2>Ved du ikke, hvor du skal begynde?</h2>';
+ h+='<p>Prøv 24 små opgaver. Bagefter får du forslag til spil, du kan øve dig med.</p>';
+ h+='<a href="starttest.html">Hjælp mig med at vælge →</a></aside></section>';
+ h+='<section class="choice-areas" id="choose-area" aria-labelledby="areas-title"><div class="choice-heading"><div><span class="choice-eyebrow">VÆLG DET, DU VIL ØVE</span><h2 id="areas-title">Hvad vil du træne i dag?</h2></div>';
+ h+='<button class="choice-show-all" type="button" onclick="setCategory(&quot;all&quot;)">Se alle 38 spil</button></div>';
+ h+='<div class="choice-category-grid">'+cats.map(c=>'<button class="choice-category" type="button" data-area="'+c.id+'" aria-pressed="'+(homeCategory===c.id)+'" onclick="setCategory(&quot;'+c.id+'&quot;)" style="--category-bg:'+c.tone+'"><span class="choice-category-icon" aria-hidden="true">'+c.icon+'</span><span class="choice-category-content"><strong>'+esc(c.title)+'</strong><span class="choice-category-wish">'+esc(c.wish)+'</span><span class="choice-category-hint">'+esc(c.hint)+'</span><span class="choice-category-foot"><span>'+c.ids.length+' spil</span><span>Vælg spil →</span></span></span></button>').join('')+'</div></section>';
+ if(current){
+  h+='<section class="choice-selected" id="selected-games" aria-labelledby="selected-games-title"><div class="choice-selected-heading">';
+  h+='<button type="button" class="choice-back" onclick="setCategory(&quot;&quot;)">← Vælg et andet område</button>';
+  h+='<span class="choice-eyebrow">DIT ØVEOMRÅDE</span><h2 id="selected-games-title">'+current.icon+' '+esc(current.title)+'</h2>';
+  h+='<p>'+esc(current.wish)+'</p><p class="choice-selected-hint">'+esc(current.hint)+'</p>';
+  h+='<div class="choice-count">'+current.ids.length+' spil, du kan vælge mellem</div></div>';
+  h+='<div class="choice-level-pick">'+levelButtons()+'<p>Basis har færre eller lettere opgaver. På vej er midt imellem. Udfordring giver mere at arbejde med. Du må gerne skifte niveau.</p></div>';
+  h+='<div class="choice-game-grid">'+current.ids.map(gameCard).join('')+'</div></section>';
+ }
+ h+='<aside class="choice-footer-note"><span aria-hidden="true">💬</span><p><strong>Du må gerne prøve dig frem.</strong> Vælg et område, øv dig i ét spil, og se bagefter, hvad du arbejdede med. Et enkelt spil fortæller ikke alt om, hvad du kan.</p></aside></main>';
+ return h;
 }
 function renderGame(){const cfg=CONFIG.find(c=>c.id===active);const total=countTotal();const current=active==='maze'?game.caught:game.index;return `<main><div class="play-top"><button class="back" onclick="goHome()">← Alle spil</button><div class="meter"><span>⭐ ${game.score} sikre svar</span>${active==='maze'?`<span>❤️ ${game.lives} liv</span>`:''}</div></div>${levelButtons()}<section class="play-head"><div><div class="prompt-label" style="color:#cfddff">DIN LÆSEMISSION</div><h1>${cfg.icon} ${esc(cfg.name)}</h1><p>${esc(cfg.intro)}</p></div><div class="play-meta">${active==='maze'?`Fanget ${game.caught} af ${game.mazeGoal}`:`Opgave ${game.index+1} af ${total}`}</div></section>${window.Laeringsmaal?.intro(active)||''}<div class="progress-track" role="progressbar" aria-label="Fremgang" aria-valuemin="0" aria-valuemax="${total}" aria-valuenow="${current}"><div class="progress-fill" style="width:${Math.round(current/total*100)}%"></div></div><section class="play-panel">${({maze:renderMaze,onset:renderOnset,blend:renderBlend,picture:renderPicture,caption:renderCaption,story:renderStory,order:renderOrder,double:renderDouble,syllable:renderSyllable,sort:renderSort,sentence:renderSentence,infer:renderScenario,noise:renderScenario,vocab:renderScenario,compass:renderCompass})[active]()}</section></main>`;}
 function explainWrong(){
@@ -989,7 +1026,12 @@ function attachDrags(){const drop=document.querySelector('[data-drop]');if(drop)
 }
 document.addEventListener('keydown',e=>{if(active!=='maze'||game?.finished)return;if(document.activeElement?.tagName==='SELECT')return;const keys={ArrowUp:[0,-1],ArrowDown:[0,1],ArrowLeft:[-1,0],ArrowRight:[1,0]};if(keys[e.key]){e.preventDefault();moveMaze(...keys[e.key]);}});
 // Tilføjede interaktive spil. Click/touch er altid et alternativ til drag-and-drop.
-function setCategory(category){homeCategory=category;render();const el=document.getElementById('games');if(el)el.scrollIntoView({block:'start'});}
+function setCategory(category){
+ if(category!==''&&category!=='all'&&!LEARNING_CATEGORIES.some(c=>c.id===category))return;
+ homeCategory=category;render();
+ const el=document.getElementById(category?'selected-games':'choose-area');
+ if(el)el.scrollIntoView({behavior:'smooth',block:'start'});
+}
 function gameLabel(){return active==='double'?'DOBBELTKONSONANTER':active==='syllable'?'STAVELSESRAKETTEN':active==='sort'?'FORLYDSSORTERING':active==='sentence'?'SÆTNINGSTOGET':active==='infer'?'LÆS MELLEM LINJERNE':active==='noise'?'HOLD FAST I DET RIGTIGE':active==='vocab'?'ORD I SAMMENHÆNG':'TEKSTKOMPASSET';}
 function optionsHTML(options,correctValue,onAnswer,small=false){return `<div class="answers">${shuffleStable(options,game.index,active+'extra').map(s=>`<button type="button" class="answer-btn ${game.solved&&s===correctValue?'correct':''}" style="${small?'font-size:17px;text-align:left;':''}" onclick="${onAnswer}(${JSON.stringify(s).replaceAll('"','&quot;')})" ${game.solved?'disabled':''}>${esc(s)}</button>`).join('')}</div>`;}
 function renderDouble(){
