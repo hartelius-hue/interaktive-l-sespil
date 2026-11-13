@@ -12,7 +12,7 @@ function get(id){
 }
 function intro(id){
  const g=get(id);if(!g)return "";
- return '<section class="learning-card" aria-label="Det lærer du i spillet"><span class="learning-eyebrow">🎯 LÆRINGSMÅL</span><div class="learning-two"><div><strong>Det øver jeg</strong><p>'+esc(g.practice)+'.</p></div><div><strong>Det arbejder jeg hen imod</strong><p>'+esc(g.learning)+'</p></div></div><p class="learning-proof"><strong>Sådan kan jeg vise det:</strong> '+esc(g.show)+'</p></section>';
+ return '<section class="learning-card" aria-label="Det øver du i spillet"><span class="learning-eyebrow">🎯 LÆRINGSMÅL</span><div class="learning-two"><div><strong>Det øver jeg</strong><p>'+esc(g.practice)+'.</p></div><div><strong>Det arbejder jeg hen imod</strong><p>'+esc(g.learning)+'</p></div></div><p class="learning-proof"><strong>Sådan kan jeg vise det:</strong> '+esc(g.show)+'</p><button class="learning-listen" type="button" onclick="Laeringsmaal.speak(&quot;'+esc(id)+'&quot;,false,this)">🔊 Hør hvad jeg øver</button><p class="learning-voice-note" aria-live="polite"></p></section>';
 }
 function result(id,correct,total,kind){
  const g=get(id);if(!g)return "";
@@ -25,7 +25,7 @@ function result(id,correct,total,kind){
  else if(share>=.4)observation="Du klarede "+score+" af "+count+" opgaver i første forsøg. Nogle opgaver gik godt, og andre var sværere.";
  else observation="Du klarede "+score+" af "+count+" opgaver i første forsøg. Her er det en god idé at øve videre med hjælp og nye eksempler.";
  const next=writing?"Læs en af dine historier højt for en anden. Prøv sammen at finde steder, der skal forklares tydeligere.":g.next;
- return '<section class="learning-result" aria-label="Hvad har jeg øvet og vist?"><span class="learning-eyebrow">📖 MIN LÆRING I DETTE SPIL</span><h2>Hvad øvede jeg – og hvad er næste skridt?</h2><div class="learning-result-grid"><div><strong>Det har jeg øvet</strong><p>'+esc(g.practice)+'.</p></div><div><strong>Det viste jeg i spillet</strong><p>'+esc(observation)+'</p></div><div><strong>Det vil jeg lære at kunne</strong><p>'+esc(g.learning)+'</p></div><div><strong>Det kan jeg gøre næste gang</strong><p>'+esc(next)+'</p></div></div><div class="learning-reflect"><strong>Kan du vise, hvordan du gør?</strong><p>'+esc(g.show)+'</p><div class="learning-reflect-actions"><button type="button" onclick="Laeringsmaal.respond(this,1)">✅ Jeg vil prøve at vise det</button><button type="button" onclick="Laeringsmaal.respond(this,0)">🌱 Jeg vil øve mere</button></div><p class="learning-response" role="status" aria-live="polite"></p></div><p class="learning-disclaimer">Et spil viser, hvad du gjorde i dag. Det fortæller ikke alene, om du har lært det for altid. Tal gerne med din lærer om, hvad du kan vise med et nyt eksempel.</p></section>';
+ return '<section class="learning-result" aria-label="Hvad har jeg øvet og vist?"><span class="learning-eyebrow">📖 MIN LÆRING I DETTE SPIL</span><h2>Hvad øvede jeg – og hvad er næste skridt?</h2><button class="learning-listen" type="button" onclick="Laeringsmaal.speak(&quot;'+esc(id)+'&quot;,true,this)">🔊 Hør min tilbagemelding</button><p class="learning-voice-note" aria-live="polite"></p><div class="learning-result-grid"><div><strong>Det har jeg øvet</strong><p>'+esc(g.practice)+'.</p></div><div><strong>Det viste jeg i spillet</strong><p>'+esc(observation)+'</p></div><div><strong>Det vil jeg lære at kunne</strong><p>'+esc(g.learning)+'</p></div><div><strong>Det kan jeg gøre næste gang</strong><p>'+esc(next)+'</p></div></div><div class="learning-reflect"><strong>Kan du vise, hvordan du gør?</strong><p>'+esc(g.show)+'</p><div class="learning-reflect-actions"><button type="button" onclick="Laeringsmaal.respond(this,1)">✅ Jeg vil prøve at vise det</button><button type="button" onclick="Laeringsmaal.respond(this,0)">🌱 Jeg vil øve mere</button></div><p class="learning-response" role="status" aria-live="polite"></p></div><p class="learning-disclaimer">Et spil viser, hvad du gjorde i dag. Det fortæller ikke alene, om du har lært det for altid. Tal gerne med din lærer om, hvad du kan vise med et nyt eksempel.</p></section>';
 }
 function respond(button,choice){
  const panel=button?.closest?.(".learning-reflect");if(!panel)return;
@@ -34,5 +34,29 @@ function respond(button,choice){
  const out=panel.querySelector(".learning-response");
  if(out)out.textContent=choice?"Prøv at vise det med et nyt eksempel, eller forklar det til en anden.":"Vælg et nyt eksempel i spillet, og brug et læseråd undervejs. Fortæl din lærer, hvad der er svært.";
 }
-window.Laeringsmaal={get,intro,result,respond,ids:Object.keys(DATA)};
+function speak(id,finished,button){
+ const goal=get(id);if(!goal)return;
+ const note=button?.parentElement?.querySelector(".learning-voice-note");
+ const synth=window.speechSynthesis;
+ if(!synth||typeof SpeechSynthesisUtterance==="undefined"){
+  if(note)note.textContent="Denne enhed kan ikke læse højt. Bed en voksen om hjælp.";
+  return;
+ }
+ const voices=synth.getVoices(),danish=voices.find(v=>/^da(?:[-_]|$)/i.test(v.lang));
+ if(voices.length&&!danish){
+  if(note)note.textContent="Der er ingen dansk computerstemme. Bed en voksen om hjælp.";
+  return;
+ }
+ const summary=finished&&button?.closest?.(".learning-result");
+ const boxes=summary?.querySelectorAll?.(".learning-result-grid > div");
+ const voiceText=finished&&boxes?.length?
+  [...boxes].map(x=>(x.querySelector("strong")?.textContent||"")+". "+(x.querySelector("p")?.textContent||"")).join(" "):
+  "Det øver jeg: "+goal.practice+". Mit mål er: "+goal.learning+" Sådan kan jeg vise det: "+goal.show;
+ synth.cancel();
+ const u=new SpeechSynthesisUtterance(voiceText);u.lang="da-DK";u.rate=.9;if(danish)u.voice=danish;
+ u.onerror=()=>{if(note)note.textContent="Oplæsningen virkede ikke. Du kan stadig læse teksten.";};
+ u.onend=()=>{if(note)note.textContent="Du kan høre det igen.";};
+ try{synth.speak(u);if(note)note.textContent="Læsemålet bliver læst højt.";}catch(e){if(note)note.textContent="Oplæsningen kunne ikke starte.";}
+}
+window.Laeringsmaal={get,intro,result,respond,speak,ids:Object.keys(DATA)};
 })();
