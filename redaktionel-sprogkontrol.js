@@ -25,6 +25,19 @@ function sprogkontrol(files){
   if(config.length!==15||games.length!==23)fejl.push("Spilantallet er ikke 38.");
   if(questions.length!==24||domains.length!==6)fejl.push("Starttestens antal er ændret.");
   const ids=new Set([...config,...games].map(g=>g.id));
+  const catsMatch=original.match(/const LEARNING_CATEGORIES=(\[[^\n]*\]);\nconst EXTRA_CATALOG=(\[[^\n]*\]);/);
+  if(!catsMatch)fejl.push("Forsidens øveområder kan ikke læses.");
+  else{
+    const areas=JSON.parse(catsMatch[1]),catalog=JSON.parse(catsMatch[2]);
+    if(areas.length!==7)fejl.push("Forsiden skal vise syv øveområder.");
+    const mapped=areas.flatMap(c=>c.ids||[]);
+    if(mapped.length!==ids.size||new Set(mapped).size!==ids.size)fejl.push("Et spil mangler eller er placeret flere gange på forsiden.");
+    for(const id of ids)if(!mapped.includes(id))fejl.push("Spillet mangler i et øveområde: "+id);
+    if(catalog.length!==games.length)fejl.push("Ikke alle ekstra spil findes i forsidens spiloversigt.");
+    for(const g of games)if(!catalog.some(c=>c.id===g.id&&c.name===g.title))fejl.push("Forsidens spiloversigt er forældet: "+g.id);
+    for(const area of areas)if(!area.title||!area.wish||!area.hint)fejl.push("Der mangler elevnær tekst til øveområdet "+area.id);
+    if(!original.includes("omraade='+encodeURIComponent(current.id)"))fejl.push("Spillets link skal huske elevens øveområde.");
+  }
   if(!learning)fejl.push("Læringsmål-filen mangler.");
   else{
     const m=learning.match(/const DATA=(\{[\s\S]*?\});\nconst esc=/);
