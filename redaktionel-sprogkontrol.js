@@ -30,6 +30,7 @@ function sprogkontrol(files){
   for(const g of games)for(const q of g.qs){
     if(g.kind==="morphbuild"){if(!q.parts||q.parts.join("")!==q.a)fejl.push("Ugyldigt sammensat ord i "+g.id);continue;}
     if(g.kind==="morphending"){if(q.stem+q.suffix!==q.a||!q.o?.includes(q.suffix))fejl.push("Ugyldig endelse i "+g.id);continue;}
+    if(g.kind==="storywrite"){if(!q.nouns?.length||!q.verbs?.length||!q.adjectives?.length||!q.p)fejl.push("Mangelfuld skriveopgave i "+g.id);continue;}
     if(g.kind==="vowelrule"&&!["kort","lang"].includes(q.vowel))fejl.push("Ugyldig vokallængde i "+g.id);
     if(!["order","nonword","write","dictation"].includes(g.kind)&&!q.o?.includes(q.a))fejl.push("Ugyldigt facit i "+g.id);
   }
