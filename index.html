@@ -230,6 +230,7 @@ body{background:radial-gradient(ellipse at 12% 0%,#f4ecff,transparent 27%),radia
 .micro-goal{border:1px solid #b6d7d1;background:#e8f8f3;color:#294d48;font-size:15px;line-height:1.55;padding:10px 14px;margin:13px 0 10px;border-radius:12px}
 .micro-goal strong{font-weight:900;color:#164f47}
 </style>
+<link rel="stylesheet" href="design-3d.css">
 </head>
 <body>
   <header class="topbar"><div class="shell toprow">
@@ -903,7 +904,7 @@ function renderHome(){
   const progress=local&&stats[id]?"<small>✓ Spillet er prøvet på denne enhed</small>":"";
   const action=local?'<button type="button" class="learning-start" onclick="newGame(&quot;'+id+'&quot;)">Prøv spillet →</button>':
    '<a class="learning-start" href="st3-traening.html?spil='+encodeURIComponent(id)+'&amp;niveau='+difficulty+'&amp;omraade='+encodeURIComponent(current.id)+'">Prøv spillet →</a>';
-  return '<article class="learning-game-card"><span class="learning-game-icon" aria-hidden="true">'+item.icon+'</span><div class="learning-game-content"><h3>'+esc(name)+'</h3><p>'+esc(detail)+'</p>'+progress+'</div>'+action+'</article>';
+  return '<article class="learning-game-card" data-game="'+id+'"><div class="game-banner-art" style="background-image:url(&quot;assets/3d/banners/'+id+'.webp&quot;)"><h3 class="game-banner-name">'+esc(name)+'</h3></div><div class="learning-game-content"><p>'+esc(detail)+'</p>'+progress+'</div>'+action+'</article>';
  }
  let h='<main class="choice-home"><section class="choice-hero" aria-labelledby="choice-title"><div class="choice-hero-copy">';
  h+='<span class="choice-eyebrow">LÆSEVÆRKSTEDET · 3.C</span><h1 id="choice-title">Hvad vil du gerne blive bedre til?</h1>';
@@ -952,7 +953,7 @@ function currentMicroGoal(){
  vocab:'Brug sætningen til at finde ud af, hvad et ord betyder.'
  })[active]||'Læs omhyggeligt, og prøv selv.';
 }
-function renderGame(){const cfg=CONFIG.find(c=>c.id===active);const total=countTotal();const current=active==='maze'?game.caught:game.index;return `<main><div class="play-top"><button class="back" onclick="goHome()">← Alle spil</button><div class="meter"><span>⭐ ${game.score} sikre svar</span>${active==='maze'?`<span>❤️ ${game.lives} liv</span>`:''}</div></div>${levelButtons()}<section class="play-head"><div><div class="prompt-label" style="color:#cfddff">DIN LÆSEMISSION</div><h1>${cfg.icon} ${esc(cfg.name)}</h1><p>${esc(cfg.intro)}</p></div><div class="play-meta">${active==='maze'?`Fanget ${game.caught} af ${game.mazeGoal}`:`Opgave ${game.index+1} af ${total}`}</div></section>${window.Laeringsmaal?.intro(active)||''}<div class="progress-track" role="progressbar" aria-label="Fremgang" aria-valuemin="0" aria-valuemax="${total}" aria-valuenow="${current}"><div class="progress-fill" style="width:${Math.round(current/total*100)}%"></div></div><div class="micro-goal"><strong>Lige nu øver du:</strong> ${esc(currentMicroGoal())}</div><section class="play-panel">${({maze:renderMaze,onset:renderOnset,blend:renderBlend,picture:renderPicture,caption:renderCaption,story:renderStory,order:renderOrder,double:renderDouble,syllable:renderSyllable,sort:renderSort,sentence:renderSentence,infer:renderScenario,noise:renderScenario,vocab:renderScenario,compass:renderCompass})[active]()}</section></main>`;}
+function renderGame(){const cfg=CONFIG.find(c=>c.id===active);const total=countTotal();const current=active==='maze'?game.caught:game.index;return `<main><div class="play-top"><button class="back" onclick="goHome()">← Alle spil</button><div class="meter"><span>⭐ ${game.score} sikre svar</span>${active==='maze'?`<span>❤️ ${game.lives} liv</span>`:''}</div></div>${levelButtons()}<div class="play-banner3d" style="background-image:url('assets/3d/banners/${active}.webp')"><h2>${esc(cfg.name)}</h2></div><section class="play-head"><div><div class="prompt-label" style="color:#cfddff">DIN LÆSEMISSION</div><h1>${cfg.icon} ${esc(cfg.name)}</h1><p>${esc(cfg.intro)}</p></div><div class="play-meta">${active==='maze'?`Fanget ${game.caught} af ${game.mazeGoal}`:`Opgave ${game.index+1} af ${total}`}</div></section>${window.Laeringsmaal?.intro(active)||''}<div class="progress-track" role="progressbar" aria-label="Fremgang" aria-valuemin="0" aria-valuemax="${total}" aria-valuenow="${current}"><div class="progress-fill" style="width:${Math.round(current/total*100)}%"></div></div><div class="micro-goal"><strong>Lige nu øver du:</strong> ${esc(currentMicroGoal())}</div><section class="play-panel">${({maze:renderMaze,onset:renderOnset,blend:renderBlend,picture:renderPicture,caption:renderCaption,story:renderStory,order:renderOrder,double:renderDouble,syllable:renderSyllable,sort:renderSort,sentence:renderSentence,infer:renderScenario,noise:renderScenario,vocab:renderScenario,compass:renderCompass})[active]()}</section></main>`;}
 function explainWrong(){
  if(!game||!game.attempted||game.solved)return;
  let answer='',reason='',item=game.items?.[game.index];
