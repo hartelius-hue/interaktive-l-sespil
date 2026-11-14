@@ -226,6 +226,9 @@ body{background:radial-gradient(ellipse at 12% 0%,#f4ecff,transparent 27%),radia
 @media(max-width:760px){.choice-hero{grid-template-columns:1fr;padding:26px}.choice-hero h1{font-size:38px}.choice-category{padding:17px}.choice-game-grid{grid-template-columns:1fr}}
 @media(max-width:600px){.choice-category-grid{grid-template-columns:1fr}.choice-category{min-height:150px}.choice-category-icon{min-width:55px;height:55px;font-size:29px}.choice-category-content>strong{font-size:21px}.choice-selected{padding:17px}.choice-hero{padding:23px 20px}.choice-hero h1{font-size:35px}.choice-help{padding:18px}}
 @media(prefers-reduced-motion:reduce){.choice-category{transition:none}.choice-category:hover{transform:none}}
+
+.micro-goal{border:1px solid #b6d7d1;background:#e8f8f3;color:#294d48;font-size:15px;line-height:1.55;padding:10px 14px;margin:13px 0 10px;border-radius:12px}
+.micro-goal strong{font-weight:900;color:#164f47}
 </style>
 </head>
 <body>
@@ -248,7 +251,7 @@ const CONFIG=[
   "color": "#fff0b9",
   "type": "Læs ord og find forlyden",
   "duration": "6–8 min",
-  "intro": "Find ord, der begynder med den samme konsonantforbindelse. Hold øje med spøgelset.",
+  "intro": "Find ord, der begynder med de samme to konsonanter. Hold øje med spøgelset.",
   "group": "decode"
  },
  {
@@ -258,7 +261,7 @@ const CONFIG=[
   "color": "#e9e3ff",
   "type": "Bogstaver i starten",
   "duration": "5–7 min",
-  "intro": "Se på billedet. Hvilken konsonantforbindelse på to bogstaver begynder ordet med?",
+  "intro": "Se på billedet. Hvilke to konsonanter begynder ordet med?",
   "group": "decode"
  },
  {
@@ -924,7 +927,32 @@ function renderHome(){
  h+='<aside class="choice-footer-note"><span aria-hidden="true">💬</span><p><strong>Du må gerne prøve dig frem.</strong> Vælg et område, øv dig i ét spil, og se bagefter, hvad du arbejdede med. Et enkelt spil fortæller ikke alt om, hvad du kan.</p></aside></main>';
  return h;
 }
-function renderGame(){const cfg=CONFIG.find(c=>c.id===active);const total=countTotal();const current=active==='maze'?game.caught:game.index;return `<main><div class="play-top"><button class="back" onclick="goHome()">← Alle spil</button><div class="meter"><span>⭐ ${game.score} sikre svar</span>${active==='maze'?`<span>❤️ ${game.lives} liv</span>`:''}</div></div>${levelButtons()}<section class="play-head"><div><div class="prompt-label" style="color:#cfddff">DIN LÆSEMISSION</div><h1>${cfg.icon} ${esc(cfg.name)}</h1><p>${esc(cfg.intro)}</p></div><div class="play-meta">${active==='maze'?`Fanget ${game.caught} af ${game.mazeGoal}`:`Opgave ${game.index+1} af ${total}`}</div></section>${window.Laeringsmaal?.intro(active)||''}<div class="progress-track" role="progressbar" aria-label="Fremgang" aria-valuemin="0" aria-valuemax="${total}" aria-valuenow="${current}"><div class="progress-fill" style="width:${Math.round(current/total*100)}%"></div></div><section class="play-panel">${({maze:renderMaze,onset:renderOnset,blend:renderBlend,picture:renderPicture,caption:renderCaption,story:renderStory,order:renderOrder,double:renderDouble,syllable:renderSyllable,sort:renderSort,sentence:renderSentence,infer:renderScenario,noise:renderScenario,vocab:renderScenario,compass:renderCompass})[active]()}</section></main>`;}
+function currentMicroGoal(){
+ if(active==='story'){
+  const question=STORIES[Math.floor(game.index/4)]?.qs?.[game.index%4];
+  return ({'På linjerne':'Find svaret direkte i teksten.','Mellem linjerne':'Brug spor i teksten til at regne noget ud.','Overblik':'Find ud af, hvad teksten mest handler om.','Sprog og tekst':'Undersøg, hvad ordene fortæller dig.'})[question?.kind]||'Læs og forstå teksten.';
+ }
+ if(active==='compass'){
+  const q=game.items?.[game.index];
+  return ({Find:'Find svaret på linjerne.',Tænk:'Brug spor i teksten til at forklare svaret.',Forstå:'Find det vigtigste i teksten.',Vurdér:'Tænk over, hvordan og hvorfor teksten er skrevet.'})[q?.kind]||'Find et godt svar i teksten.';
+ }
+ return ({
+ maze:'Se på de to første konsonanter i hvert ord.',
+ onset:'Find de to konsonanter, der står først i ordet.',
+ blend:'Sig bogstavlydene, og træk dem sammen til et ord.',
+ picture:'Læs hele ordet, før du vælger.',
+ caption:'Læs sætningen helt færdig, og sammenlign med billedet.',
+ order:'Find ud af, hvad der sker først, bagefter og til sidst.',
+ double:'Lyt efter, om vokalen er kort eller lang.',
+ syllable:'Sig ordet, og klap dets stavelser.',
+ sort:'Find de to første konsonanter i ordet.',
+ sentence:'Sæt ordene i en rækkefølge, der giver mening.',
+ infer:'Find spor i teksten, når svaret ikke står direkte.',
+ noise:'Læg mærke til små ord, der ændrer betydningen.',
+ vocab:'Brug sætningen til at finde ud af, hvad et ord betyder.'
+ })[active]||'Læs omhyggeligt, og prøv selv.';
+}
+function renderGame(){const cfg=CONFIG.find(c=>c.id===active);const total=countTotal();const current=active==='maze'?game.caught:game.index;return `<main><div class="play-top"><button class="back" onclick="goHome()">← Alle spil</button><div class="meter"><span>⭐ ${game.score} sikre svar</span>${active==='maze'?`<span>❤️ ${game.lives} liv</span>`:''}</div></div>${levelButtons()}<section class="play-head"><div><div class="prompt-label" style="color:#cfddff">DIN LÆSEMISSION</div><h1>${cfg.icon} ${esc(cfg.name)}</h1><p>${esc(cfg.intro)}</p></div><div class="play-meta">${active==='maze'?`Fanget ${game.caught} af ${game.mazeGoal}`:`Opgave ${game.index+1} af ${total}`}</div></section>${window.Laeringsmaal?.intro(active)||''}<div class="progress-track" role="progressbar" aria-label="Fremgang" aria-valuemin="0" aria-valuemax="${total}" aria-valuenow="${current}"><div class="progress-fill" style="width:${Math.round(current/total*100)}%"></div></div><div class="micro-goal"><strong>Lige nu øver du:</strong> ${esc(currentMicroGoal())}</div><section class="play-panel">${({maze:renderMaze,onset:renderOnset,blend:renderBlend,picture:renderPicture,caption:renderCaption,story:renderStory,order:renderOrder,double:renderDouble,syllable:renderSyllable,sort:renderSort,sentence:renderSentence,infer:renderScenario,noise:renderScenario,vocab:renderScenario,compass:renderCompass})[active]()}</section></main>`;}
 function explainWrong(){
  if(!game||!game.attempted||game.solved)return;
  let answer='',reason='',item=game.items?.[game.index];
