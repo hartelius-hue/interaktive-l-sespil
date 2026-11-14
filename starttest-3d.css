@@ -11,7 +11,7 @@ main{padding-top:31px}
 .hero h1{color:#fff;max-width:680px;font-size:clamp(35px,4.8vw,55px);line-height:1.08;letter-spacing:-.045em;text-shadow:0 3px 13px #08233bbb;margin:13px 0 18px}
 .hero p{color:#f5fffb;font-size:clamp(16px,1.8vw,19px);line-height:1.55;max-width:635px;text-shadow:0 1px 10px #07243bc4}
 .eyebrow{display:inline-flex;padding:7px 12px;border:1px solid #fee3a65e;background:#0c2c39b0;border-radius:99px;color:#ffe0a0;font-size:12px;letter-spacing:.1em}
-.mascot3d{height:auto;width:min(290px,100%);font-size:0;align-self:center;justify-self:center;animation:bob 5s ease-in-out infinite}
+.mascot3d{display:block;height:auto;width:min(290px,100%);font-size:0;align-self:center;justify-self:center;animation:bob 5s ease-in-out infinite}
 .mascot3d img{width:100%;height:auto;display:block;filter:drop-shadow(0 17px 13px #0317228c)}
 .hero .chips{gap:8px;margin-top:20px}.chip{padding:6px 13px;background:#fbfffbf2;color:#244c56;border:1px solid #dbebe1;font-size:13px;box-shadow:0 3px 0 #d7e5d8}
 .btn{border-radius:13px;box-shadow:0 5px 0 #a94430;transition:transform .14s,box-shadow .14s;min-height:49px}.btn:hover{transform:translateY(-2px);filter:none;box-shadow:0 7px 0 #a94430}
