@@ -65,7 +65,7 @@ function sprogkontrol(files){
     if(g.kind==="vowelrule"&&!["kort","lang"].includes(q.vowel))fejl.push("Ugyldig vokallængde i "+g.id);
     if(!["order","nonword","write","dictation"].includes(g.kind)&&!q.o?.includes(q.a))fejl.push("Ugyldigt facit i "+g.id);
   }
-  if(tips.length!==12||voiceTips.length!==12||tips.some((t,i)=>t.tip!==voiceTips[i]?.body))fejl.push("Læsemakkerens råd afviger fra guiden.");
+  if(tips.length!==21||voiceTips.length!==21||tips.some((t,i)=>t.tip!==voiceTips[i]?.body))fejl.push("Læsemakkerens råd afviger fra guiden.");
   if(start.includes("localStorage")||start.includes("sessionStorage"))fejl.push("Starttesten gemmer svar i browseren.");
   for(const name of ["index.html","st3-traening.html","starttest.html"])if(!files[name].includes('laesemakker.js'))fejl.push("Avatar mangler på "+name);
   if(!original.includes("u.lang='da-DK'")||!ekstra.includes("utterance.lang='da-DK'")||!avatar.includes('u.lang="da-DK"'))fejl.push("Dansk oplæsning mangler.");
