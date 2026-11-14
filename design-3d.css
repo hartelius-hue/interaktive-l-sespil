@@ -6,7 +6,7 @@ body{background:linear-gradient(180deg,#eef7f2 0%,#f7faf9 45%,#f3f4f9 100%);colo
 .brand-mark{background:linear-gradient(145deg,#ffe6a2,#ffba4d);border:2px solid #fff8d6}
 .topbtn,.headlink{border-radius:13px}
 .choice-hero{display:flex;flex-direction:column;justify-content:center;align-items:flex-start;gap:16px;min-height:590px;padding:33px 40px;position:relative;overflow:hidden;isolation:isolate;border:3px solid #bfdedc;border-radius:28px;background:#122c45 url("assets/3d/forside_hero.webp") 62% 50%/cover no-repeat;box-shadow:0 9px 0 #d5e6dd,0 22px 55px #17405824;color:white}
-.choice-hero::before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(90deg,rgba(7,29,48,.92) 0%,rgba(8,34,52,.83) 32%,rgba(6,29,51,.24) 72%,rgba(5,23,42,.06))}
+.choice-hero::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;background:linear-gradient(90deg,rgba(7,29,48,.92) 0%,rgba(8,34,52,.83) 32%,rgba(6,29,51,.24) 72%,rgba(5,23,42,.06))}
 .choice-hero-copy{position:relative;z-index:1;max-width:535px;min-height:0;gap:12px}
 .choice-hero h1{max-width:530px;font-size:clamp(35px,4.2vw,55px);line-height:1.06;text-shadow:0 3px 16px #071d3f9e}
 .choice-hero .choice-eyebrow{color:#ffe3a0}
@@ -39,7 +39,7 @@ body{background:linear-gradient(180deg,#eef7f2 0%,#f7faf9 45%,#f3f4f9 100%);colo
 .learning-game-card:hover{transform:translateY(-2px);box-shadow:0 9px 0 #dce7e5,0 18px 30px #234b5720}
 .learning-game-icon{display:none}
 .game-banner-art{height:182px;position:relative;flex:none;isolation:isolate;background-color:#18374f;background-size:cover;background-position:center;display:flex;align-items:flex-end;overflow:hidden;padding:17px}
-.game-banner-art::after,.play-banner3d::after,.extra-card-banner::after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,transparent 35%,rgba(5,16,34,.83) 100%)}
+.game-banner-art::after,.play-banner3d::after,.extra-card-banner::after{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;background:linear-gradient(180deg,transparent 35%,rgba(5,16,34,.83) 100%)}
 .game-banner-name,.extra-banner-name{color:#fff;font-size:clamp(21px,2.1vw,28px);font-weight:950;line-height:1.16;letter-spacing:-.03em;text-shadow:0 3px 13px #061529d9;margin:0;position:relative;z-index:1}
 .learning-game-content{display:block;flex:1 1 auto;padding:15px 18px 10px}
 .learning-game-content h3{display:none}.learning-game-content p{font-size:15px;line-height:1.55;color:#426074;margin:0}.learning-game-content small{display:block;margin-top:6px}
@@ -55,9 +55,9 @@ body{background:linear-gradient(180deg,#eef7f2 0%,#f7faf9 45%,#f3f4f9 100%);colo
 .btn,.learning-start{transition:transform .16s,box-shadow .16s}
 .extra-card-banner{height:155px;display:flex;align-items:flex-end;position:relative;isolation:isolate;background-color:#183a55;background-position:center;background-size:cover;border-radius:16px;overflow:hidden;padding:14px 15px;margin-bottom:12px}
 .extra-card-banner .extra-banner-name{font-size:21px}
-.card:has(.extra-card-banner){overflow:hidden;border:2px solid #e0ebe8;box-shadow:0 5px 0 #dae9e2}
+.card:has(.extra-card-banner){overflow:hidden;padding:0;border:2px solid #e0ebe8;min-height:322px;box-shadow:0 5px 0 #dae9e2}
 .card:has(.extra-card-banner) .emoji{display:none}
-.card:has(.extra-card-banner) h3{display:none}
+.card:has(.extra-card-banner) > h3{display:none}
 body:has(.extra-card-banner) .hero{background:#142d49 url("assets/3d/forside_hero.webp") center/cover no-repeat;color:#fff;min-height:350px;position:relative;isolation:isolate;overflow:hidden;border-color:#d2e8df}
 body:has(.extra-card-banner) .hero::before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(90deg,#0b2946e8,#0c2a468a 52%,transparent 96%)}
 body:has(.extra-card-banner) .hero h1,body:has(.extra-card-banner) .hero p{color:#fff;text-shadow:0 2px 12px #061e36}
@@ -69,3 +69,8 @@ body .mission h1{font-size:25px}
 @media(max-width:760px){.choice-hero{min-height:550px;padding:23px;background-position:60% 45%}.choice-hero::before{background:linear-gradient(90deg,#08243eea,#07243ead 65%,#08243e72)}.choice-hero h1{font-size:37px}.choice-help{max-width:100%}.choice-category::before{height:153px}.choice-category{min-height:295px}.choice-game-grid{grid-template-columns:1fr}.play-banner3d{min-height:180px;padding:17px}.game-banner-art{height:170px}}
 @media(max-width:520px){.choice-hero{min-height:575px;padding:19px 18px}.choice-hero-copy>p{font-size:16px}.choice-hero h1{font-size:33px}.choice-category-content>strong{font-size:21px}.choice-category::before{height:150px}.choice-category-grid{grid-template-columns:1fr}.learning-game-card{min-height:315px}.play-banner3d{min-height:163px}.play-banner3d h2{font-size:26px}.choice-help{padding:12px 14px}}
 @media(prefers-reduced-motion:reduce){.learning-game-card,.choice-category,.btn{transition:none}.learning-game-card:hover,.choice-category:hover{transform:none}}
+
+.card:has(.extra-card-banner) > .tiny{padding:0 16px;margin:3px 0 7px}
+.card:has(.extra-card-banner) > p{margin:0 16px 13px;padding:0;flex:1;font-size:14px;line-height:1.55}
+.card:has(.extra-card-banner) > .btn{align-self:stretch;text-align:center;margin:0 16px 16px;min-height:44px;background:linear-gradient(110deg,#147d78,#245f78)}
+.card:has(.extra-card-banner) .extra-banner-name{display:block;color:white}
