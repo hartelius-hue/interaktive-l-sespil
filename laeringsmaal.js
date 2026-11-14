@@ -14,17 +14,25 @@ function intro(id){
  const g=get(id);if(!g)return "";
  return '<section class="learning-card" aria-label="Det øver du i spillet"><span class="learning-eyebrow">🎯 LÆRINGSMÅL</span><div class="learning-two"><div><strong>Det øver jeg</strong><p>'+esc(g.practice)+'.</p></div><div><strong>Det arbejder jeg hen imod</strong><p>'+esc(g.learning)+'</p></div></div><p class="learning-proof"><strong>Sådan kan jeg vise det:</strong> '+esc(g.show)+'</p><button class="learning-listen" type="button" onclick="Laeringsmaal.speak(&quot;'+esc(id)+'&quot;,false,this)">🔊 Hør hvad jeg øver</button><p class="learning-voice-note" aria-live="polite"></p></section>';
 }
-function result(id,correct,total,kind){
+function result(id,correct,total,kind,mistakes=[]){
  const g=get(id);if(!g)return "";
- const writing=kind==="storywrite";
+ const writing=kind==="storywrite",maze=kind==="maze"||kind==="maze-lost",mazeLost=kind==="maze-lost";
  const raw=Number(correct),count=Number(total),score=Number.isFinite(raw)&&Number.isFinite(count)&&count>0?Math.max(0,Math.min(count,raw)):0,share=count?score/count:0;
  let observation="";
  if(writing)observation="Du har skrevet dine tekster med de dele, opgaven bad om. Sitet har ikke vurderet, om historien hænger sammen, eller om ordene er stavet rigtigt.";
+ else if(mazeLost)observation="Du fandt "+score+" af "+count+" ord, før spøgelset fangede dig. Runden er ikke gennemført, men du har øvet dig på at genkende konsonantforbindelser.";
+ else if(maze)observation="Du fandt alle "+count+" ord. Du kan nu øve dig med en anden konsonantforbindelse.";
  else if(count<=0)observation="Her kan du fortælle, hvad du øvede dig på.";
  else if(share>=.8)observation="Du klarede "+score+" af "+count+" opgaver i første forsøg. Du viste, at du kunne meget af det i denne runde.";
  else if(share>=.4)observation="Du klarede "+score+" af "+count+" opgaver i første forsøg. Nogle opgaver gik godt, og andre var sværere.";
  else observation="Du klarede "+score+" af "+count+" opgaver i første forsøg. Her er det en god idé at øve videre med hjælp og nye eksempler.";
- const next=writing?"Læs en af dine historier højt for en anden. Prøv sammen at finde steder, der skal forklares tydeligere.":g.next;
+ let next=writing?"Læs en af dine historier højt for en anden. Prøv sammen at finde steder, der skal forklares tydeligere.":g.next;
+ const wrong=Array.isArray(mistakes)?mistakes:[];
+ if(!writing&&wrong.length){
+  const first=wrong[0],detail=typeof first==="string"?first:(first?.hint||first?.question||"");
+  const clean=String(detail).trim().replace(/s+/g," ");
+  if(clean)next="Du var i tvivl ved mindst én opgave. Prøv først denne strategi: "+clean+" Prøv derefter et nyt eksempel.";
+ }
  return '<section class="learning-result" aria-label="Hvad har jeg øvet og vist?"><span class="learning-eyebrow">📖 MIN LÆRING I DETTE SPIL</span><h2>Hvad øvede jeg – og hvad er næste skridt?</h2><button class="learning-listen" type="button" onclick="Laeringsmaal.speak(&quot;'+esc(id)+'&quot;,true,this)">🔊 Hør min tilbagemelding</button><p class="learning-voice-note" aria-live="polite"></p><div class="learning-result-grid"><div><strong>Det har jeg øvet</strong><p>'+esc(g.practice)+'.</p></div><div><strong>Det viste jeg i spillet</strong><p>'+esc(observation)+'</p></div><div><strong>Det vil jeg lære at kunne</strong><p>'+esc(g.learning)+'</p></div><div><strong>Det kan jeg gøre næste gang</strong><p>'+esc(next)+'</p></div></div><div class="learning-reflect"><strong>Kan du vise, hvordan du gør?</strong><p>'+esc(g.show)+'</p><div class="learning-reflect-actions"><button type="button" onclick="Laeringsmaal.respond(this,1)">✅ Jeg vil prøve at vise det</button><button type="button" onclick="Laeringsmaal.respond(this,0)">🌱 Jeg vil øve mere</button></div><p class="learning-response" role="status" aria-live="polite"></p></div><p class="learning-disclaimer">Et spil viser, hvad du gjorde i dag. Det fortæller ikke alene, om du har lært det for altid. Tal gerne med din lærer om, hvad du kan vise med et nyt eksempel.</p></section>';
 }
 function respond(button,choice){
