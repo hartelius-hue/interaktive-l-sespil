@@ -136,7 +136,7 @@ function writing(){
  h+='<label for="sentence">2. Skriv din egen sætning</label><p class="muted">Du kan begynde sådan: '+esc(q.starter)+' Brug mindst '+limit+' ord, og afslut med punktum, spørgsmålstegn eller udråbstegn.</p>';
  h+='<textarea id="sentence" rows="3" maxlength="650" placeholder="Skriv en sætning med ordet ..." '+(state.review?"readonly":"")+' oninput="Ordforraad.setText(&quot;sentence&quot;,this.value)">'+esc(state.sentence)+'</textarea>';
  if(!state.review)h+='<div class="actions"><button class="btn secondary" type="button" onclick="Ordforraad.reviewWriting()">Se på min sætning →</button></div>';
- if(state.review){
+ if(state.review && !state.finished){
   h+='<div class="example"><strong>Sammenlign med et eksempel</strong><p><strong>Ordet kan forklares sådan:</strong> '+esc(q.definition)+'</p><p><strong>Eksempel på en sætning:</strong> '+esc(q.example)+'</p><p>Det er ikke den eneste rigtige måde at bruge ordet på.</p></div>';
   h+='<p><strong>3. Undersøg dit eget arbejde</strong></p><div class="review">'+[
   "Jeg har forklaret, hvad ordet betyder, med mine egne ord.",
@@ -152,9 +152,10 @@ function renderPlay(){
  const id=state.id,q=current(),g=GAMES[id],total=state.rounds.length;
  let h='<div class="topline"><a class="btn light" href="index.html?omraade=ordforraad">← Vælg øveområde</a><span class="tiny">'+titleLevels[level]+' · Opgave '+(state.at+1)+' af '+total+'</span></div>';
  h+=banner(id,"h1")+'<div class="progress" role="progressbar" aria-label="Fremgang" aria-valuemin="0" aria-valuemax="'+total+'" aria-valuenow="'+state.at+'"><div style="width:'+(100*state.at/total)+'%"></div></div>';
- h+='<section class="stage">'+(window.Laeringsmaal?.intro(id)||'')+question()+feedback();
+ h+='<section class="stage"><div class="micro-learning"><span aria-hidden="true">🎯</span><strong>Det øver jeg:</strong> '+esc(g.focus)+'.</div>'+question()+feedback();
  if(state.finished)h+='<div class="actions"><button class="btn secondary" type="button" onclick="Ordforraad.next()">'+(state.at+1===total?"Se min afslutning →":"Næste opgave →")+'</button></div>';
- h+='</section><section class="info"><strong>Det øver du:</strong> '+esc(g.focus)+'. <span class="muted">Du må gerne bruge Læsemakkerens råd. Det vigtigste er, at du kan forklare din tankegang.</span></section>';
+ h+='<details class="learning-details"><summary>📖 Se mine læringsmål og få dem læst højt</summary>'+(window.Laeringsmaal?.intro(id)||'')+'</details></section>';
+ h+='<section class="info"><strong>Et læseråd:</strong> '+esc(g.advice)+' <span class="muted">Du kan også trykke på Læsemakkeren og få rådet læst højt.</span></section>';
  app.innerHTML=h;window.scrollTo(0,0);
 }
 function answer(index){
