@@ -152,7 +152,7 @@ function renderPlay(){
  const id=state.id,q=current(),g=GAMES[id],total=state.rounds.length;
  let h='<div class="topline"><a class="btn light" href="index.html?omraade=ordforraad">← Vælg øveområde</a><span class="tiny">'+titleLevels[level]+' · Opgave '+(state.at+1)+' af '+total+'</span></div>';
  h+=banner(id,"h1")+'<div class="progress" role="progressbar" aria-label="Fremgang" aria-valuemin="0" aria-valuemax="'+total+'" aria-valuenow="'+state.at+'"><div style="width:'+(100*state.at/total)+'%"></div></div>';
- h+='<section class="stage"><div class="micro-learning"><span aria-hidden="true">🎯</span><strong>Det øver jeg:</strong> '+esc(g.focus)+'.</div>'+question()+feedback();
+ h+='<section class="stage"><div class="micro-learning"><span aria-hidden="true">🎯</span><strong>Det øver jeg:</strong> '+esc(g.focus)+'. <button class="micro-advice" type="button" onclick="window.Laesemakker?.open?.()">🦉 Få et læseråd</button></div>'+question()+feedback();
  if(state.finished)h+='<div class="actions"><button class="btn secondary" type="button" onclick="Ordforraad.next()">'+(state.at+1===total?"Se min afslutning →":"Næste opgave →")+'</button></div>';
  h+='<details class="learning-details"><summary>📖 Se mine læringsmål og få dem læst højt</summary>'+(window.Laeringsmaal?.intro(id)||'')+'</details></section>';
  h+='<section class="info"><strong>Et læseråd:</strong> '+esc(g.advice)+' <span class="muted">Du kan også trykke på Læsemakkeren og få rådet læst højt.</span></section>';
