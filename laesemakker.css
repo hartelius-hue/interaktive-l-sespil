@@ -37,3 +37,6 @@
 .lm-bubble{background:linear-gradient(135deg,#eaf9f3,#f3f9fc);border-color:#c5e3da}
 .lm-panel button.lm-speak{background:linear-gradient(120deg,#117971,#235a71);border-color:#116a65}
 @media(max-width:590px){.lm-launch .lm-avatar{width:43px;height:44px}.lm-launch{padding:5px}}
+
+/* Stop lyd skal ikke stå fremme, når browseren ikke læser op. */
+.lm-actions .lm-stop[hidden]{display:none!important}
