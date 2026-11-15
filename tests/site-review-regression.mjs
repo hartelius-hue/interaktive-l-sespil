@@ -13,7 +13,7 @@ for(const [name,html] of [["index",index],["starttest",start],["trainer",trainer
 }
 assert.ok(index.includes('id="til-foraeldre"'),"parent panel on home");
 assert.ok(index.includes("De 24 opgaver i »Find din læsevej«"),"transparent parent information");
-assert.ok(index.includes("requestAnimationFrame(()=>{const d=document.getElementById('til-foraeldre')"),"deep link to parents");
+assert.ok(index.includes("window.addEventListener('hashchange',openParentFromHash)")&&index.includes("requestAnimationFrame(openParentFromHash)"),"deep link to parents works without full page reload");
 assert.ok(index.includes("Læsehjælp: Til")&&index.includes("Læsehjælp: Fra"),"support is distinctly named");
 assert.ok(!index.includes("Hvad vil du træne i dag?"),"student uses øve");
 assert.ok(index.includes("Hvad vil du øve i dag?"));
