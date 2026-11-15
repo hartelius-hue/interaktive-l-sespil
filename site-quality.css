@@ -34,3 +34,11 @@ body:not(.sites-embed) #app{padding-bottom:20px}
 #laesemakker-root .lm-panel{max-height:calc(100dvh - 105px);width:min(330px,calc(100vw - 20px))}
 }
 @media print{.parent-info:not([open]){display:none}.foot,body>footer{padding-bottom:16px!important}#laesemakker-root{display:none!important}}
+
+/* I mellemstore vinduer ligger den brede flydende knap over højre tekstspalte.
+   Brug den lille 3D-ugle her; rådet åbnes stadig med samme knap. */
+@media(min-width:591px) and (max-width:1510px){
+  body:has(.choice-home) #laesemakker-root .lm-launch{width:64px;min-width:64px;min-height:60px;padding:4px;border-radius:50%;justify-content:center}
+  body:has(.choice-home) #laesemakker-root .lm-launch-label{display:none}
+  body:has(.choice-home) #laesemakker-root .lm-launch .lm-avatar{height:48px;width:48px}
+}
