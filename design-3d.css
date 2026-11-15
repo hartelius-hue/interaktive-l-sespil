@@ -76,6 +76,18 @@ body .mission h1{font-size:25px}
 .card:has(.extra-card-banner) > .btn{align-self:stretch;text-align:center;margin:0 16px 16px;min-height:44px;background:linear-gradient(110deg,#147d78,#245f78)}
 .card:has(.extra-card-banner) .extra-banner-name{display:block;color:white}
 
-/* Ordforråd er et selvstændigt, foreløbigt éns-pils-område. */
-.choice-selected[data-area="ordforraad"] .choice-game-grid{grid-template-columns:minmax(0,440px);justify-content:center}
-@media(max-width:520px){.choice-selected[data-area="ordforraad"] .choice-game-grid{grid-template-columns:minmax(0,1fr)}}
+
+/* Ordforråd har nu fem 3D-kort: det eksisterende Ordspor og fire nye spil. */
+.choice-selected[data-area="ordforraad"] .choice-game-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:17px;justify-content:stretch}
+.choice-selected[data-area="ordforraad"] .learning-game-card{min-width:0}
+.learning-game-card:is([data-game="betydningsbro"],[data-game="begrebsvaerksted"],[data-game="ordvalg"],[data-game="ordlaboratorium"]) .game-banner-art{
+ background-size:105% auto;background-position:50% 46%;animation:word3d-pan 8s ease-in-out infinite alternate;
+}
+.learning-game-card:is([data-game="betydningsbro"],[data-game="begrebsvaerksted"],[data-game="ordvalg"],[data-game="ordlaboratorium"]) .game-banner-art::before{
+ content:"";position:absolute;left:-65%;top:-55%;height:240%;width:90px;transform:rotate(19deg);background:linear-gradient(90deg,transparent,#ebfff32f,transparent);z-index:1;pointer-events:none;animation:word3d-glimmer 7.5s ease-in-out infinite;
+}
+@keyframes word3d-pan{from{background-size:105% auto;background-position:47% 44%}to{background-size:114% auto;background-position:54% 50%}}
+@keyframes word3d-glimmer{0%,17%{left:-65%;opacity:0}33%{opacity:.8}52%,100%{left:125%;opacity:0}}
+@media(max-width:700px){.choice-selected[data-area="ordforraad"] .choice-game-grid{grid-template-columns:1fr}}
+@media(max-width:520px){.learning-game-card:is([data-game="betydningsbro"],[data-game="begrebsvaerksted"],[data-game="ordvalg"],[data-game="ordlaboratorium"]) .game-banner-art{background-size:cover!important;animation:none}}
+@media(prefers-reduced-motion:reduce){.learning-game-card:is([data-game="betydningsbro"],[data-game="begrebsvaerksted"],[data-game="ordvalg"],[data-game="ordlaboratorium"]) .game-banner-art,.learning-game-card:is([data-game="betydningsbro"],[data-game="begrebsvaerksted"],[data-game="ordvalg"],[data-game="ordlaboratorium"]) .game-banner-art::before{animation:none}}
