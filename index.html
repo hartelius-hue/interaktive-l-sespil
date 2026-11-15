@@ -917,11 +917,11 @@ function renderHome(){
  h+='<button class="choice-show-all" type="button" onclick="setCategory(&quot;all&quot;)">Se alle 38 spil</button></div>';
  h+='<div class="choice-category-grid">'+cats.map(c=>'<button class="choice-category" type="button" data-area="'+c.id+'" aria-pressed="'+(homeCategory===c.id)+'" onclick="setCategory(&quot;'+c.id+'&quot;)" style="--category-bg:'+c.tone+'"><span class="choice-category-icon" aria-hidden="true">'+c.icon+'</span><span class="choice-category-content"><strong>'+esc(c.title)+'</strong><span class="choice-category-wish">'+esc(c.wish)+'</span><span class="choice-category-hint">'+esc(c.hint)+'</span><span class="choice-category-foot"><span>'+c.ids.length+' spil</span><span>Vælg spil →</span></span></span></button>').join('')+'</div></section>';
  if(current){
-  h+='<section class="choice-selected" id="selected-games" aria-labelledby="selected-games-title"><div class="choice-selected-heading">';
+  h+='<section class="choice-selected" data-area="'+current.id+'" id="selected-games" aria-labelledby="selected-games-title"><div class="choice-selected-heading">';
   h+='<button type="button" class="choice-back" onclick="setCategory(&quot;&quot;)">← Vælg et andet område</button>';
   h+='<span class="choice-eyebrow">DIT ØVEOMRÅDE</span><h2 id="selected-games-title">'+current.icon+' '+esc(current.title)+'</h2>';
   h+='<p>'+esc(current.wish)+'</p><p class="choice-selected-hint">'+esc(current.hint)+'</p>';
-  h+='<div class="choice-count">'+current.ids.length+' spil, du kan vælge mellem</div></div>';
+  h+='<div class="choice-count">'+(current.ids.length===1?'1 spil, du kan prøve':current.ids.length+' spil, du kan vælge mellem')+'</div></div>';
   h+='<div class="choice-level-pick">'+levelButtons()+'<p>Basis har færre eller lettere opgaver. På vej er midt imellem. Udfordring giver mere at arbejde med. Du må gerne skifte niveau.</p></div>';
   h+='<div class="choice-game-grid">'+current.ids.map(gameCard).join('')+'</div></section>';
  }
