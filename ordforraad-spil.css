@@ -96,3 +96,14 @@ footer{background:#f8fbfa;border-top:1px solid #d7e5df;padding:24px 0;font-size:
 @media(max-width:560px){.shell{width:calc(100% - 22px)}.hero{grid-template-columns:1fr;padding:26px}.hero img{width:100px;justify-self:end;margin:-15px 0}.hero h1{font-size:35px}.stage{padding:20px 17px}.answers,.bins{grid-template-columns:1fr}.banner-orbit.second{display:none}.banner{background-size:cover!important;animation:none}.banner h1,.banner h2{font-size:31px}.game-body{padding:16px}.topline{align-items:flex-start}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.banner,.banner::before,.banner-orbit{animation:none!important}.btn,.answers button,.bins button{transition:none}.btn:hover,.answers button:hover,.bins button:hover{transform:none}}
 @media print{header,footer,.btn,.back-link,#laesemakker-root{display:none!important}body{background:#fff}.banner{animation:none;color:#163b51;background:#fff!important;border:1px solid #ddd}.banner::before,.banner::after,.banner-orbit{display:none}.banner h1,.banner h2,.banner-copy p{color:#17394e;text-shadow:none}}
+
+/* Mobilvenligt læringsflow: elevens opgave før den lange faglige forklaring. */
+.micro-learning{display:flex;align-items:baseline;gap:9px;flex-wrap:wrap;padding:12px 15px;margin:4px 0 22px;background:#eaf8f2;border:1px solid #b6dfd0;border-radius:12px;color:#194f4a;font-size:15px;line-height:1.5}
+.micro-learning strong{font-weight:950}
+.stage>.eyebrow{display:block;margin-top:6px;margin-bottom:10px}
+.stage .word-token{display:block;width:max-content;max-width:100%;overflow-wrap:anywhere;margin:11px 0 24px}
+.learning-details{margin-top:27px;padding:0;border:2px solid #d7e8df;border-radius:16px;background:#f8fcfa;overflow:hidden}
+.learning-details summary{cursor:pointer;padding:14px 18px;font-weight:900;color:#1e5660;background:#ecf7f2}
+.learning-details summary:hover{background:#e0f2e9}
+.learning-details .learning-intro{margin:12px}
+@media(max-width:560px){.topline>.btn.light{display:none}.topline{justify-content:flex-end}.stage .word-token{font-size:34px}.micro-learning{font-size:14px}.learning-details summary{font-size:14px}}
