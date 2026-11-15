@@ -32,6 +32,7 @@ assert.ok(!index.includes("Hjælp mig med at vælge →"),"single navigation");
 const c0=index.indexOf("const LEARNING_CATEGORIES="),c1=index.indexOf(";\nconst EXTRA_CATALOG=",c0);
 const cats=JSON.parse(index.slice(c0+"const LEARNING_CATEGORIES=".length,c1));
 assert.equal(cats.length,8,"eight learning areas");
+assert.ok(cats.find(c=>c.id==="tekster").hint.includes("står direkte i teksten"),"pupil-facing text comprehension uses clear language");
 assert.equal(cats.flatMap(c=>c.ids).length,42,"42 links in catalog");
 assert.equal(new Set(cats.flatMap(c=>c.ids)).size,42,"no duplicate games");
 assert.ok(start.includes("Hvad er du mest sikker på:"),"start intro speaks naturally");
