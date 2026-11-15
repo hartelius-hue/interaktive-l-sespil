@@ -21,6 +21,11 @@ try{
  assert.equal(await page.locator(".parent-info").getAttribute("open"),"","parent information opens");
  assert.ok((await page.locator(".parent-info").innerText()).includes("10–15 minutter"),"practical advice for parents");
  assert.ok((await page.locator(".parent-info").innerText()).includes("Ikke en prøve"),"transparent limits");
+ const desktopPosition=await page.evaluate(()=>{
+   const a=document.querySelector(".parent-info").getBoundingClientRect(),b=document.querySelector("#laesemakker-root .lm-launch").getBoundingClientRect();
+   return {parent:{left:a.left,right:a.right,top:a.top,bottom:a.bottom},owl:{left:b.left,right:b.right,top:b.top,bottom:b.bottom}};
+ });
+ assert.ok(desktopPosition.owl.left>=desktopPosition.parent.right-1,"owl launcher must not cover parent information on medium desktop: "+JSON.stringify(desktopPosition));
  await page.screenshot({path:"test-results/review-home-desktop.png",fullPage:true});
  await page.locator(".lm-launch").click();
  assert.ok(await page.locator("#lm-panel").isVisible(),"owl can be opened");
