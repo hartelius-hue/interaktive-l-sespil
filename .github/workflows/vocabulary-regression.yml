@@ -1,14 +1,20 @@
-name: Vocabulary games regression
+name: Læseværkstedet functionality and visual QA
 on:
   push:
     branches: [main]
     paths:
       - 'ordforraad-spil.*'
       - 'index.html'
+      - 'starttest.html'
+      - 'st3-traening.html'
+      - 'starttest-3d.css'
+      - 'site-quality.css'
+      - 'laesemakker.css'
       - 'design-3d.css'
       - 'laesemakker.js'
       - 'laeringsmaal.js'
       - 'tests/ordforraad-*.mjs'
+      - 'tests/site-review-*.mjs'
       - 'assets/3d/banners/**'
       - '.github/workflows/vocabulary-regression.yml'
   workflow_dispatch:
@@ -24,7 +30,9 @@ jobs:
         with:
           node-version: '22'
       - name: Semantic, functionality and privacy checks
-        run: node tests/ordforraad-regression.mjs
+        run: |
+          node tests/ordforraad-regression.mjs
+          node tests/site-review-regression.mjs
       - name: Install Chromium for real browser tests
         run: |
           npm install --no-save playwright@1.56.1
@@ -33,11 +41,13 @@ jobs:
         run: |
           python3 -m http.server 8765 --bind 127.0.0.1 >/tmp/vocab-http.log 2>&1 &
       - name: Browser checks across all levels and mobile
-        run: node tests/ordforraad-browser.mjs
+        run: |
+          node tests/ordforraad-browser.mjs
+          node tests/site-review-browser.mjs
       - name: Attach visual QA screenshots
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: vocabulary-3d-qa
+          name: laesevaerksted-qa
           path: test-results/
           if-no-files-found: ignore
