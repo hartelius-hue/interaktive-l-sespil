@@ -107,3 +107,15 @@ footer{background:#f8fbfa;border-top:1px solid #d7e5df;padding:24px 0;font-size:
 .learning-details summary:hover{background:#e0f2e9}
 .learning-details .learning-intro{margin:12px}
 @media(max-width:560px){.topline>.btn.light{display:none}.topline{justify-content:flex-end}.stage .word-token{font-size:34px}.micro-learning{font-size:14px}.learning-details summary{font-size:14px}}
+
+/* Læseråd uden permanent overlap på elevens mobilskærm. */
+.micro-advice{display:none;align-items:center;gap:6px;font-weight:900;font-size:13px;white-space:nowrap;background:#fffaf0;border:1px solid #e4c780;border-radius:10px;padding:8px 10px;color:#23526b}
+@media(max-width:560px){
+ .micro-learning{display:block}
+ .micro-learning strong{margin-right:4px}
+ .micro-advice{display:inline-flex;margin-top:11px;min-height:40px}
+ #laesemakker-root{position:static!important;display:flex;justify-content:center;right:auto!important;bottom:auto!important;margin:0 auto 28px;width:max-content;max-width:100%;padding:0 12px}
+ #laesemakker-root .lm-launch{width:auto;min-width:175px;min-height:52px;padding:6px 14px 6px 7px;border-radius:100px}
+ #laesemakker-root .lm-launch-label{display:block}
+ #laesemakker-root .lm-panel{position:fixed;right:10px;bottom:12px;top:auto;z-index:999;max-height:calc(100vh - 24px);width:min(350px,calc(100vw - 20px));overflow:auto}
+}
