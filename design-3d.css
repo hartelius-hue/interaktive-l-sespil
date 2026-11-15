@@ -23,6 +23,7 @@ body{background:linear-gradient(180deg,#eef7f2 0%,#f7faf9 45%,#f3f4f9 100%);colo
 .choice-category[data-area="stavning"]::before{background-image:url("assets/3d/kategori_stavning.webp")}
 .choice-category[data-area="orddele"]::before{background-image:url("assets/3d/kategori_orddele.webp")}
 .choice-category[data-area="saetninger"]::before{background-image:url("assets/3d/kategori_saetninger.webp")}
+.choice-category[data-area="ordforraad"]::before{background-image:url("assets/3d/banners/vocab.webp")}
 .choice-category[data-area="tekster"]::before{background-image:url("assets/3d/kategori_tekster.webp")}
 .choice-category[data-area="flyd"]::before{background-image:url("assets/3d/kategori_flyd.webp")}
 .choice-category[data-area="skrive"]::before{background-image:url("assets/3d/kategori_skrive.webp")}
@@ -74,3 +75,7 @@ body .mission h1{font-size:25px}
 .card:has(.extra-card-banner) > p{margin:0 16px 13px;padding:0;flex:1;font-size:14px;line-height:1.55}
 .card:has(.extra-card-banner) > .btn{align-self:stretch;text-align:center;margin:0 16px 16px;min-height:44px;background:linear-gradient(110deg,#147d78,#245f78)}
 .card:has(.extra-card-banner) .extra-banner-name{display:block;color:white}
+
+/* Ordforråd er et selvstændigt, foreløbigt éns-pils-område. */
+.choice-selected[data-area="ordforraad"] .choice-game-grid{grid-template-columns:minmax(0,440px);justify-content:center}
+@media(max-width:520px){.choice-selected[data-area="ordforraad"] .choice-game-grid{grid-template-columns:minmax(0,1fr)}}
