@@ -14,7 +14,7 @@ for(const id of ids){
  assert.ok(read("assets/3d/banners/"+id+".svg").startsWith("<svg"),id+" 3D SVG");
 }
 function create(level=2,selected=""){
- const store=new Map(),app={innerHTML:""},live={textContent:""};
+ const store=new Map(),app={innerHTML:"",querySelector(){return {disabled:false};}},live={textContent:""};
  const location={search:"?niveau="+level+(selected?"&spil="+selected:""),href:"https://example.com/ordforraad-spil.html?niveau="+level+(selected?"&spil="+selected:"")};
  const dom={getElementById:function(id){return id==="app"?app:live;}};
  const sandbox={
