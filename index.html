@@ -1134,7 +1134,9 @@ function showTeacher(){const html=`<div class="modal-back" role="presentation" o
 function closeTeacher(e){if(e&&e.target!==e.currentTarget)return;document.getElementById('modalRoot').innerHTML='';}
 function clearStats(){if(!window.confirm('Vil du slette øveresultaterne for alle, der har brugt denne browser? Det kan ikke fortrydes.'))return;stats={};try{localStorage.removeItem('laese3c_extra_done');localStorage.removeItem('laese3c_maze_lost');localStorage.removeItem('laese3c_stats');}catch(e){}save();closeTeacher();render();announce('Lokale øveresultater er ryddet.');}
 render();
-if(location.hash==='#til-foraeldre')requestAnimationFrame(()=>{const d=document.getElementById('til-foraeldre');if(d){d.open=true;d.scrollIntoView({block:'start'});}});
+function openParentFromHash(){if(location.hash!=='#til-foraeldre')return;const d=document.getElementById('til-foraeldre');if(d){d.open=true;requestAnimationFrame(()=>d.scrollIntoView({block:'start'}));}}
+window.addEventListener('hashchange',openParentFromHash);
+requestAnimationFrame(openParentFromHash);
 </script>
 <script src="laesemakker.js" defer></script>
 </body>
