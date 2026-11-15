@@ -119,3 +119,5 @@ footer{background:#f8fbfa;border-top:1px solid #d7e5df;padding:24px 0;font-size:
  #laesemakker-root .lm-launch-label{display:block}
  #laesemakker-root .lm-panel{position:fixed;right:10px;bottom:12px;top:auto;z-index:999;max-height:calc(100vh - 24px);width:min(350px,calc(100vw - 20px));overflow:auto}
 }
+
+.micro-learning>span[aria-hidden="true"]{margin-right:6px}
