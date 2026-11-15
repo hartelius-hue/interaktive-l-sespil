@@ -1,0 +1,36 @@
+/* Læseværkstedet 3.C — konsekvent navigation og tilgængelighed. Gennemgået 15.11.2026. */
+.top-actions a.topbtn,.topbar a.topbtn{display:inline-flex;align-items:center;justify-content:center;text-decoration:none;line-height:1.3;min-height:43px}
+.top-actions a.topbtn:hover,.topbar a.topbtn:hover{text-decoration:none}
+.top-actions a.topbtn:focus-visible,.topbar a.topbtn:focus-visible{outline:3px solid #ffce79;outline-offset:3px}
+.foot,body>footer{padding-bottom:max(112px,env(safe-area-inset-bottom,0px))!important}
+.foot-inner{align-items:flex-start}
+.foot-inner>a,.foot a{color:inherit}
+.foot-inner span{min-width:0;overflow-wrap:anywhere}
+.ai-credit{display:block;font-size:12px;line-height:1.6;opacity:.85}
+.parent-info{max-width:1080px;margin:28px auto 8px;border:2px solid #cfe4db;background:#fff;border-radius:20px;box-shadow:0 5px 0 #e0efe8;overflow:hidden;color:#264b5f}
+.parent-info summary{cursor:pointer;padding:18px 21px;background:linear-gradient(110deg,#e5f7ef,#eff6fc);font-size:18px;font-weight:900;color:#1d515a}
+.parent-info summary:hover{background:#d9f2e8}
+.parent-info>div{padding:6px 21px 20px}
+.parent-info p{margin:13px 0;line-height:1.6;font-size:15px;color:#34596c}
+.parent-info strong{color:#224b57}
+.teacher-mini-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:11px 0 14px}
+.teacher-mini-grid section{padding:13px 16px;border:1px solid #dceae2;border-radius:13px;background:#f7fbf9;min-width:0}
+.teacher-mini-grid h4{margin:0 0 7px;font-size:16px;color:#1d4f55}
+.teacher-mini-grid ol{padding-left:22px;margin:6px 0 0;font-size:14px;line-height:1.65}
+.teacher-mini-grid li{margin-bottom:6px}
+.source-check{font-size:13px;color:#456b71}
+.teacher-reset{border:2px solid #c27e61!important;background:#fff4ed!important;color:#734225!important;cursor:pointer}
+.teacher-reset:hover{background:#ffeadb!important}
+body:not(.sites-embed) #app{padding-bottom:20px}
+#laesemakker-root .lm-panel{max-height:min(75vh,560px);overflow:auto}
+@media(max-width:750px){
+.teacher-mini-grid{grid-template-columns:1fr}
+.parent-info{margin:22px 0}
+.parent-info summary{font-size:16px}
+}
+@media(max-width:590px){
+.foot,body>footer{padding-bottom:max(100px,env(safe-area-inset-bottom,0px))!important}
+.top-actions a.topbtn{text-align:center;font-size:12px;padding:10px}
+#laesemakker-root .lm-panel{max-height:calc(100dvh - 105px);width:min(330px,calc(100vw - 20px))}
+}
+@media print{.parent-info:not([open]){display:none}.foot,body>footer{padding-bottom:16px!important}#laesemakker-root{display:none!important}}
