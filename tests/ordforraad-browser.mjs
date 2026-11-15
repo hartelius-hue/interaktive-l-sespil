@@ -59,6 +59,11 @@ try{
  await page.screenshot({path:"test-results/ordforraad-game-desktop.png",fullPage:true});
  await page.setViewportSize({width:390,height:844});
  await page.goto(base+"/ordforraad-spil.html?spil=ordlaboratorium&niveau=1",{waitUntil:"networkidle"});
+ assert.equal(await page.locator("#laesemakker-root").evaluate(el=>getComputedStyle(el).position),"static","owl does not cover mobile learning text");
+ await page.locator(".micro-advice").click();
+ assert.ok(await page.locator("#lm-panel").isVisible(),"inline advice opens owl panel");
+ await page.locator(".lm-close").click();
+ assert.ok(!(await page.locator("#lm-panel").isVisible()),"owl panel closes");
  await page.screenshot({path:"test-results/ordforraad-mobile.png",fullPage:true});
  const sizes=await page.evaluate(()=>({viewport:innerWidth,body:document.body.scrollWidth,document:document.documentElement.scrollWidth}));
  assert.ok(sizes.document<=sizes.viewport+2,"no horizontal overflow on mobile: "+JSON.stringify(sizes));
