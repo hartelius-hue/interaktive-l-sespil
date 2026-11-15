@@ -1,0 +1,43 @@
+name: Vocabulary games regression
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'ordforraad-spil.*'
+      - 'index.html'
+      - 'design-3d.css'
+      - 'laesemakker.js'
+      - 'laeringsmaal.js'
+      - 'tests/ordforraad-*.mjs'
+      - 'assets/3d/banners/**'
+      - '.github/workflows/vocabulary-regression.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  vocabulary-tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Semantic, functionality and privacy checks
+        run: node tests/ordforraad-regression.mjs
+      - name: Install Chromium for real browser tests
+        run: |
+          npm install --no-save playwright@1.56.1
+          npx playwright install chromium --with-deps
+      - name: Start local static web server
+        run: |
+          python3 -m http.server 8765 --bind 127.0.0.1 >/tmp/vocab-http.log 2>&1 &
+      - name: Browser checks across all levels and mobile
+        run: node tests/ordforraad-browser.mjs
+      - name: Attach visual QA screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: vocabulary-3d-qa
+          path: test-results/
+          if-no-files-found: ignore
