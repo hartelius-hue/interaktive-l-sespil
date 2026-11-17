@@ -17,6 +17,7 @@ on:
       - 'tests/ordforraad-*.mjs'
       - 'tests/site-review-*.mjs'
       - 'tests/progress-evaluation-*.mjs'
+      - 'tests/all-games-smoke-browser.mjs'
       - 'assets/3d/banners/**'
       - '.github/workflows/vocabulary-regression.yml'
   workflow_dispatch:
@@ -48,6 +49,7 @@ jobs:
           node tests/ordforraad-browser.mjs
           node tests/site-review-browser.mjs
           node tests/progress-evaluation-browser.mjs
+          node tests/all-games-smoke-browser.mjs
       - name: Attach visual QA screenshots
         if: always()
         uses: actions/upload-artifact@v4
