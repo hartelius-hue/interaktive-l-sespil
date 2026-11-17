@@ -87,9 +87,12 @@ function banner(id,tag){
 }
 function catalog(){
  state.id=null;
+ const finishedIds=new Set(window.LaeseFremgang?.completedIds(IDS)||[]);
  let h='<section class="hero"><div><span class="eyebrow">LÆSEVÆRKSTEDET 3.C · FORSTÅ NYE ORD</span><h1>Gå på opdagelse i ordene</h1><p>Fire nye spil, hvor du finder betydninger, opdager ordgrupper og selv bruger nye ord. Vælg et spil og et niveau.</p></div><img src="assets/3d/laesemakker-ugle.svg" alt="" aria-hidden="true"></section>';
  h+='<div class="levels" role="group" aria-label="Vælg niveau"><strong>Dit niveau:</strong>'+[1,2,3].map(function(n){return '<button type="button" class="level" aria-pressed="'+(n===level)+'" onclick="Ordforraad.setLevel('+n+')">'+titleLevels[n]+'</button>';}).join('')+'</div>';
- h+='<div class="game-grid">'+IDS.map(function(id){const g=GAMES[id];return '<article class="game-card">'+banner(id,"h2")+'<div class="game-body"><span class="skill-label">'+esc(g.focus)+'</span><p>'+esc(g.short)+'</p><div class="card-footer"><span class="tiny">'+(id==="ordlaboratorium"?"3 skriveopgaver":"4 opgaver")+' · '+titleLevels[level]+'</span><button class="btn secondary" type="button" onclick="Ordforraad.start(&quot;'+id+'&quot;)">Start spillet →</button></div></div></article>';}).join('')+'</div>';
+ const doneCount=IDS.filter(id=>finishedIds.has(id)).length;
+ h+='<div class="info"><strong>'+(doneCount===IDS.length?'✓ Alle fire nye ordspil er gennemført':doneCount+' af 4 nye ordspil gennemført')+'</strong><p>Et spil tæller som gennemført, når du har afsluttet alle opgaverne på ét niveau.</p></div>';
+ h+='<div class="game-grid">'+IDS.map(function(id){const g=GAMES[id],done=finishedIds.has(id);return '<article class="game-card'+(done?' is-completed':'')+'" data-game="'+id+'" data-completed="'+String(done)+'">'+banner(id,"h2")+'<div class="game-body"><span class="skill-label">'+esc(g.focus)+'</span><p>'+esc(g.short)+'</p>'+(done?'<p class="completion-confirmation">✓ Gennemført på denne enhed</p>':'')+'<div class="card-footer"><span class="tiny">'+(id==="ordlaboratorium"?"3 skriveopgaver":"4 opgaver")+' · '+titleLevels[level]+'</span><button class="btn secondary" type="button" onclick="Ordforraad.start(&quot;'+id+'&quot;)">'+(done?'Prøv igen →':'Start spillet →')+'</button></div></div></article>';}).join('')+'</div>';
  h+='<section class="info"><h2>Sådan øver du nye ord</h2><p>Prøv først at løse opgaven selv. Læs forklaringen bagefter, og sig gerne ordet højt. Hvis du skriver dine egne sætninger, skal du selv og gerne en voksen se på, om de giver mening.</p><p>Din tekst gemmes ikke, når du forlader siden. Vi gemmer kun, hvilke spil der er gennemført på denne enhed.</p></section>'+helpMarkup();
  app.innerHTML=h;window.scrollTo(0,0);setAdvice("ordforraad");
 }
@@ -197,11 +200,13 @@ function finishWriting(){
 function next(){if(!state.finished||!state.id)return;state.at++;if(state.at>=state.rounds.length)return finish();setupRound();renderPlay();}
 function finish(){
  const id=state.id,g=GAMES[id];if(!g)return catalog();
- try{const k="laese3c_extra_done",a=JSON.parse(localStorage.getItem(k)||"[]");const u=new Set(Array.isArray(a)?a:[]);u.add(id);localStorage.setItem(k,JSON.stringify([...u]));}catch(e){}
+ const saved=window.LaeseFremgang?window.LaeseFremgang.record(id):(function(){try{const k="laese3c_extra_done",a=JSON.parse(localStorage.getItem(k)||"[]");const u=new Set(Array.isArray(a)?a:[]);u.add(id);localStorage.setItem(k,JSON.stringify([...u]));return true;}catch(e){return false;}})();
+ const saveMessage=window.LaeseFremgang?.notice(saved)||'';
  const writing=id==="ordlaboratorium",count=state.rounds.length;
  let h='<section class="finish-hero"><span class="eyebrow">DU HAR GENNEMFØRT '+esc(g.title.toLocaleUpperCase("da-DK"))+'</span><h1>Godt arbejdet!</h1>';
  if(writing){h+='<div class="result-value">'+count+' nye ord</div><p>Du har forklaret og brugt tre ord i dine egne sætninger.</p>';}
  else h+='<div class="result-value">'+state.points+' af '+count+'</div><p>Opgaver løst rigtigt i første forsøg. Tallene viser kun, hvordan du svarede i denne runde.</p>';
+ h+=saveMessage;
  h+='<div class="actions"><button class="btn" type="button" onclick="Ordforraad.start(&quot;'+id+'&quot;)">Spil igen ↻</button><a class="btn secondary" href="index.html?omraade=ordforraad">Vælg flere ordspil →</a></div></section>';
  if(writing){
   h+='<div class="info"><h2>Hvad har jeg øvet?</h2><p>Du har arbejdet med at forklare nye ord og bruge dem i egne sætninger. Programmet har ikke vurderet, om dine tekster er rigtige. Fortæl din lærer, hvordan du har brugt ordene, og prøv et nyt eksempel sammen.</p><p><strong>Mit næste skridt:</strong> Brug et af ordene i en ny samtale eller tekst. Kan en anden forstå det ud fra din sætning?</p></div>';
