@@ -42,3 +42,14 @@ body:not(.sites-embed) #app{padding-bottom:20px}
   body:has(.choice-home) #laesemakker-root .lm-launch-label{display:none}
   body:has(.choice-home) #laesemakker-root .lm-launch .lm-avatar{height:48px;width:48px}
 }
+
+/* Læseværksted 3.C: fælles og entydige flueben i alle otte øveområder. */
+.choice-category .category-completion{display:inline-flex;align-items:center;gap:5px;background:#fffdf9;border:1px solid #cfded6;padding:5px 9px;border-radius:999px;color:#2a625b;font-size:13px;font-weight:900}
+.choice-category.is-completed{border-color:#5aa78c!important;box-shadow:0 6px 0 #d3e8da,0 10px 23px #1d593a18}
+.choice-category.is-completed .category-completion{background:#d9f3e4;border-color:#78bea0;color:#125a3c}
+.choice-selected .completed-game-label{display:inline-flex;align-items:center;gap:5px;margin-top:10px;padding:6px 9px;background:#e3f8eb;border:1px solid #b6dfc7;border-radius:999px;color:#146346;font-size:13px;line-height:1.35}
+.learning-game-card.is-completed{border-color:#7abf9b;background:#f7fdf8}
+.choice-selected .completion-help{font-size:13px;color:#4d6d67;margin:17px 0 0;line-height:1.6}
+.completion-confirmation,.completion-warning{font-size:15px;font-weight:800;line-height:1.55;padding:13px 16px;border-radius:14px;margin:16px 0;background:#e7f9ee;border:2px solid #a4d9b5;color:#145c3d}
+.completion-warning{background:#fff4e6;border-color:#e8be8d;color:#754723}
+@media(max-width:600px){.choice-category .category-completion{font-size:12px}.choice-selected .completion-help{font-size:12px}}
