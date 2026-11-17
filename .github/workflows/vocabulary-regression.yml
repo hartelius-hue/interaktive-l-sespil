@@ -13,8 +13,10 @@ on:
       - 'design-3d.css'
       - 'laesemakker.js'
       - 'laeringsmaal.js'
+      - 'fremgang-3c.js'
       - 'tests/ordforraad-*.mjs'
       - 'tests/site-review-*.mjs'
+      - 'tests/progress-evaluation-*.mjs'
       - 'assets/3d/banners/**'
       - '.github/workflows/vocabulary-regression.yml'
   workflow_dispatch:
@@ -33,6 +35,7 @@ jobs:
         run: |
           node tests/ordforraad-regression.mjs
           node tests/site-review-regression.mjs
+          node tests/progress-evaluation-regression.mjs
       - name: Install Chromium for real browser tests
         run: |
           npm install --no-save playwright@1.56.1
@@ -44,6 +47,7 @@ jobs:
         run: |
           node tests/ordforraad-browser.mjs
           node tests/site-review-browser.mjs
+          node tests/progress-evaluation-browser.mjs
       - name: Attach visual QA screenshots
         if: always()
         uses: actions/upload-artifact@v4
