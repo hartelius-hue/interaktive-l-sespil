@@ -232,6 +232,19 @@ body{background:radial-gradient(ellipse at 12% 0%,#f4ecff,transparent 27%),radia
 .micro-goal strong{font-weight:900;color:#164f47}
 </style>
 <link rel="stylesheet" href="design-3d.css">
+<style id="jul-3c-integration">
+.christmas-opening{background:#102c36;border:5px solid #cda75a;border-radius:30px;overflow:hidden;margin:0 0 34px;box-shadow:0 16px 40px rgba(28,37,42,.16)}
+.christmas-opening-head{padding:24px clamp(20px,4vw,42px);display:flex;justify-content:space-between;align-items:center;gap:22px;flex-wrap:wrap;background:linear-gradient(125deg,#163c43,#254940);color:#fffbeb}
+.christmas-kicker{color:#f2d890;font-size:12px;font-weight:900;letter-spacing:.16em}
+.christmas-opening h2{font-family:Georgia,serif;font-size:clamp(29px,4vw,45px);line-height:1.05;font-weight:700;margin:7px 0 10px;color:#ffe9b6}
+.christmas-opening p{font-size:16px;line-height:1.6;margin:0;max-width:670px;color:#f5efdf}
+.christmas-fullscreen{background:#f6dfae;color:#283c35;text-decoration:none;padding:12px 17px;border-radius:99px;font-size:15px;font-weight:900;white-space:nowrap;box-shadow:0 4px 0 #a78343}
+.christmas-fullscreen:hover{background:#fff0cb;transform:translateY(1px)}
+.christmas-frame{border:0;display:block;width:100%;height:890px;background:#102c36}
+@media(max-width:800px){.christmas-frame{height:680px}.christmas-opening-head{padding:20px 22px}}
+@media(max-width:570px){.christmas-opening{margin-bottom:24px;border-width:3px;border-radius:21px}.christmas-opening-head{gap:14px}.christmas-frame{height:530px}.christmas-fullscreen{white-space:normal}}
+@media(prefers-reduced-motion:reduce){.christmas-fullscreen{transition:none}}
+</style>
 </head>
 <body>
   <header class="topbar"><div class="shell toprow">
@@ -914,7 +927,7 @@ function renderHome(){
    '<a class="learning-start" href="'+(newWordGame?'ordforraad-spil.html':'st3-traening.html')+'?spil='+encodeURIComponent(id)+'&amp;niveau='+difficulty+'&amp;omraade='+encodeURIComponent(current.id)+'">'+label+'</a>';
   return '<article class="learning-game-card'+(isCompleted?' is-completed':'')+'" data-game="'+id+'" data-completed="'+String(isCompleted)+'"><div class="game-banner-art" style="background-image:url(&quot;assets/3d/banners/'+id+'.'+(newWordGame?'svg':'webp')+'&quot;)"><h3 class="game-banner-name">'+esc(name)+'</h3></div><div class="learning-game-content"><p>'+esc(detail)+'</p>'+progress+'</div>'+action+'</article>';
  }
- let h='<main class="choice-home"><section class="choice-hero" aria-labelledby="choice-title"><div class="choice-hero-copy">';
+ let h='<main class="choice-home"><section class="christmas-opening" aria-labelledby="christmas-home-title"><div class="christmas-opening-head"><div><span class="christmas-kicker">3.C · DECEMBER 2026</span><h2 id="christmas-home-title">Julen i fare</h2><p>Åbn dagens låge kl. 05.00, læs et nyt kapitel, og find et bogstav til julehemmeligheden.</p></div><a class="christmas-fullscreen" href="julekalender/" aria-label="Åbn 3.Cs julekalender i en ny side">Se julekalenderen i fuld størrelse ↗</a></div><iframe class="christmas-frame" src="julekalender/" title="3.Cs julekalender med 24 låger, historier, gåder og julemusik" loading="eager" allow="autoplay"></iframe></section><section class="choice-hero" aria-labelledby="choice-title"><div class="choice-hero-copy">';
  h+='<span class="choice-eyebrow">LÆSEVÆRKSTEDET · 3.C</span><h1 id="choice-title">Hvad vil du gerne blive bedre til?</h1>';
  h+='<p>Vælg det, du vil øve. Så finder du spil, der hjælper dig i gang. Du må gerne vælge noget, der er svært.</p>';
  h+='<div class="choice-progress">⭐ '+completedCount()+' af 42 spil er gennemført på denne enhed.</div></div>';
