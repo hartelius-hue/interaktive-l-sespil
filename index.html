@@ -243,6 +243,23 @@ body{background:radial-gradient(ellipse at 12% 0%,#f4ecff,transparent 27%),radia
 .christmas-frame{border:0;display:block;width:100%;height:890px;background:#102c36}
 @media(max-width:800px){.christmas-frame{height:680px}.christmas-opening-head{padding:20px 22px}}
 @media(max-width:570px){.christmas-opening{margin-bottom:24px;border-width:3px;border-radius:21px}.christmas-opening-head{gap:14px}.christmas-frame{height:530px}.christmas-fullscreen{white-space:normal}}
+
+/* Nedtælling til første julelåge, 1. december kl. 07.00 dansk tid */
+.christmas-countdown{position:relative;isolation:isolate;display:flex;align-items:center;gap:22px;flex-wrap:wrap;background:linear-gradient(115deg,#263e42 0%,#34514b 44%,#753f40 100%);color:#fff8e9;border:3px solid #dcb76d;border-radius:26px;padding:24px clamp(18px,3vw,32px);margin:0 0 17px;overflow:hidden;box-shadow:0 12px 28px rgba(35,46,41,.18)}
+.christmas-countdown::before{content:"✦  ❄  ✦  ❄";position:absolute;right:16px;top:4px;opacity:.16;letter-spacing:23px;font-size:32px;pointer-events:none}
+.christmas-countdown-icon{position:relative;z-index:1;flex:none;font-size:clamp(42px,5vw,66px);filter:drop-shadow(0 6px 8px rgba(0,0,0,.2))}
+.christmas-countdown-body{position:relative;z-index:1;flex:1;min-width:205px}
+.christmas-countdown-kicker{font-size:12px;letter-spacing:.14em;text-transform:uppercase;font-weight:900;color:#ffe2a2}
+.christmas-countdown-title{font:700 clamp(25px,3vw,35px)/1.14 Georgia,serif;margin:4px 0 6px;color:#fff0c5}
+.christmas-countdown-sub{margin:0;color:#fff5e8;font-size:15px}
+.christmas-countdown-timer{position:relative;z-index:1;display:grid;grid-template-columns:repeat(4,minmax(55px,1fr));gap:9px;min-width:min(100%,300px)}
+.christmas-countdown-timer>div{display:grid;justify-items:center;gap:2px;background:#fff9e814;border:1px solid #fff6d24f;border-radius:14px;padding:9px 11px;min-width:57px}
+.christmas-countdown-timer strong{font-size:clamp(26px,2.8vw,37px);font-variant-numeric:tabular-nums;line-height:1.2;font-weight:900;color:#fff0bc}
+.christmas-countdown-timer span{font-size:12px;font-weight:800;color:#fff8e9}
+.christmas-countdown.is-open{background:linear-gradient(115deg,#20564d,#30704e 60%,#655336)}
+.christmas-countdown.is-open .christmas-countdown-timer{display:none}
+@media(max-width:670px){.christmas-countdown{gap:13px;padding:18px}.christmas-countdown-icon{font-size:45px}.christmas-countdown-body{min-width:0;flex-basis:calc(100% - 68px)}.christmas-countdown-timer{width:100%;grid-template-columns:repeat(4,minmax(0,1fr))}}
+@media(prefers-reduced-motion:reduce){.christmas-countdown::before{animation:none}}
 @media(prefers-reduced-motion:reduce){.christmas-fullscreen{transition:none}}
 </style>
 </head>
@@ -903,7 +920,29 @@ function wrong(message){
  const answer=[message||'Se på ordet eller teksten igen.',tip].filter(Boolean).join(' ');
  feedback(answer,'try');
 }
-function render(){updateTop();let html='';if(!active)html=renderHome();else if(game.finished)html=renderFinish();else html=renderGame();document.getElementById('app').innerHTML=html;attachDrags();attachExtraDrags();}
+
+function updateChristmasCountdown(){
+ const element=document.getElementById('christmas-countdown');
+ if(!element)return;
+ const start=new Date('2026-12-01T07:00:00+01:00').getTime();
+ const remaining=start-Date.now();
+ if(remaining<=0){
+  element.classList.add('is-open');
+  element.querySelector('.christmas-countdown-title').textContent='Den første låge er åben!';
+  element.querySelector('.christmas-countdown-sub').textContent='God december, 3.C! Gå på opdagelse i julekalenderen.';
+  return;
+ }
+ element.classList.remove('is-open');
+ const seconds=Math.ceil(remaining/1000);
+ const units={days:Math.floor(seconds/86400),hours:Math.floor(seconds%86400/3600),minutes:Math.floor(seconds%3600/60),seconds:seconds%60};
+ element.querySelectorAll('[data-countdown-unit]').forEach(span=>{
+  const unit=span.dataset.countdownUnit;
+  span.textContent=unit==='days'?String(units[unit]):String(units[unit]).padStart(2,'0');
+ });
+}
+setInterval(updateChristmasCountdown,1000);
+
+function render(){updateTop();let html='';if(!active)html=renderHome();else if(game.finished)html=renderFinish();else html=renderGame();document.getElementById('app').innerHTML=html;updateChristmasCountdown();attachDrags();attachExtraDrags();}
 const LEARNING_CATEGORIES=[{"id":"ord","icon":"👂","title":"Læse ord","wish":"Jeg vil være mere sikker, når jeg læser ord.","hint":"Lyt til lydene, sæt dem sammen, og prøv at læse ord, du ikke kender.","professional":"Afkodning og ordgenkendelse","tone":"#e9f4ff","ids":["maze","onset","blend","picture","syllable","sort","lydbro","vrovle","ordblik","stavelser","ordglimt"]},{"id":"stavning","icon":"✏️","title":"Stave ord","wish":"Jeg vil blive bedre til at stave.","hint":"Tænk over, hvilke bogstaver der passer til lydene i ordet.","professional":"Stavning og stavemønstre","tone":"#fff3dd","ids":["double","vokaler","dobbelte","stumme","skriv","diktat-ord","diktat-vrovle"]},{"id":"orddele","icon":"🧩","title":"Bygge og bøje ord","wish":"Jeg vil finde ud af, hvordan ord er bygget op.","hint":"Sæt orddele sammen. Prøv endelser, og se, hvad de ændrer.","professional":"Morfemer og bøjning","tone":"#edf9e9","ids":["endelser","sammensat","nutidsr","morfem-byg","morfem-endelser"]},{"id":"saetninger","icon":"💬","title":"Forstå sætninger","wish":"Jeg vil forstå hele sætningen.","hint":"Læs de små ord, byg sætninger, og find ud af, hvad der sker.","professional":"Sætningsforståelse","tone":"#fff0eb","ids":["caption","order","sentence","noise"]},{"id":"ordforraad","icon":"🧠","title":"Forstå nye ord","wish":"Jeg vil forstå flere ord, når jeg læser.","hint":"Brug ordene omkring et nyt ord som hjælp til at finde ud af, hvad det betyder.","professional":"Ordforråd og ordforståelse i kontekst","tone":"#eef0ff","ids":["vocab","betydningsbro","begrebsvaerksted","ordvalg","ordlaboratorium"]},{"id":"tekster","icon":"🔎","title":"Forstå tekster","wish":"Jeg vil forstå mere af det, jeg læser.","hint":"Find svar, der står direkte i teksten. Brug også spor i teksten til at forstå det, der ikke står direkte.","professional":"Læseforståelse og inferens","tone":"#f0edff","ids":["story","infer","compass","tekstspor","tekstkompas","tekstkilder","teksttjek"]},{"id":"flyd","icon":"📖","title":"Læse mere flydende","wish":"Jeg vil læse mere sikkert og flydende.","hint":"Læs teksten i dit eget tempo. Læs den igen, og læg mærke til, om ordene bliver lettere at genkende.","professional":"Læseflyd og genlæsning","tone":"#e5f7f7","ids":["genlaes","flydelaesning"]},{"id":"skrive","icon":"📝","title":"Skrive historier","wish":"Jeg vil selv skrive en historie.","hint":"Skriv en begyndelse, fortæl hvad der sker, og find på en slutning.","professional":"Skriftlig fremstilling","tone":"#fcecf5","ids":["minihistorie"]}];
 const EXTRA_CATALOG=[{"id":"lydbro","name":"Lydbroen","icon":"🧱"},{"id":"vrovle","name":"Vrøvleordsplaneten","icon":"👽"},{"id":"ordblik","name":"Ord på kornet","icon":"🎯"},{"id":"stavelser","name":"Stavelsesraketten","icon":"🚀"},{"id":"vokaler","name":"Vokaldetektiven","icon":"🔎"},{"id":"dobbelte","name":"Konsonantkontrol","icon":"⚡"},{"id":"stumme","name":"De skjulte bogstaver","icon":"🕵️"},{"id":"endelser","name":"Bøjningsværkstedet","icon":"🌱"},{"id":"sammensat","name":"Orddelingsmesteren","icon":"✂️"},{"id":"nutidsr","name":"R-detektiven","icon":"📝"},{"id":"skriv","name":"Skriv ordet selv","icon":"✏️"},{"id":"tekstspor","name":"Find tekstens spor","icon":"🔦"},{"id":"tekstkompas","name":"Tekstkompasset","icon":"🧭"},{"id":"genlaes","name":"Genlæs og forstå","icon":"🔁"},{"id":"diktat-ord","name":"Lyt og stav ordene","icon":"🎧"},{"id":"diktat-vrovle","name":"Vrøvleordsdiktat","icon":"👂"},{"id":"ordglimt","name":"Ordglimt","icon":"⚡"},{"id":"flydelaesning","name":"Læse mere flydende","icon":"⏱️"},{"id":"tekstkilder","name":"To tekster, én løsning","icon":"🗝️"},{"id":"teksttjek","name":"Teksttjekkerne","icon":"🕵️"},{"id":"morfem-byg","name":"Morfemværkstedet","icon":"🧩"},{"id":"morfem-endelser","name":"Endelseslaboratoriet","icon":"✍️"},{"id":"minihistorie","name":"Min minihistorie","icon":"✍️"},{"id":"betydningsbro","name":"Betydningsbroen","icon":"🔗"},{"id":"begrebsvaerksted","name":"Begrebsbyggeren","icon":"🧺"},{"id":"ordvalg","name":"Ordet der passer","icon":"🔍"},{"id":"ordlaboratorium","name":"Brug ordet!","icon":"✍️"}];
 const areaFromUrl=new URLSearchParams(location.search).get('omraade');if(areaFromUrl==='all'||LEARNING_CATEGORIES.some(c=>c.id===areaFromUrl))homeCategory=areaFromUrl;
@@ -927,7 +966,7 @@ function renderHome(){
    '<a class="learning-start" href="'+(newWordGame?'ordforraad-spil.html':'st3-traening.html')+'?spil='+encodeURIComponent(id)+'&amp;niveau='+difficulty+'&amp;omraade='+encodeURIComponent(current.id)+'">'+label+'</a>';
   return '<article class="learning-game-card'+(isCompleted?' is-completed':'')+'" data-game="'+id+'" data-completed="'+String(isCompleted)+'"><div class="game-banner-art" style="background-image:url(&quot;assets/3d/banners/'+id+'.'+(newWordGame?'svg':'webp')+'&quot;)"><h3 class="game-banner-name">'+esc(name)+'</h3></div><div class="learning-game-content"><p>'+esc(detail)+'</p>'+progress+'</div>'+action+'</article>';
  }
- let h='<main class="choice-home"><section class="christmas-opening" aria-labelledby="christmas-home-title"><div class="christmas-opening-head"><div><span class="christmas-kicker">3.C · DECEMBER 2026</span><h2 id="christmas-home-title">Julen i fare</h2><p>Åbn dagens låge kl. 05.00, læs et nyt kapitel, og find et bogstav til julehemmeligheden.</p></div><a class="christmas-fullscreen" href="julekalender/" aria-label="Åbn 3.Cs julekalender i en ny side">Se julekalenderen i fuld størrelse ↗</a></div><iframe class="christmas-frame" src="julekalender/" title="3.Cs julekalender med 24 låger, historier, gåder og julemusik" loading="eager" allow="autoplay"></iframe></section><section class="choice-hero" aria-labelledby="choice-title"><div class="choice-hero-copy">';
+ let h='<main class="choice-home"><section class="christmas-countdown" id="christmas-countdown" aria-label="Nedtælling til jul"><div class="christmas-countdown-icon" aria-hidden="true">🎄</div><div class="christmas-countdown-body"><span class="christmas-countdown-kicker">3.C · JULEN NÆRMER SIG</span><h2 class="christmas-countdown-title" id="christmas-countdown-title">Nedtælling til 1. december</h2><p class="christmas-countdown-sub" id="christmas-countdown-sub">Den første låge åbner kl. 07.00 dansk tid.</p></div><div class="christmas-countdown-timer" role="timer" aria-label="Tid til julekalenderen"><div><strong data-countdown-unit="days">–</strong><span>dage</span></div><div><strong data-countdown-unit="hours">–</strong><span>timer</span></div><div><strong data-countdown-unit="minutes">–</strong><span>min.</span></div><div><strong data-countdown-unit="seconds">–</strong><span>sek.</span></div></div></section><section class="christmas-opening" aria-labelledby="christmas-home-title"><div class="christmas-opening-head"><div><span class="christmas-kicker">3.C · DECEMBER 2026</span><h2 id="christmas-home-title">Julen i fare</h2><p>Åbn dagens låge kl. 07.00, læs et nyt kapitel, og find et bogstav til julehemmeligheden.</p></div><a class="christmas-fullscreen" href="julekalender/" aria-label="Åbn 3.Cs julekalender i en ny side">Se julekalenderen i fuld størrelse ↗</a></div><iframe class="christmas-frame" src="julekalender/" title="3.Cs julekalender med 24 låger, historier, gåder og julemusik" loading="eager" allow="autoplay"></iframe></section><section class="choice-hero" aria-labelledby="choice-title"><div class="choice-hero-copy">';
  h+='<span class="choice-eyebrow">LÆSEVÆRKSTEDET · 3.C</span><h1 id="choice-title">Hvad vil du gerne blive bedre til?</h1>';
  h+='<p>Vælg det, du vil øve. Så finder du spil, der hjælper dig i gang. Du må gerne vælge noget, der er svært.</p>';
  h+='<div class="choice-progress">⭐ '+completedCount()+' af 42 spil er gennemført på denne enhed.</div></div>';
